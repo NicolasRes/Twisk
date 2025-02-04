@@ -58,7 +58,6 @@ public class Activite extends Etape {
             sb.append(etape.getNom()).append(", ");
         }
 
-        // Supprime la dernière virgule et l'espace en trop si nécessaire
         if (this.nbSuccesseur() > 0) {
             sb.setLength(sb.length() - 2);
         }

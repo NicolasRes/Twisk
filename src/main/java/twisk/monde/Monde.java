@@ -23,7 +23,7 @@ public class Monde implements Iterable<Etape> {
     public void aCommeSortie(Etape ... etape) { // À modifier
         for(Etape e : etape){
             assert (e != null) : "Erreur : Etape null";
-            sortie.ajouterSuccesseur(e);
+            e.ajouterSuccesseur(sortie);
         }
     }
 
