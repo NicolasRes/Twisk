@@ -35,6 +35,14 @@ public class Activite extends Etape {
         return true;
     }
 
+    public boolean estUneEntree() {
+        return false;
+    }
+
+    public boolean estUneSortie() {
+        return false;
+    }
+
     /**
      * Méthode qui renvoie les informations de l'activité sous forme de String
      * @return L'activité sous forme de String
