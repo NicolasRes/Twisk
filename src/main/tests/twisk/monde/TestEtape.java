@@ -2,6 +2,8 @@ package twisk.monde;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TestEtape {
@@ -36,5 +38,21 @@ class TestEtape {
 
     @Test
     void iterator() {
+        Etape gui = new Guichet("A");
+        Etape act = new Activite("B");
+        Etape act2 = new Activite("C");
+        gui.ajouterSuccesseur(act, act2);
+
+        Iterator<Etape> i = gui.iterator();
+
+        // Premier élément suivant
+        assertTrue(i.hasNext(), "L'itérateur doit avoir un élément suivant");
+        assertEquals(i.next(), act);
+
+        // Deuxième élément suivant
+        assertTrue(i.hasNext(), "L'itérateur doit avoir un deuxième élément suivant");
+        assertEquals(i.next(), act2);
+
+        assertFalse(i.hasNext(), "L'itérateur ne doit pas avoir d'élément suivant");
     }
 }
