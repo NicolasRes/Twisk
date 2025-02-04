@@ -4,26 +4,26 @@ import java.util.Iterator;
 
 public class Monde implements Iterable<Etape> {
     private GestionnaireEtapes LesEtapes;
-    private SasSortie sortie;
     private SasEntree entree;
+    private SasSortie sortie;
 
     public Monde() {
         LesEtapes = new GestionnaireEtapes();
+        this.entree = new SasEntree();
+        this.sortie = new SasSortie();
     }
 
-    public void aCommeEntree(Etape ... etape) {
+    public void aCommeEntree(Etape ... etape) { // À modifier
         for(Etape e : etape){
             assert (e != null) : "Erreur : Etape null";
-            SasEntree sasEntree = new SasEntree();
-            this.entree = sasEntree;
+            entree.ajouterSuccesseur(e);
         }
     }
 
-    public void aCommeSortie(Etape ... etape) {
+    public void aCommeSortie(Etape ... etape) { // À modifier
         for(Etape e : etape){
             assert (e != null) : "Erreur : Etape null";
-            SasSortie sasSortie = new SasSortie();
-            this.sortie = sasSortie;
+            sortie.ajouterSuccesseur(e);
         }
     }
 
@@ -52,6 +52,7 @@ public class Monde implements Iterable<Etape> {
         return LesEtapes.iterator();
     }
 
+    @Override
     public String toString() {
         int capacite = this.nbEtapes();
         StringBuilder sb = new StringBuilder(capacite);

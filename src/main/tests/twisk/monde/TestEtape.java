@@ -14,10 +14,15 @@ class TestEtape {
         Etape gui = new Guichet("B");
         Etape act = new Activite("C");
 
+        Guichet gui2 = new Guichet("D");
+
         e.ajouterSuccesseur(gui, act);
+        gui.ajouterSuccesseur(gui2);
+
         assertEquals(2, e.nbSuccesseur());
         assertEquals(gui, e.getSuccesseur(0));
         assertEquals(act, e.getSuccesseur(1));
+        assertEquals(1, gui.nbSuccesseur());
     }
 
     @Test
@@ -54,5 +59,18 @@ class TestEtape {
         assertEquals(i.next(), act2);
 
         assertFalse(i.hasNext(), "L'itérateur ne doit pas avoir d'élément suivant");
+    }
+
+    @Test
+    void testToString() {
+        Guichet gui = new Guichet("A");
+        Activite act = new Activite("B");
+        Etape act2 = new Activite("C");
+        Etape act3 = new Activite("D");
+        gui.ajouterSuccesseur(act, act2);
+        act2.ajouterSuccesseur(act3);
+
+        System.out.println(gui.toString());
+        System.out.println(act2.toString());
     }
 }

@@ -8,7 +8,7 @@ public class SasEntree extends Activite {
      * Constructeur de la classe SasEntree
      */
     public SasEntree() {
-        super("SasEntree");
+        super("Entrée");
     }
 
     /**
@@ -23,7 +23,20 @@ public class SasEntree extends Activite {
      * Méthode qui crée une version String de SasEntree
      * @return Une SasEntree sous forme de String
      */
+    @Override
     public String toString() {
-        return "Entrée : " + super.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Entrée : ").append(this.nbSuccesseur()).append(" successeur");
+        for(Etape e : this.getEtapes()) {
+            sb.append(" - ").append(e.getNom());
+        }
+        return sb.toString();
+    }
+
+    public boolean equals(Object o) {
+        if(o == null) {
+            return false;
+        }
+        return o instanceof SasEntree;
     }
 }

@@ -36,9 +36,19 @@ public class Guichet extends Etape {
      * Méthode qui renvoie les informations du guichet sous forme de String
      * @return Le guichet sous forme de String
      */
+    @Override
     public String toString() {
-        return "Guichet \n" +
-                "Nom du guichet : " + this.getNom() + "\n" +
-                "Nombre de jetons : " + nbJetons + "\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.getNom()).append(" : ").append(this.nbSuccesseur()).append(" successeur(s) -> ");
+
+        for (Etape etape : this.getEtapes()) {
+            sb.append(etape.getNom()).append(", ");
+        }
+
+        if (this.nbSuccesseur() > 0) {
+            sb.setLength(sb.length() - 2);
+        }
+
+        return sb.toString();
     }
 }

@@ -58,6 +58,10 @@ public abstract class Etape implements Iterable<Etape> {
         return false;
     }
 
+    public boolean estUneEntree() {
+        return false;
+    }
+
     /**
      * Méthode qui permet d'itérer sur la classe Etape
      * @return Un itérateur sur les étapes
@@ -74,17 +78,9 @@ public abstract class Etape implements Iterable<Etape> {
         return nom;
     }
 
-    /**
-     * Méthode qui crée une version String de d'Etape
-     * @return Des étapes sous forme de String
-     */
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        int cpt = 0;
-        for(Etape etape : etapes){
-            sb.append(etape.getNom() + " : " + etape.nbSuccesseur() + " - " + etape.getSuccesseur(cpt).getNom()).append("\n");
-            cpt++;
-        }
-        return sb.toString();
+    public GestionnaireEtapes getEtapes() {
+        return etapes;
     }
+
+    public abstract String toString();
 }
