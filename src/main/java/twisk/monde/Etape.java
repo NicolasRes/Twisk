@@ -50,6 +50,11 @@ public abstract class Etape implements Iterable<Etape> {
         return this.etapes.nbEtapes();  // Sens à discuter. Ajouter successeurs indirects ?
     }
 
+    /**
+     * Méthode qui renvoie un successeur à l'index indiqué
+     * @param index L'index du successeur à renvoyer
+     * @return Le successeur
+     */
     public Etape getSuccesseur(int index) {
         return this.etapes.getEtape(index);
     }
@@ -70,10 +75,6 @@ public abstract class Etape implements Iterable<Etape> {
         return false;
     }
 
-    public boolean estUneEntree() {
-        return false;
-    }
-
     /**
      * Méthode qui permet d'itérer sur la classe Etape
      * @return Un itérateur sur les étapes
@@ -87,12 +88,19 @@ public abstract class Etape implements Iterable<Etape> {
      * @return Le nom d'une étape
      */
     public String getNom() {
-        return nom;
+        return this.nom;
     }
 
+    /**
+     * Méthode qui renvoie un gestionnaire d'étapes
+     * @return Le gestionnaire d'étapes
+     */
     public GestionnaireEtapes getEtapes() {
-        return etapes;
+        return this.etapes;
     }
 
+    /**
+     * Méthode abstraite toString de la classe Etape
+     */
     public abstract String toString();
 }

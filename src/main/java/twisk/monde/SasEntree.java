@@ -8,7 +8,7 @@ public class SasEntree extends Activite {
      * Constructeur de la classe SasEntree
      */
     public SasEntree() {
-        super("Entrée");
+        super("Entrée");    // Nom par défaut
     }
 
     /**
@@ -31,12 +31,5 @@ public class SasEntree extends Activite {
             sb.append(" - ").append(e.getNom());
         }
         return sb.toString();
-    }
-
-    public boolean equals(Object o) {
-        if(o == null) {
-            return false;
-        }
-        return o instanceof SasEntree;
     }
 }

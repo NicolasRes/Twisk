@@ -1,7 +1,5 @@
 package twisk.monde;
 
-import java.util.Iterator;
-
 /**
  * Sous-classe d'Etape de type Activite
  */
@@ -37,10 +35,18 @@ public class Activite extends Etape {
         return true;
     }
 
+    /**
+     * Méthode qui vérifie si une activité est une entrée
+     * @return Faux de base, vrai si l'activité est une entrée
+     */
     public boolean estUneEntree() {
         return false;
     }
 
+    /**
+     * Méthode qui vérifie si une activité est une sortie
+     * @return Faux de base, vrai si l'activité est une sortie
+     */
     public boolean estUneSortie() {
         return false;
     }
