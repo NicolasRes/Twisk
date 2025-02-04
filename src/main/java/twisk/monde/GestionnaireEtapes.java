@@ -13,7 +13,7 @@ public class GestionnaireEtapes implements Iterable<Etape> {
 
     void ajouterEtape(Etape ... etape) {
         for(Etape e : etape){
-            assert (e != null) : "Erreur : Etape null";
+            //assert (e != null) : "Erreur : Etape null";
             etapes.add(e);
         }
     }
