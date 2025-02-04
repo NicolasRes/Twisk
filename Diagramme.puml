@@ -1,0 +1,38 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+Etape <|-- Activite
+Etape <|-- Guichet
+
+class Activite {
+- int temps
+- int ecartTemps
++ Activite(String nom)
++ Activite(String nom, int temps, int ecartTemps)
++ boolean estUneActivite()
++ String toString()
+}
+
+abstract class Etape {
+- String nom
+- ArrayList<Etape> etapes
++ Etape(String nom)
++ void ajouterSuccesseur(Etape... e)
++ int nbSuccesseur()
++ Etape getSuccesseur(int index)
++ boolean estUneActivite()
++ boolean estUnGuichet()
++ Iterator<Etape> iterator()
++ String getNom()
++ ArrayList<Etape> getEtapes()
+}
+
+class Guichet {
+- int nbJetons
++ Guichet(String nom)
++ Guichet(String nom, int nbJetons)
++ boolean estUnGuichet()
++ String toString()
+}
+
+@enduml
