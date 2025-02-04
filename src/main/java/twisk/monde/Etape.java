@@ -8,7 +8,7 @@ import java.util.Iterator;
  */
 public abstract class Etape implements Iterable<Etape> {
     private String nom;
-    private ArrayList<Etape> etapes;
+    private GestionnaireEtapes etapes;
 
     /**
      * Constructeur de la classe Etape avec nom comme seul paramètre
@@ -16,9 +16,7 @@ public abstract class Etape implements Iterable<Etape> {
      */
     public Etape(String nom) {
         assert(nom != null) : "Erreur nom null";
-
         this.nom = nom;
-        this.etapes = new ArrayList<Etape>();
     }
 
     /**
@@ -28,7 +26,7 @@ public abstract class Etape implements Iterable<Etape> {
     public void ajouterSuccesseur(Etape... e) {
         for(Etape etape : e){
             assert (etape != null) : "Erreur : Etape null";
-            etapes.add(etape);
+            etapes.ajouterEtape(etape);
         }
     }
 
@@ -37,11 +35,11 @@ public abstract class Etape implements Iterable<Etape> {
      * @return Le nombre de successeurs
      */
     public int nbSuccesseur() {
-        return this.etapes.size();  // Sens à discuter. Ajouter successeurs indirects ?
+        return this.etapes.nbEtapes();  // Sens à discuter. Ajouter successeurs indirects ?
     }
 
     public Etape getSuccesseur(int index) {
-        return this.etapes.get(index);
+        return this.etapes.getEtape(index);
     }
 
     /**
@@ -76,11 +74,4 @@ public abstract class Etape implements Iterable<Etape> {
         return nom;
     }
 
-    /**
-     * Méthode qui renvoie une liste d'étapes
-     * @return La liste d'étapes
-     */
-    public ArrayList<Etape> getEtapes() {
-        return etapes;
-    }
 }
