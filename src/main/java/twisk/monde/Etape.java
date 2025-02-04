@@ -1,6 +1,5 @@
 package twisk.monde;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -17,6 +16,7 @@ public abstract class Etape implements Iterable<Etape> {
     public Etape(String nom) {
         assert(nom != null) : "Erreur nom null";
         this.nom = nom;
+        etapes = new GestionnaireEtapes();
     }
 
     /**
