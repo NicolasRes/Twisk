@@ -11,12 +11,19 @@ public class GestionnaireEtapes implements Iterable<Etape> {
         etapes = new ArrayList<Etape>();
     }
 
-    void ajouterEtape(Etape etape) {
-        etapes.add(etape);
+    void ajouterEtape(Etape ... etape) {
+        for(Etape e : etape){
+            assert (e != null) : "Erreur : Etape null";
+            etapes.add(e);
+        }
     }
 
     public int nbEtapes() {
         return etapes.size();
+    }
+
+    public Etape getEtape(int index) {
+        return etapes.get(index);
     }
 
     public Iterator<Etape> iterator() {
