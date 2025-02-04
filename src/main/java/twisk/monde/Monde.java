@@ -5,6 +5,8 @@ import java.util.Iterator;
 public class Monde implements Iterable<Etape> {
 
     private GestionnaireEtapes LesEtapes;
+    private SasSortie sortie;
+    private SasEntree entree;
 
     public Monde() {
         LesEtapes = new GestionnaireEtapes();
@@ -14,7 +16,7 @@ public class Monde implements Iterable<Etape> {
         for(Etape e : etape){
             assert (e != null) : "Erreur : Etape null";
             SasEntree sasEntree = new SasEntree();
-            LesEtapes.ajouterEtape(sasEntree);
+            this.entree = sasEntree;
         }
     }
 
@@ -22,7 +24,7 @@ public class Monde implements Iterable<Etape> {
         for(Etape e : etape){
             assert (e != null) : "Erreur : Etape null";
             SasSortie sasSortie = new SasSortie();
-            LesEtapes.ajouterEtape(sasSortie);
+            this.sortie = sasSortie;
         }
     }
 
