@@ -67,10 +67,20 @@ class TestEtape {
         Activite act = new Activite("B");
         Etape act2 = new Activite("C");
         Etape act3 = new Activite("D");
+
         gui.ajouterSuccesseur(act, act2);
         act2.ajouterSuccesseur(act3);
 
-        System.out.println(gui.toString());
-        System.out.println(act2.toString());
+        assertEquals("A : 2 successeur -> B, C", gui.toString());
+        assertEquals("C : 1 successeur -> D", act2.toString());
+        assertEquals("D : 0 successeur -> ", act3.toString());
+    }
+
+    @Test
+    void iteratorSansSuccesseur() {
+        Etape etape = new Activite("E");
+        Iterator<Etape> i = etape.iterator();
+
+        assertFalse(i.hasNext(), "L'itérateur ne doit pas avoir d'élément suivant pour une étape sans successeurs");
     }
 }

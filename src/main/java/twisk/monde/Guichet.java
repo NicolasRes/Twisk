@@ -39,7 +39,7 @@ public class Guichet extends Etape {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.getNom()).append(" : ").append(this.nbSuccesseur()).append(" successeur(s) -> ");
+        sb.append(this.getNom()).append(" : ").append(this.nbSuccesseur()).append(" successeur -> ");
 
         for (Etape etape : this.getEtapes()) {
             sb.append(etape.getNom()).append(", ");

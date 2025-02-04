@@ -2,6 +2,8 @@ package twisk.monde;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestSas {
@@ -21,4 +23,15 @@ public class TestSas {
         assertEquals("Entrée : 2 successeur - Guigui - Acti", entree.toString());
         assertEquals("Sortie : 0 successeur", sortie.toString());
     }
+
+    @Test
+    void testSasSortie() {
+        SasSortie sortie = new SasSortie();
+
+        assertEquals("Sortie : 0 successeur", sortie.toString());
+        assertEquals(0, sortie.nbSuccesseur());
+    }
+
+
+
 }
