@@ -1,5 +1,7 @@
 package twisk.monde;
 
+import twisk.outils.FabriqueNumero;
+
 import java.util.Iterator;
 
 /**
@@ -8,6 +10,7 @@ import java.util.Iterator;
 public abstract class Etape implements Iterable<Etape> {
     private String nom;
     private GestionnaireEtapes etapes;
+    private int idEtape;
 
     /**
      * Constructeur de la classe Etape avec nom comme seul paramètre
@@ -17,6 +20,15 @@ public abstract class Etape implements Iterable<Etape> {
         assert(nom != null) : "Erreur nom null";
         this.nom = nom;
         this.etapes = new GestionnaireEtapes();
+        this.idEtape = FabriqueNumero.getInstance().getNumeroEtape();
+    }
+
+    /**
+     * Méthode qui renvoie le numéro de l'étape
+     * @return Le numéro de l'étape
+     */
+    public int getNumero() {
+        return idEtape;
     }
 
     /**
