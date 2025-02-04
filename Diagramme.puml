@@ -6,6 +6,7 @@ Etape <|-- Guichet
 Activite <|--"1" SasEntree
 Activite <|--"1" SasSortie
 Activite <|-- ActiviteRestreinte
+GestionnaireEtapes "1"-right-"*" Etape
 
 class Activite {
 - int temps
@@ -23,7 +24,6 @@ class ActiviteRestreinte {
 
 abstract class Etape {
 - String nom
-- ArrayList<Etape> etapes
 + Etape(String nom)
 + void ajouterSuccesseur(Etape... e)
 + int nbSuccesseur()
@@ -32,7 +32,15 @@ abstract class Etape {
 + boolean estUnGuichet()
 + Iterator<Etape> iterator()
 + String getNom()
-+ ArrayList<Etape> getEtapes()
+}
+
+class GestionnaireEtapes {
+- ArrayList<Etape> etapes
++ GestionnaireEtapes()
++ void ajouter(Etape... etapes)
++ int nbEtapes()
++ Etape getEtapes(int index)
++ Iterator<Etape> iterator()
 }
 
 class Guichet {
