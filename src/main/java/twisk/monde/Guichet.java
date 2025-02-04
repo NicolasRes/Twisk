@@ -1,10 +1,13 @@
 package twisk.monde;
 
+import twisk.outils.FabriqueNumero;
+
 /**
  * Sous-classe d'Etape de type Guichet
  */
 public class Guichet extends Etape {
     private int nbJetons;
+    private int numeroSemaphore;
 
     /**
      * Constructeur de classe Guichet nom en seul paramètre
@@ -12,6 +15,7 @@ public class Guichet extends Etape {
      */
     public Guichet(String nom) {
         super(nom);
+        this.numeroSemaphore = FabriqueNumero.getInstance().getNumeroSemaphore();
     }
 
     /**
@@ -22,6 +26,7 @@ public class Guichet extends Etape {
     public Guichet(String nom, int nbJetons) {
         super(nom);
         this.nbJetons = nbJetons;
+        this.numeroSemaphore = FabriqueNumero.getInstance().getNumeroSemaphore();
     }
 
     /**
@@ -30,6 +35,14 @@ public class Guichet extends Etape {
      */
     public boolean estUnGuichet() {
         return true;
+    }
+
+    /**
+     * Méthode qui renvoie le numéro de semaphore associé à la guichet
+     * @return Le numéro de semaphore
+     */
+    public int getNumeroSemaphore() {
+        return numeroSemaphore;
     }
 
     /**

@@ -31,4 +31,6 @@ class TestFabrique {
         Activite act = new Activite("A");
         assertEquals(0, act.getNumero());
     }
+
+
 }
