@@ -5,7 +5,7 @@ package twisk.monde;
  */
 public class SasSortie extends Activite {
     public SasSortie() {
-        super("SasSortie");
+        super("Sortie");
     }
 
     /**
@@ -20,7 +20,13 @@ public class SasSortie extends Activite {
      * Méthode qui crée une version String de SasSortie
      * @return Une SasSortie sous forme de String
      */
+    @Override
     public String toString() {
-        return "Sortie : " + super.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Sortie : ").append(this.nbSuccesseur()).append(" successeur");
+        for(Etape e : this.getEtapes()) {
+            sb.append(" - ").append(e.getNom());
+        }
+        return sb.toString();
     }
 }

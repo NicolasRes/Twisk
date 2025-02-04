@@ -11,9 +11,6 @@ public class Simulation {
     }
 
     public void simuler(Monde monde){
-
-        for(Etape e : monde){
-            e.toString();
-        }
+        System.out.println(monde.toString());
     }
 }

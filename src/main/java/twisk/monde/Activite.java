@@ -1,5 +1,7 @@
 package twisk.monde;
 
+import java.util.Iterator;
+
 /**
  * Sous-classe d'Etape de type Activite
  */
@@ -44,11 +46,24 @@ public class Activite extends Etape {
     }
 
     /**
-     * Méthode qui renvoie les informations de l'activité sous forme de String
-     * @return L'activité sous forme de String
+     * Méthode qui crée une version String de d'Etape
+     * @return Des étapes sous forme de String
      */
+    @Override
     public String toString() {
-        return "Temps de l'activité : " + temps + "\n"
-                + "Écart temps : " + ecartTemps;
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.getNom()).append(" : ").append(this.nbSuccesseur()).append(" successeur(s) -> ");
+
+        for (Etape etape : this.getEtapes()) {
+            sb.append(etape.getNom()).append(", ");
+        }
+
+        // Supprime la dernière virgule et l'espace en trop si nécessaire
+        if (this.nbSuccesseur() > 0) {
+            sb.setLength(sb.length() - 2);
+        }
+
+        return sb.toString();
     }
+
 }
