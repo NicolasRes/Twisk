@@ -11,7 +11,19 @@ public class SasEntree extends Activite {
         super("SasEntree");
     }
 
+    /**
+     * Méthode qui vérifie si un SasEntre est une entrée
+     * @return Vrai pour un SasEntree, faux sinon
+     */
     public boolean estUneEntree() {
         return true;
+    }
+
+    /**
+     * Méthode qui crée une version String de SasEntree
+     * @return Une SasEntree sous forme de String
+     */
+    public String toString() {
+        return "Entrée : " + super.toString();
     }
 }

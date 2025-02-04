@@ -16,7 +16,7 @@ public abstract class Etape implements Iterable<Etape> {
     public Etape(String nom) {
         assert(nom != null) : "Erreur nom null";
         this.nom = nom;
-        etapes = new GestionnaireEtapes();
+        this.etapes = new GestionnaireEtapes();
     }
 
     /**
@@ -26,7 +26,7 @@ public abstract class Etape implements Iterable<Etape> {
     public void ajouterSuccesseur(Etape... e) {
         for(Etape etape : e){
             assert (etape != null) : "Erreur : Etape null";
-            etapes.ajouterEtape(etape);
+            this.etapes.ajouterEtape(etape);
         }
     }
 
@@ -72,5 +72,19 @@ public abstract class Etape implements Iterable<Etape> {
      */
     public String getNom() {
         return nom;
+    }
+
+    /**
+     * Méthode qui crée une version String de d'Etape
+     * @return Des étapes sous forme de String
+     */
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        int cpt = 0;
+        for(Etape etape : etapes){
+            sb.append(etape.getNom() + " : " + etape.nbSuccesseur() + " - " + etape.getSuccesseur(cpt).getNom()).append("\n");
+            cpt++;
+        }
+        return sb.toString();
     }
 }
