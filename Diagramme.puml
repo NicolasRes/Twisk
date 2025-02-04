@@ -3,6 +3,9 @@
 
 Etape <|-- Activite
 Etape <|-- Guichet
+Activite <|--"1" SasEntree
+Activite <|--"1" SasSortie
+Activite <|-- ActiviteRestreinte
 
 class Activite {
 - int temps
@@ -11,6 +14,11 @@ class Activite {
 + Activite(String nom, int temps, int ecartTemps)
 + boolean estUneActivite()
 + String toString()
+}
+
+class ActiviteRestreinte {
++ ActiviteRestreinte(String nom)
++ ActiviteRestreinte(String nom, int temps, int ecartTemps)
 }
 
 abstract class Etape {
@@ -33,6 +41,14 @@ class Guichet {
 + Guichet(String nom, int nbJetons)
 + boolean estUnGuichet()
 + String toString()
+}
+
+class SasEntree {
++ asEntree()
+}
+
+class SasSortie {
++ SasSortie()
 }
 
 @enduml
