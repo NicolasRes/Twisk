@@ -8,7 +8,7 @@ import twisk.outils.FabriqueNumero;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TestGuichet extends  TestEtape{
+class TestGuichet extends Java.TestEtape {
 
     @BeforeEach
     void setUp() {
