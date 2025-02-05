@@ -8,29 +8,27 @@ import java.util.Iterator;
 public class ClientTwisk {
 
     public static void main(String[] args) {
+        Monde monde = new Monde();
 
-        Monde monde = new Monde() ;
+        Activite act1 = new Activite("1", 2, 1) ;
+        Activite act2 = new Activite("2", 2, 1) ;
+        Activite act3 = new Activite("3", 2, 1) ;
+        Activite act4 = new Activite("4", 2, 1);
+        Activite act5 = new Activite("5", 2, 1);
 
-        Guichet guichet = new Guichet("ticket", 2) ;
-        Activite act1 = new ActiviteRestreinte("toboggan", 2, 1) ;
+        Guichet guich = new Guichet("ticket", 2) ;
 
-        Etape etape1 = new Activite("musee") ;
-        Etape etape2 = new Activite("boutique") ;
+        act2.ajouterSuccesseur(act3);
+        act4.ajouterSuccesseur(guich);
+        guich.ajouterSuccesseur(act5);
 
-        etape1.ajouterSuccesseur(etape2) ;
-        etape2.ajouterSuccesseur(guichet) ;
-        guichet.ajouterSuccesseur(act1);
+        monde.aCommeEntree(act1, act2, act4);
+        monde.aCommeSortie(act1, act3, act5);
 
-        monde.ajouter(etape1, etape2) ;
-        monde.ajouter(act1) ;
-        monde.ajouter(guichet) ;
+        monde.ajouter(act1, act2, act3, act4, act5);
+        monde.ajouter(guich);
 
-        monde.aCommeEntree(etape1);
-        monde.aCommeSortie(act1) ;
-
-        Iterator<Etape> ite = monde.iterator() ;
-        while(ite.hasNext()) {
-            System.out.println(ite.next());
-        }
+        Simulation sim = new Simulation();
+        sim.simuler(monde);
     }
 }
