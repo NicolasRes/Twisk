@@ -52,8 +52,8 @@ public class Activite extends Etape {
     }
 
     /**
-     * Méthode qui crée une version String de d'Etape
-     * @return Des étapes sous forme de String
+     * Méthode qui crée une version String d'une étape de type Activite
+     * @return Une activité sous forme de String
      */
     @Override
     public String toString() {
@@ -70,5 +70,4 @@ public class Activite extends Etape {
 
         return sb.toString();
     }
-
 }

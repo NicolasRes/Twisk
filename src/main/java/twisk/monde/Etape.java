@@ -47,7 +47,7 @@ public abstract class Etape implements Iterable<Etape> {
      * @return Le nombre de successeurs
      */
     public int nbSuccesseur() {
-        return this.etapes.nbEtapes();  // Sens à discuter. Ajouter successeurs indirects ?
+        return this.etapes.nbEtapes();
     }
 
     /**
