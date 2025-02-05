@@ -17,20 +17,20 @@ public class TestSas {
         Activite act = new Activite("Acti");
         entree.ajouterSuccesseur(gui);
 
-        assertEquals("Entrée : 1 successeur - Guigui", entree.toString());
+        assertEquals("Entrée : 1 successeur(s) - Guigui", entree.toString());
         assertEquals("Guigui", entree.getSuccesseur(0).getNom());
         assertEquals(1, entree.nbSuccesseur());
 
         entree.ajouterSuccesseur(act);
-        assertEquals("Entrée : 2 successeur - Guigui - Acti", entree.toString());
-        assertEquals("Sortie : 0 successeur", sortie.toString());
+        assertEquals("Entrée : 2 successeur(s) - Guigui - Acti", entree.toString());
+        assertEquals("Sortie : 0 successeur(s)", sortie.toString());
     }
 
     @Test
     void testSasSortie() {
         SasSortie sortie = new SasSortie();
 
-        assertEquals("Sortie : 0 successeur", sortie.toString());
+        assertEquals("Sortie : 0 successeur(s)", sortie.toString());
         assertEquals(0, sortie.nbSuccesseur());
     }
 }
