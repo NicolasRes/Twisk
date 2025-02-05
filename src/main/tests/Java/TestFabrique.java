@@ -1,11 +1,16 @@
-package twisk.monde;
+package Java;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import twisk.monde.Activite;
 import twisk.outils.FabriqueNumero;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestFabrique {
+
+    @BeforeEach
+    void setUp(){FabriqueNumero.getInstance().reset();}
 
     @Test
     void testNumeroUnique() {
@@ -31,6 +36,4 @@ class TestFabrique {
         Activite act = new Activite("A");
         assertEquals(0, act.getNumero());
     }
-
-
 }

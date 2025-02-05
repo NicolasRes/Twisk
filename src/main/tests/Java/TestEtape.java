@@ -1,6 +1,9 @@
-package twisk.monde;
+package Java;
 
 import org.junit.jupiter.api.Test;
+import twisk.monde.Activite;
+import twisk.monde.Etape;
+import twisk.monde.Guichet;
 
 import java.util.Iterator;
 

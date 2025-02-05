@@ -50,5 +50,6 @@ public class FabriqueNumero {
      */
     public void reset() {
         this.cptEtape = 0;
+        this.cptSemaphore = 1;
     }
 }

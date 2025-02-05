@@ -1,12 +1,14 @@
-package twisk.monde;
+package Java;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import twisk.monde.Activite;
+import twisk.monde.Guichet;
 import twisk.outils.FabriqueNumero;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GuichetTest {
+class TestGuichet extends  TestEtape{
 
     @BeforeEach
     void setUp() {
@@ -35,7 +37,5 @@ class GuichetTest {
         Guichet g2 = new Guichet("G2", 2);
         assertEquals(2,g2.getNumeroSemaphore());
         assertEquals(3,g2.getNumero());
-
     }
-
 }

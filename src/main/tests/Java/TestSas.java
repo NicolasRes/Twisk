@@ -1,8 +1,10 @@
-package twisk.monde;
+package Java;
 
 import org.junit.jupiter.api.Test;
-
-import java.util.Iterator;
+import twisk.monde.Activite;
+import twisk.monde.Guichet;
+import twisk.monde.SasEntree;
+import twisk.monde.SasSortie;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,7 +33,4 @@ public class TestSas {
         assertEquals("Sortie : 0 successeur", sortie.toString());
         assertEquals(0, sortie.nbSuccesseur());
     }
-
-
-
 }
