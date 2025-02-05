@@ -1,12 +1,30 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+'Liens entre les classes
+Iterable <|.. Monde
+Iterable <|.. GestionnaireEtapes
+Iterable <|.. Etape
+
 Etape <|-- Activite
 Etape <|-- Guichet
+
 Activite <|--"1" SasEntree
 Activite <|--"1" SasSortie
 Activite <|-- ActiviteRestreinte
+
 GestionnaireEtapes "1"-right-"*" Etape
+
+Monde -right-"1" "GestionnaireEtapes" : lesEtapes
+Monde --"1" "SasEntree" : Entrée
+Monde --"1" "SasSortie" : Sortie
+
+Simulation --"1" Monde
+
+'Définition des classes
+interface Iterable {
+Iterator<Etape> iterator()
+}
 
 class Activite {
 - int temps
@@ -14,6 +32,8 @@ class Activite {
 + Activite(String nom)
 + Activite(String nom, int temps, int ecartTemps)
 + boolean estUneActivite()
++ boolean estUneEntree()
++ boolean estUneSortie()
 + String toString()
 }
 
@@ -24,7 +44,9 @@ class ActiviteRestreinte {
 
 abstract class Etape {
 - String nom
+- int idEtape
 + Etape(String nom)
++ int getNumero
 + void ajouterSuccesseur(Etape... e)
 + int nbSuccesseur()
 + Etape getSuccesseur(int index)
@@ -32,6 +54,8 @@ abstract class Etape {
 + boolean estUnGuichet()
 + Iterator<Etape> iterator()
 + String getNom()
++ GestionnaireEtapes getEtapes()
++ {abstract} String toString()
 }
 
 class GestionnaireEtapes {
@@ -45,18 +69,40 @@ class GestionnaireEtapes {
 
 class Guichet {
 - int nbJetons
+- int numeroSemaphore
 + Guichet(String nom)
 + Guichet(String nom, int nbJetons)
 + boolean estUnGuichet()
++ boolean getNumeroSemaphore()
++ String toString()
+}
+
+class Monde {
++ Monde()
++ void aCommeEntree(Etape... etape)
++ void aCommeSortie(Etape... etape)
++ void ajouter(Etape... etape)
++ int nbEtapes()
++ int nbGuichets()
++ Iterator<Etape> iterator()
 + String toString()
 }
 
 class SasEntree {
 + asEntree()
++ boolean estUneEntree()
++ String toString()
 }
 
 class SasSortie {
 + SasSortie()
++ boolean estUneSortie()
++ String toString()
+}
+
+class Simulation {
++ Simulation()
++ void simuler(Monde monde)
 }
 
 @enduml
