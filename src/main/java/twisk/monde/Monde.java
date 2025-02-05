@@ -6,7 +6,7 @@ import java.util.Iterator;
  * Classe Monde qui gère le monde du Twisk
  */
 public class Monde implements Iterable<Etape> {
-    private GestionnaireEtapes LesEtapes;
+    private GestionnaireEtapes lesEtapes;
     private SasEntree entree;
     private SasSortie sortie;
 
@@ -14,7 +14,7 @@ public class Monde implements Iterable<Etape> {
      * Constructeur de la classe Monde
      */
     public Monde() {
-        this.LesEtapes = new GestionnaireEtapes();
+        this.lesEtapes = new GestionnaireEtapes();
         this.entree = new SasEntree();
         this.sortie = new SasSortie();
     }
@@ -48,7 +48,7 @@ public class Monde implements Iterable<Etape> {
     public void ajouter(Etape... etape) {
         for(Etape e : etape){
             assert (e != null) : "Erreur : Etape null";
-            this.LesEtapes.ajouterEtape(e);
+            this.lesEtapes.ajouterEtape(e);
         }
     }
 
@@ -57,7 +57,7 @@ public class Monde implements Iterable<Etape> {
      * @return Le nombre d'étapes
      */
     public int nbEtapes() {
-        return this.LesEtapes.nbEtapes();
+        return this.lesEtapes.nbEtapes();
     }
 
     /**
@@ -66,7 +66,7 @@ public class Monde implements Iterable<Etape> {
      */
     public int nbGuichets() {
         int nbGuichets = 0;
-        for(Etape e : this.LesEtapes){
+        for(Etape e : this.lesEtapes){
             if(e.estUnGuichet()){
                 nbGuichets++;
             }
@@ -79,7 +79,7 @@ public class Monde implements Iterable<Etape> {
      * @return Un itérateur sur les étapes
      */
     public Iterator<Etape> iterator() {
-        return this.LesEtapes.iterator();
+        return this.lesEtapes.iterator();
     }
 
     /**
@@ -92,7 +92,7 @@ public class Monde implements Iterable<Etape> {
         StringBuilder sb = new StringBuilder(capacite);
         sb.append(this.entree.toString()).append("\n");
         sb.append(this.sortie.toString()).append("\n");
-        for(Etape e : this.LesEtapes) {
+        for(Etape e : this.lesEtapes) {
             sb.append(e.toString()).append("\n");
         }
         return sb.toString();

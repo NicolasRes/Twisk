@@ -3,8 +3,6 @@ package twisk;
 import twisk.monde.*;
 import twisk.simulation.Simulation;
 
-import java.util.Iterator;
-
 public class ClientTwisk {
 
     public static void main(String[] args) {
