@@ -26,7 +26,8 @@ public class SasEntree extends Activite {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Entrée : ").append(this.nbSuccesseur()).append(" successeur");
+
+        sb.append("Entrée : ").append(this.nbSuccesseur()).append(" successeur(s)");
         for(Etape e : this.getEtapes()) {
             sb.append(" - ").append(e.getNom());
         }

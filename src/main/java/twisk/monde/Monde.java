@@ -75,6 +75,20 @@ public class Monde implements Iterable<Etape> {
     }
 
     /**
+     * Méthode qui permet de récupérer l'Etape qui succède un sas d'entrée à l'indice i
+     * @param i L'indice auquel récupérer l'entrée
+     * @return Un successeur du sas d'entrée
+     */
+    public Etape getEntree(int i) {
+        return this.entree.getSuccesseur(i);
+    }
+
+    /* À implanter pour tester aCommeSortie
+    public Etape getSortie(int i) {
+        return this.entree.getSuccesseur(i);
+    }*/
+
+    /**
      * Méthode qui rend un gestionnaire d'étapes itérable
      * @return Un itérateur sur les étapes
      */

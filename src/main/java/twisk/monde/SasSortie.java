@@ -23,7 +23,7 @@ public class SasSortie extends Activite {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Sortie : ").append(this.nbSuccesseur()).append(" successeur");
+        sb.append("Sortie : ").append(this.nbSuccesseur()).append(" successeur(s)");
         for(Etape e : this.getEtapes()) {
             sb.append(" - ").append(e.getNom());
         }
