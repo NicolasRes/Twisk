@@ -9,8 +9,8 @@ Iterable <|.. Etape
 Etape <|-- Activite
 Etape <|-- Guichet
 
-Activite <|--"1" SasEntree
-Activite <|--"1" SasSortie
+Activite <|-- SasEntree
+Activite <|-- SasSortie
 Activite <|-- ActiviteRestreinte
 
 GestionnaireEtapes "1"-right-"*" Etape
