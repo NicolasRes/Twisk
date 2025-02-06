@@ -23,8 +23,7 @@ public class ClientTwisk {
         monde.aCommeEntree(act1, act2, act4);
         monde.aCommeSortie(act1, act3, act5);
 
-        monde.ajouter(act1, act2, act3, act4, act5);
-        monde.ajouter(guich);
+        monde.ajouter(act1, act2, act3, act4, guich,act5);
 
         Simulation sim = new Simulation();
         sim.simuler(monde);
