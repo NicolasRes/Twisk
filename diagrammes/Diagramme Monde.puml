@@ -1,11 +1,22 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+interface Iterable {
+    Iterator<Etape> iterator()
+}
+
+package "monde" #red {
+
 'Liens entre les classes
 Iterable <|.. Monde
 Iterable <|.. GestionnaireEtapes
 Iterable <|.. Etape
 
+Monde -right-"1" "GestionnaireEtapes" : lesEtapes
+Monde --"1" "SasEntree" : Entrée
+Monde --"1" "SasSortie" : Sortie
+
+Etape "*"-left-"1" GestionnaireEtapes
 Etape <|-- Activite
 Etape <|-- Guichet
 
@@ -13,28 +24,17 @@ Activite <|-- SasEntree
 Activite <|-- SasSortie
 Activite <|-- ActiviteRestreinte
 
-GestionnaireEtapes "1"-right-"*" Etape
-
-Monde -right-"1" "GestionnaireEtapes" : lesEtapes
-Monde --"1" "SasEntree" : Entrée
-Monde --"1" "SasSortie" : Sortie
-
-Simulation --"1" Monde
-
 'Définition des classes
-interface Iterable {
-Iterator<Etape> iterator()
-}
 
 class Activite {
-- int temps
-- int ecartTemps
-+ Activite(String nom)
-+ Activite(String nom, int temps, int ecartTemps)
-+ boolean estUneActivite()
-+ boolean estUneEntree()
-+ boolean estUneSortie()
-+ String toString()
+    - int temps
+    - int ecartTemps
+    + Activite(String nom)
+    + Activite(String nom, int temps, int ecartTemps)
+    + boolean estUneActivite()
+    + boolean estUneEntree()
+    + boolean estUneSortie()
+    + String toString()
 }
 
 class ActiviteRestreinte {
@@ -99,10 +99,11 @@ class SasSortie {
 + boolean estUneSortie()
 + String toString()
 }
+}
 
-class Simulation {
-+ Simulation()
-+ void simuler(Monde monde)
+skinparam class {
+    BackgroundColor aliceblue
+    BorderColor black
 }
 
 @enduml

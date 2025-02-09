@@ -1,0 +1,15 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+package "simulation" #yellow {
+
+    class "Monde" as sMonde {}
+    Simulation --"1" sMonde
+
+    class Simulation {
+    + Simulation()
+    + void simuler(Monde monde)
+    }
+}
+
+@enduml
