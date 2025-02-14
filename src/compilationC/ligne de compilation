@@ -3,3 +3,5 @@ gcc -Wall -fPIC client.c -c client.c //pour demander la génération d’un code
 gcc -shared ../ressources/codeC/programmeCLinux.o client.o -o libTwisk.so //pour creer lib partagée
 
 nm -D libTwisk.so //pour voir les dépendances
+
+gcc -Wall -L. main.c -o main -lTwisk
