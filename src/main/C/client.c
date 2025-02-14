@@ -10,7 +10,10 @@
  */
 
 #include "../ressources/codeC/def.h"
-
+/**
+*    @brief Fonction qui simule le client
+*    @param ids Identifiant du client
+*/
 void simulation(int ids) {
     entrer(ACT1);
     transfert(ACT1, ACT2);

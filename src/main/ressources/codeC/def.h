@@ -14,6 +14,7 @@
 void delai(int temps, int delta) ;
 
 void entrer(int etape) ;
+
 void transfert(int source, int destination) ;
 
 int P(int semid, int numero) ;
