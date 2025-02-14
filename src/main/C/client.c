@@ -10,7 +10,7 @@
  */
 
 #define NB_ETAPES 3
-#define NB_CLIENTS 3
+#define NB_CLIENTS 5
 #define NB_GUICHET 0
 
 
