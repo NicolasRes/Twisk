@@ -1,1 +1,1 @@
-#include "../ressources/codeC/def.h"int main(int argc, char **argv) {    int *tabPid = start_simulation(3, 0, 3, NULL);    return 0;}
+#include "../ressources/codeC/def.h"#include "client.h"int main(int argc, char **argv) {    int nb_Client = get_nb_clients();    int nb_Guichet = get_nb_guichets();    int nb_Activite = get_nb_etapes();    int *tabPid = start_simulation(nb_Client, nb_Guichet, nb_Activite, NULL);    for (int i = 0; i < nb_Client; i++) {        printf("PID: %d\n", tabPid[i]);    }    nettoyage();    return 0;}

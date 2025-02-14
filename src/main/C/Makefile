@@ -11,4 +11,5 @@ client.o: client.c
 	gcc -Wall -fPIC -c client.c
 
 main : main.c
-	gcc -Wall -L. main.c -o main -lTwisk
+	gcc -Wall -L. main.c client.c -o main -lTwisk
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
