@@ -13,3 +13,7 @@ client.o: client.c
 main : main.c
 	gcc -Wall -L. main.c client.c -o main -lTwisk
 	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
+
+clear :
+	rm -rf *.o
+	rm -f main
