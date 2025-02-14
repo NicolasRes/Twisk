@@ -9,3 +9,6 @@ libTwisk.so: $(OBJECTS)
 
 client.o: client.c
 	gcc -Wall -fPIC -c client.c
+
+main : main.c
+	gcc -Wall -L. main.c -o main -lTwisk

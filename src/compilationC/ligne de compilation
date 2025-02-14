@@ -5,3 +5,5 @@ gcc -shared ../ressources/codeC/programmeCLinux.o client.o -o libTwisk.so //pour
 nm -D libTwisk.so //pour voir les dépendances
 
 gcc -Wall -L. main.c -o main -lTwisk
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
