@@ -1,5 +1,6 @@
 package Java;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import twisk.monde.Activite;
 import twisk.monde.Etape;
@@ -10,15 +11,21 @@ import java.util.Iterator;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TestEtape {
+    private Etape e;
+    private Etape gui;
+    private Etape act;
+    private Etape gui2;
+
+    @BeforeEach
+    void setUp() {
+        e = new Guichet("A");
+        gui = new Guichet("B");
+        act = new Activite("C");
+        gui2 = new Guichet("D");
+    }
 
     @Test
     void ajouterSuccesseur() {
-        Etape e = new Guichet("A");
-        Etape gui = new Guichet("B");
-        Etape act = new Activite("C");
-
-        Guichet gui2 = new Guichet("D");
-
         e.ajouterSuccesseur(gui, act);
         gui.ajouterSuccesseur(gui2);
 
@@ -30,59 +37,46 @@ class TestEtape {
 
     @Test
     void estUneActivite() {
-        Etape gui = new Guichet("A");
-        Etape act = new Activite("B");
         assertFalse(gui.estUneActivite());
         assertTrue(act.estUneActivite());
     }
 
     @Test
     void estUnGuichet() {
-        Etape gui = new Guichet("A");
-        Etape act = new Activite("B");
         assertTrue(gui.estUnGuichet());
         assertFalse(act.estUnGuichet());
     }
 
     @Test
     void iterator() {
-        Etape gui = new Guichet("A");
-        Etape act = new Activite("B");
-        Etape act2 = new Activite("C");
-        gui.ajouterSuccesseur(act, act2);
+        e.ajouterSuccesseur(gui, act);
 
-        Iterator<Etape> i = gui.iterator();
+        Iterator<Etape> i = e.iterator();
 
         // Premier élément suivant
         assertTrue(i.hasNext(), "L'itérateur doit avoir un élément suivant");
-        assertEquals(i.next(), act);
+        assertEquals(i.next(), gui);
 
         // Deuxième élément suivant
         assertTrue(i.hasNext(), "L'itérateur doit avoir un deuxième élément suivant");
-        assertEquals(i.next(), act2);
+        assertEquals(i.next(), act);
 
         assertFalse(i.hasNext(), "L'itérateur ne doit pas avoir d'élément suivant");
     }
 
     @Test
     void testToString() {
-        Guichet gui = new Guichet("A");
-        Activite act = new Activite("B");
-        Etape act2 = new Activite("C");
-        Etape act3 = new Activite("D");
+        e.ajouterSuccesseur(gui, act);
+        gui.ajouterSuccesseur(act);
 
-        gui.ajouterSuccesseur(act, act2);
-        act2.ajouterSuccesseur(act3);
-
-        assertEquals("A : 2 successeur -> B, C", gui.toString());
-        assertEquals("C : 1 successeur -> D", act2.toString());
-        assertEquals("D : 0 successeur -> ", act3.toString());
+        assertEquals("A : 2 successeur -> B, C", e.toString());
+        assertEquals("B : 1 successeur -> C", gui.toString());
+        assertEquals("C : 0 successeur -> ", act.toString());
     }
 
     @Test
     void iteratorSansSuccesseur() {
-        Etape etape = new Activite("E");
-        Iterator<Etape> i = etape.iterator();
+        Iterator<Etape> i = e.iterator();
 
         assertFalse(i.hasNext(), "L'itérateur ne doit pas avoir d'élément suivant pour une étape sans successeurs");
     }

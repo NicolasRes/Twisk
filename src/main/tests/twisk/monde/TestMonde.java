@@ -26,17 +26,17 @@ class TestMonde {
 
     @Test
     void ajouterEtNbEtapes() {
-        Monde monde = new Monde();
+        Monde monde = new Monde();  // Entrée et sortie comptent
         Etape e1 = new Activite("e1");
         Etape e2 = new Guichet("e2");
 
-        assertEquals(0, monde.nbEtapes());
+        assertEquals(2, monde.nbEtapes());
 
         monde.ajouter(e1);
-        assertEquals(1, monde.nbEtapes());
+        assertEquals(3, monde.nbEtapes());
 
         monde.ajouter(e2);
-        assertEquals(2, monde.nbEtapes());
+        assertEquals(4, monde.nbEtapes());
     }
 
     @Test
