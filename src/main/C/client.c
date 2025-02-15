@@ -22,8 +22,9 @@
 */
 void simulation(int ids) {
     entrer(0);
+    delai(5, 1);   // 0 < delta < temps < 100
     transfert(0, 1);
-    delai(2, 1);   // 0 < delta < temps < 100
+    delai(6, 2);   // 0 < delta < temps < 100
     transfert(1, 2);
 }
 

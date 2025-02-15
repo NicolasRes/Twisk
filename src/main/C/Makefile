@@ -5,15 +5,16 @@ SOURCES=client.c
 OBJECTS=$(SOURCES:.c=.o)
 
 libTwisk.so: $(OBJECTS)
-	gcc -shared ../ressources/codeC/programmeCLinux.o client.o -o libTwisk.so
+	gcc -shared -fPIC ../ressources/codeC/programmeCLinux.o client.o -o libTwisk.so
 
 client.o: client.c
-	gcc -Wall -fPIC -c client.c
+	gcc $(CFLAGS) -c client.c
 
 main : main.c
-	gcc -Wall -L. main.c client.c -o main -lTwisk
-	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
+	gcc -Wall -L. -Wl,-rpath,. main.c client.c -o main -lTwisk
 
-clear :
-	rm -rf *.o
-	rm -f main
+run: main
+	LD_LIBRARY_PATH=.:$$LD_LIBRARY_PATH ./main
+
+clean:
+	rm -rf *.o libTwisk.so main
