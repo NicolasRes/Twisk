@@ -10,7 +10,6 @@
  */
 
 #include "../ressources/codeC/def.h"
-#include "client2.h"
 #include "client.h"
 
 #define TMP_ATTENTE 1
