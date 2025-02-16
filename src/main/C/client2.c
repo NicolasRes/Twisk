@@ -10,7 +10,7 @@
  */
  
  #include "../ressources/codeC/def.h"
- #include "client.h"
+ #include "client2.h"
  
  #define NB_ETAPES2 5
  #define NB_CLIENTS2 4
@@ -22,7 +22,7 @@
      transfert(0, 1);
      delai(6, 2);
      transfert(1, 2);
-     delai(1, 1);
+     delai(2, 1);
      transfert(2, 3);
  }
  

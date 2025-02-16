@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -fPIC
 LDFLAGS=-shared
-SOURCES=client.c
+SOURCES=client.c client2.c
 OBJECTS=$(SOURCES:.c=.o)
 
 # Règles spécifiques à Linux
@@ -14,13 +14,13 @@ libTwisk.so: $(OBJECTS)
 mac: libTwisk.dylib
 
 libTwisk.dylib: $(OBJECTS)
-	$(CC) $(LDFLAGS) -Wall ../ressources/codeC/programmeCMac.o $(OBJECTS) -o libTwisk.dylib
+	$(CC) $(LDFLAGS) -Wall ../ressources/codeC/programmeCMac.o client2.o -o libTwisk.dylib
 
 client.o: client.c
 	gcc $(CFLAGS) -c client.c
 
 client2.o: client2.c
-	gcc $(FLAGS) -c client2.c
+	gcc $(CFLAGS) -c client2.c
 
 main : main.c
 	gcc -Wall -L. -Wl,-rpath,. main.c client2.c -o main -lTwisk
