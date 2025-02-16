@@ -4,8 +4,17 @@ LDFLAGS=-shared
 SOURCES=client.c
 OBJECTS=$(SOURCES:.c=.o)
 
+# Règles spécifiques à Linux
+linux: libTwisk.so
+
 libTwisk.so: $(OBJECTS)
-	gcc -shared -fPIC ../ressources/codeC/programmeCLinux.o client.o -o libTwisk.so
+	gcc -Wall -shared -fPIC ../ressources/codeC/programmeCLinux.o client.o -o libTwisk.so
+
+# Règles spécifiques à macOS
+mac: libTwisk.dylib
+
+libTwisk.dylib: $(OBJECTS)
+	$(CC) $(LDFLAGS) -Wall ../ressources/codeC/programmeCMac.o client.o -o libTwisk.dylib
 
 client.o: client.c
 	gcc $(CFLAGS) -c client.c
