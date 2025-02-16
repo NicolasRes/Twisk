@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -fPIC
 LDFLAGS=-shared
-SOURCES=client.c client2.c
+SOURCES=client.c
 OBJECTS=$(SOURCES:.c=.o)
 
 # Règles spécifiques à Linux
@@ -23,7 +23,7 @@ client2.o: client2.c
 	gcc $(CFLAGS) -c client2.c
 
 main : main.c
-	gcc -Wall -L. -Wl,-rpath,. main.c client2.c -o main -lTwisk
+	gcc -Wall -L. -Wl,-rpath,. main.c $(SOURCES) -o main -lTwisk
 
 run: main
 	LD_LIBRARY_PATH=.:$$LD_LIBRARY_PATH ./main

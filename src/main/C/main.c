@@ -11,6 +11,7 @@
 
 #include "../ressources/codeC/def.h"
 #include "client2.h"
+#include "client.h"
 
 #define TMP_ATTENTE 1
 
@@ -31,9 +32,9 @@ typedef struct {
  */
 info_simu initialisation() {
     info_simu info;
-    info.nb_client = get_nb_clients2();
-    info.nb_guichet = get_nb_guichets2();
-    info.nb_etape = get_nb_etapes2();
+    info.nb_client = get_nb_clients();
+    info.nb_guichet = get_nb_guichets();
+    info.nb_etape = get_nb_etapes();
     return info;
 }
 

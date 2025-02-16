@@ -17,20 +17,20 @@
   * 
   * @return int Le nombre d'étapes du monde
   */
- int get_nb_etapes2();
+ int get_nb_etapes();
  
  /**
   * @brief Fonction qui récupère le nombre de guichets du monde 2
   * 
   * @return int Le nombre de guichets du monde
   */
- int get_nb_guichets2();
+ int get_nb_guichets();
  
  /**
   * @brief Fonction qui récupère le nombre de clients du monde 2
   * 
   * @return int Le nombre de clients du monde
   */
- int get_nb_clients2();
+ int get_nb_clients();
  
  #endif

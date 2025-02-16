@@ -12,9 +12,9 @@
  #include "../ressources/codeC/def.h"
  #include "client2.h"
  
- #define NB_ETAPES2 5
- #define NB_CLIENTS2 4
- #define NB_GUICHET2 0
+ #define NB_ETAPES 5
+ #define NB_CLIENTS 4
+ #define NB_GUICHET 0
 
  void simulation(int ids) {
      entrer(0);
@@ -24,16 +24,18 @@
      transfert(1, 2);
      delai(2, 1);
      transfert(2, 3);
+     delai(2, 1);
+     transfert(3, 4);
  }
  
- int get_nb_etapes2(){
-     return NB_ETAPES2;
+ int get_nb_etapes(){
+     return NB_ETAPES;
  }
  
- int get_nb_guichets2(){
-     return NB_GUICHET2;
+ int get_nb_guichets(){
+     return NB_GUICHET;
  }
  
- int get_nb_clients2(){
-     return NB_CLIENTS2;
+ int get_nb_clients(){
+     return NB_CLIENTS;
  }
