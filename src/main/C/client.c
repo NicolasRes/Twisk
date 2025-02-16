@@ -9,12 +9,12 @@
  * 
  */
 
+#include "../ressources/codeC/def.h"
+#include "client.h"
+
 #define NB_ETAPES 3
 #define NB_CLIENTS 5
 #define NB_GUICHET 0
-
-#include "../ressources/codeC/def.h"
-#include "client.h"
 
 void simulation(int ids) {
     entrer(0);

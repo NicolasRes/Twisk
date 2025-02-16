@@ -31,9 +31,9 @@ typedef struct {
  */
 info_simu initialisation() {
     info_simu info;
-    info.nb_client = get_nb_clients();
-    info.nb_guichet = get_nb_guichets();
-    info.nb_etape = get_nb_etapes();
+    info.nb_client = get_nb_clients2();
+    info.nb_guichet = get_nb_guichets2();
+    info.nb_etape = get_nb_etapes2();
     return info;
 }
 
