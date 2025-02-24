@@ -9,21 +9,18 @@
  * 
  */
 
+#include "../ressources/codeC/def.h"
+#include "client.h"
+
 #define NB_ETAPES 3
 #define NB_CLIENTS 5
 #define NB_GUICHET 0
 
-
-#include "../ressources/codeC/def.h"
-#include "client.h"
-/**
-*    @brief Fonction qui simule le client
-*
-*/
 void simulation(int ids) {
     entrer(0);
+    delai(5, 1);   // 0 < delta < temps < 100
     transfert(0, 1);
-    delai(2, 1);   // 0 < delta < temps < 100
+    delai(6, 2);
     transfert(1, 2);
 }
 
