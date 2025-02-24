@@ -1,7 +1,7 @@
 /**
- * @file client3.h
+ * @file client4.h
  * @author RESENDE Nicolas et BURNEL Mathias
- * @brief Bibliothèque de client3.c
+ * @brief Bibliothèque de client.4c
  * @version 0.1
  * @date 2025-02-16
  * 
@@ -9,8 +9,8 @@
  * 
  */
 
- #ifndef CLIENT3_H
- #define CLIENT3_H
+ #ifndef CLIENT4_H
+ #define CLIENT4_H
  
  /**
   * @brief Fonction qui récupère le nombre d'étapes du monde 2
@@ -33,7 +33,7 @@
   */
  int get_nb_clients();
 
-  /**
+ /**
   * @brief Fonction qui récupère le nombre de jetons des clients des guichets
   * 
   * @return int* Tableau contenant les jetons des clients pour les guichets

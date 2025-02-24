@@ -10,29 +10,34 @@
  */
  
  #include "../ressources/codeC/def.h"
- #include "client3.h"
+ #include "client4.h"
  
- #define NB_ETAPES 4
+ #define NB_ETAPES 5
  #define NB_CLIENTS 6
  #define NB_GUICHET 1
  #define SEMAPHORE_GUICHET1 1
 
  #define SAAS_ENTREE 0
- #define GUICHET 3
+ #define GUICHET 4
  #define ACTIVITE2 2
+ #define ACTIVITE3 3
  #define SAS_SORTIE 1
 
-static int tabjetons[NB_GUICHET] = {2};//nb jetons pour chaque guichet
+static int tabjetons[NB_GUICHET] = {3};//nb jetons pour chaque guichet
 
  void simulation(int ids) {
      entrer(SAAS_ENTREE);
      delai(5,1);
-     transfert(SAAS_ENTREE, GUICHET);
+     transfert (SAAS_ENTREE, ACTIVITE2);
+     delai(2,1);
+     transfert(ACTIVITE2, GUICHET);
         P(ids,SEMAPHORE_GUICHET1);
-        transfert(GUICHET, ACTIVITE2); //ici pas plus de 2 personnes
+        transfert(GUICHET, ACTIVITE3); //ici pas plus de 3 personnes
         delai(6,1);
      V(ids,SEMAPHORE_GUICHET1);
-     transfert(ACTIVITE2, SAS_SORTIE);
+     transfert(ACTIVITE3, SAS_SORTIE);
+     delai(4,2);
+
  }
  
  int get_nb_etapes(){

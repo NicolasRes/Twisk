@@ -10,7 +10,7 @@
  */
 
 #include "../ressources/codeC/def.h"
-#include "client3.h"
+#include "client4.h"
 
 #define TMP_ATTENTE 1
 
@@ -22,6 +22,7 @@ typedef struct {
     int nb_client;
     int nb_guichet;
     int nb_etape;
+    int* tabjetons;
 } info_simu;
 
 /**
@@ -34,6 +35,7 @@ info_simu initialisation() {
     info.nb_client = get_nb_clients();
     info.nb_guichet = get_nb_guichets();
     info.nb_etape = get_nb_etapes();
+    info.tabjetons = get_tabjetons();
     return info;
 }
 
@@ -99,9 +101,7 @@ int main(int argc, char **argv) {
 
     afficher_info_simu(info.nb_client, info.nb_guichet, info.nb_etape);
 
-    int *tabjetons = get_tabjetons();
-
-    int *tabPid = start_simulation(info.nb_etape, info.nb_guichet, info.nb_client, tabjetons);
+    int *tabPid = start_simulation(info.nb_etape, info.nb_guichet, info.nb_client, info.tabjetons);
 
     afficher_pid_client(tabPid, info.nb_client);
 

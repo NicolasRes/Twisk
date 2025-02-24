@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -fPIC
 LDFLAGS=-shared
-SOURCES=client3.c
+SOURCES=client4.c
 OBJECTS=$(SOURCES:.c=.o)
 
 # Règles spécifiques à Linux
@@ -25,6 +25,9 @@ client2.o: client2.c
 
 client3.o: client3.c
 	gcc $(CFLAGS) -c client3.c
+
+client4.o: client4.c
+	gcc $(CFLAGS) -c client4.c
 
 main : main.c
 	gcc -Wall -L. -Wl,-rpath,. main.c $(SOURCES) -o main -lTwisk
