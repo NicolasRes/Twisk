@@ -15,19 +15,25 @@
  #define NB_ETAPES 4
  #define NB_CLIENTS 6
  #define NB_GUICHET 1
- #define NUM_GUICHET1 1
+ #define SEMAPHORE_GUICHET1 1
+
+ #define SAAS_ENTREE 0
+ #define GUICHET 1
+ #define ACTIVITE2 2
+ #define ACTIVITE3 3
 
  static int tabjetons[NB_GUICHET] = {2};//nb jetons pour chaque guichet
 
  void simulation(int ids) {
-     entrer(0);
+     entrer(SAAS_ENTREE);
      delai(5,1);
-     transfert(0, 1);
-        P(ids,NUM_GUICHET1);
-        transfert(1, 2);
+     transfert(SAAS_ENTREE, GUICHET);
+        P(ids,SEMAPHORE_GUICHET1);
+        transfert(GUICHET, ACTIVITE2); //ici pas plus de 2 personnes
         delai(6,1);
-     V(ids,NUM_GUICHET1);
-     transfert(2, 3);
+     V(ids,SEMAPHORE_GUICHET1);
+     transfert(ACTIVITE2, ACTIVITE3);
+     delai(4,2);
 
  }
  

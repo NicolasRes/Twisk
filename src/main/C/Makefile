@@ -23,6 +23,9 @@ client.o: client.c
 client2.o: client2.c
 	gcc $(CFLAGS) -c client2.c
 
+client3.o: client3.c
+	gcc $(CFLAGS) -c client3.c
+
 main : main.c
 	gcc -Wall -L. -Wl,-rpath,. main.c $(SOURCES) -o main -lTwisk
 
