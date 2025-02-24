@@ -18,9 +18,9 @@
  #define SEMAPHORE_GUICHET1 1
 
  #define SAAS_ENTREE 0
- #define GUICHET 1
+ #define GUICHET 3
  #define ACTIVITE2 2
- #define ACTIVITE3 3
+ #define SAS_SORTIE 1
 
  static int tabjetons[NB_GUICHET] = {2};//nb jetons pour chaque guichet
 
@@ -32,7 +32,7 @@
         transfert(GUICHET, ACTIVITE2); //ici pas plus de 2 personnes
         delai(6,1);
      V(ids,SEMAPHORE_GUICHET1);
-     transfert(ACTIVITE2, ACTIVITE3);
+     transfert(ACTIVITE2, SAS_SORTIE);
      delai(4,2);
 
  }

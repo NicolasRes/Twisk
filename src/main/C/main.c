@@ -74,7 +74,7 @@ void afficher_pid_client(int* tabPid, int nb_client) {
 void simule_clients(int nb_client, int nb_etape) {
     int*position = ou_sont_les_clients(nb_etape,nb_client);
 
-    while (position[(nb_etape - 1) * (nb_client + 1)] < nb_client) { //  Tant que tous les clients ne sont pas dans la dernière activité, nbact-1 car on commence à 0
+    while (position[(nb_client + 1)] < nb_client) { //  Tant que tous les clients ne sont pas dans la dernière activité, nbact-1 car on commence à 0
         position = ou_sont_les_clients(nb_etape, nb_client);
 
         for (int i = 0; i < nb_etape; i++) {
