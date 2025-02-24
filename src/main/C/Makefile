@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -fPIC
 LDFLAGS=-shared
-SOURCES=client.c
+SOURCES=client3.c
 OBJECTS=$(SOURCES:.c=.o)
 
 # Règles spécifiques à Linux
@@ -24,7 +24,6 @@ client2.o: client2.c
 	gcc $(CFLAGS) -c client2.c
 
 main : main.c
-	./update_include.sh
 	gcc -Wall -L. -Wl,-rpath,. main.c $(SOURCES) -o main -lTwisk
 
 run: main

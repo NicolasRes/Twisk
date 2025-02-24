@@ -10,7 +10,7 @@
  */
 
 #include "../ressources/codeC/def.h"
-#include "client.h"
+#include "client3.h"
 
 #define TMP_ATTENTE 1
 
@@ -99,7 +99,9 @@ int main(int argc, char **argv) {
 
     afficher_info_simu(info.nb_client, info.nb_guichet, info.nb_etape);
 
-    int *tabPid = start_simulation(info.nb_etape, info.nb_guichet, info.nb_client, NULL);
+    int *tabjetons = get_tabjetons();
+
+    int *tabPid = start_simulation(info.nb_etape, info.nb_guichet, info.nb_client, tabjetons);
 
     afficher_pid_client(tabPid, info.nb_client);
 
