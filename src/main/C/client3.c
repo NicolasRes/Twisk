@@ -17,7 +17,7 @@
  #define NB_GUICHET 1
  #define NUM_GUICHET1 1
 
- static int tabjetons[NB_GUICHET] = {2};//nb jetons pour chaque guichet
+static int tabjetons[NB_GUICHET] = {2};//nb jetons pour chaque guichet
 
  void simulation(int ids) {
      entrer(0);

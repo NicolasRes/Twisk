@@ -15,13 +15,16 @@ libTwisk.so: $(OBJECTS) Makefile
 mac: libTwisk.dylib
 
 libTwisk.dylib: $(OBJECTS)
-	$(CC) $(LDFLAGS) -Wall ../ressources/codeC/programmeCMac.o client2.o -o libTwisk.dylib
+	$(CC) $(LDFLAGS) -Wall ../ressources/codeC/programmeCMac.o $(OBJECTS) -o libTwisk.dylib
 
 client.o: client.c
 	gcc $(CFLAGS) -c client.c
 
 client2.o: client2.c
 	gcc $(CFLAGS) -c client2.c
+
+client3.o: client3.c
+	gcc $(CFLAGS) -c client3.c
 
 main : main.c
 	gcc -Wall -L. -Wl,-rpath,. main.c $(SOURCES) -o main -lTwisk
@@ -30,6 +33,8 @@ run: main
 	LD_LIBRARY_PATH=.:$$LD_LIBRARY_PATH ./main
 
 rebuild: clear libTwisk.so
+
+rebuild mac: clear mac
 
 clear:
 	rm -rf *.o libTwisk.so main
