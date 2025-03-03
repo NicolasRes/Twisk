@@ -70,4 +70,14 @@ public class Activite extends Etape {
 
         return sb.toString();
     }
+    public String toC(){
+
+        StringBuilder sb = new StringBuilder();
+        String delai = "delai(" + this.temps + ", " + this.ecartTemps + ");";
+        sb.append(delai);
+        String successeur = "transfert("+getNumero()+", "+this.getSuccesseur(0).getNumero()+");";
+        sb.append(successeur);
+
+        return sb.toString();
+    }
 }

@@ -112,4 +112,14 @@ public class Monde implements Iterable<Etape> {
         }
         return sb.toString();
     }
+
+    public String toC(){
+
+        StringBuilder sb = new StringBuilder();
+        for(Etape e : this.lesEtapes) {
+            sb.append(e.toC()).append("\n");
+        }
+
+        return sb.toString();
+    }
 }

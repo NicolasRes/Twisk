@@ -80,4 +80,11 @@ class TestEtape {
 
         assertFalse(i.hasNext(), "L'itérateur ne doit pas avoir d'élément suivant pour une étape sans successeurs");
     }
+
+    @Test
+    void testToC() {
+
+
+
+    }
 }

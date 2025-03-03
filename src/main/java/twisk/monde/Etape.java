@@ -103,4 +103,6 @@ public abstract class Etape implements Iterable<Etape> {
      * Méthode abstraite toString de la classe Etape
      */
     public abstract String toString();
+
+    public abstract String toC();
 }
