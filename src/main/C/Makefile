@@ -9,7 +9,7 @@ linux: libTwisk.so
 
 # Dépendance à `Makefile` pour recompiler si `SOURCES` change
 libTwisk.so: $(OBJECTS) Makefile
-	gcc -Wall -shared -fPIC ../ressources/codeC/programmeCLinux.o $(OBJECTS) -o libTwisk.so
+	gcc -Wall -shared -fPIC ../ressources/codeC/programmeC.o $(OBJECTS) -o libTwisk.so
 
 # Règles spécifiques à macOS
 mac: libTwisk.dylib
