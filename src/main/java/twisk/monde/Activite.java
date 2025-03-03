@@ -73,11 +73,19 @@ public class Activite extends Etape {
     public String toC(){
 
         StringBuilder sb = new StringBuilder();
-        String delai = "delai(" + this.temps + ", " + this.ecartTemps + ");";
+        String delai = "delai(" + this.temps + ", " + this.ecartTemps + "); \n";
         sb.append(delai);
-        String successeur = "transfert("+getNumero()+", "+this.getSuccesseur(0).getNumero()+");";
+        String successeur = "transfert("+getNumero()+", "+this.getSuccesseur(0).getNumero()+"); \n";
         sb.append(successeur);
 
         return sb.toString();
+    }
+
+    public int getTemps() {
+        return temps;
+    }
+
+    public int getEcartTemps() {
+        return ecartTemps;
     }
 }

@@ -116,9 +116,16 @@ public class Monde implements Iterable<Etape> {
     public String toC(){
 
         StringBuilder sb = new StringBuilder();
-        for(Etape e : this.lesEtapes) {
-            sb.append(e.toC()).append("\n");
+        String sasEntree  = "entrer("+this.entree.getNumero()+"); \n";
+        sb.append(sasEntree);
+
+        for(Etape e : this.lesEtapes){
+            if(e.getNumero()!=0 || e.getNumero()!=1){
+                sb.append(e.toC()).append("\n");
+            }
         }
+
+        String sasSortie  = "transfert("+this.entree.getNumero()+", "+this.sortie.getNumero()+"); \n";
 
         return sb.toString();
     }

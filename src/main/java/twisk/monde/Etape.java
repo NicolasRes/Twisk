@@ -105,4 +105,8 @@ public abstract class Etape implements Iterable<Etape> {
     public abstract String toString();
 
     public abstract String toC();
+
+    public abstract int getTemps();
+
+    public abstract int getEcartTemps();
 }

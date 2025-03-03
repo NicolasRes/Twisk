@@ -15,13 +15,15 @@ class TestEtape {
     private Etape gui;
     private Etape act;
     private Etape gui2;
+    private Etape act2;
 
     @BeforeEach
     void setUp() {
-        e = new Guichet("A");
-        gui = new Guichet("B");
-        act = new Activite("C");
-        gui2 = new Guichet("D");
+        e = new Guichet("A",2);
+        gui = new Guichet("B",2);
+        act = new Activite("C",5,2);
+        gui2 = new Guichet("D",2);
+        act2 = new Activite("E",6,2);
     }
 
     @Test
@@ -84,6 +86,8 @@ class TestEtape {
     @Test
     void testToC() {
 
+        act.ajouterSuccesseur(act2);
+        System.out.println(act.toC());
 
 
     }

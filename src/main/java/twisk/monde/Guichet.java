@@ -69,15 +69,29 @@ public class Guichet extends Etape {
 
         StringBuilder sb = new StringBuilder();
 
-        String guichet = "P(ids,"+this.getNumeroSemaphore()+");";
+        String guichet = "P(ids,"+this.getNumeroSemaphore()+"); \n";
         sb.append(guichet);
 
-        String successeur = "transfert("+getNumero()+", "+this.getSuccesseur(0).getNumero()+");";
+        String successeur = "transfert("+getNumero()+", "+this.getSuccesseur(0).getNumero()+"); \n";
         sb.append(successeur);
 
-        String liberation ="V(ids,"+this.getNumeroSemaphore()+");";
+        String delaiSucc="delai("+this.getSuccesseur(0).getTemps()+", "+this.getSuccesseur(0).getEcartTemps()+"); \n";
+        sb.append(delaiSucc);
+
+
+
+
+        String liberation ="V(ids,"+this.getNumeroSemaphore()+"); \n";
         sb.append(liberation);
 
         return sb.toString();
+    }
+
+    public int getTemps() {
+        return -1;
+    }
+
+    public int getEcartTemps() {
+        return -1;
     }
 }

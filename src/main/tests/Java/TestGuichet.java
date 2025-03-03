@@ -38,4 +38,13 @@ class TestGuichet extends Java.TestEtape {
         assertEquals(2,g2.getNumeroSemaphore());
         assertEquals(3,g2.getNumero());
     }
+
+    @Test
+    void testToC() {
+        Guichet g1 = new Guichet("G1",2);
+        Activite act = new Activite("A",5,2);
+        g1.ajouterSuccesseur(act);
+        System.out.println(g1.toC());
+
+    }
 }
