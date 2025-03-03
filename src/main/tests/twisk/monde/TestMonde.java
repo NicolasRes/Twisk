@@ -80,4 +80,22 @@ class TestMonde {
 
         assertEquals(texteAttendu, monde.toString());
     }
+
+    @Test
+    void testToC() {
+        Monde monde = new Monde();
+        Etape a1 = new Activite("e1",5,2);
+        Guichet g1 = new Guichet("g1",2);
+        Etape a2 = new Activite("e2",5,2);
+
+        a1.ajouterSuccesseur(g1);
+        g1.ajouterSuccesseur(a2);
+        monde.ajouter(a1,g1,a2);
+
+        monde.aCommeEntree(a1);
+        monde.aCommeSortie(a2);
+
+        System.out.println(monde.toC());
+    }
+
 }

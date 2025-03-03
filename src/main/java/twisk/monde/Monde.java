@@ -120,12 +120,10 @@ public class Monde implements Iterable<Etape> {
         sb.append(sasEntree);
 
         for(Etape e : this.lesEtapes){
-            if(e.getNumero()!=0 || e.getNumero()!=1){
-                sb.append(e.toC()).append("\n");
+            if(e.getNumero()!=0 && e.getNumero()!=1){
+                sb.append(e.toC());
             }
         }
-
-        String sasSortie  = "transfert("+this.entree.getNumero()+", "+this.sortie.getNumero()+"); \n";
 
         return sb.toString();
     }
