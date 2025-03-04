@@ -77,6 +77,7 @@ public class Activite extends Etape {
         sb.append(delai);
         String successeur = "transfert("+getNumero()+", "+this.getSuccesseur(0).getNumero()+"); \n";
         sb.append(successeur);
+        sb.append(this.getSuccesseur(0).toC());
 
         return sb.toString();
     }

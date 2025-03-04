@@ -75,11 +75,16 @@ public class Guichet extends Etape {
         String successeur = "transfert("+getNumero()+", "+this.getSuccesseur(0).getNumero()+"); \n";
         sb.append(successeur);
 
-        String delaiSucc="delai_gui("+this.getSuccesseur(0).getTemps()+", "+this.getSuccesseur(0).getEcartTemps()+"); \n";
+        String delaiSucc="delai("+this.getSuccesseur(0).getTemps()+", "+this.getSuccesseur(0).getEcartTemps()+"); \n";
         sb.append(delaiSucc);
 
         String liberation ="V(ids,"+this.getNumeroSemaphore()+"); \n";
         sb.append(liberation);
+
+        String successeurActiviteRes = "transfert("+this.getSuccesseur(0).getNumero()+", "+this.getSuccesseur(0).getSuccesseur(0).getNumero()+"); \n";
+        sb.append(successeurActiviteRes);
+
+        sb.append(this.getSuccesseur(0).getSuccesseur(0).toC());
 
         return sb.toString();
     }

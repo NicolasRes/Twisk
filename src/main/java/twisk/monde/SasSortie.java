@@ -29,4 +29,10 @@ public class SasSortie extends Activite {
         }
         return sb.toString();
     }
+
+    public String toC(){
+
+        return "";
+    }
+
 }

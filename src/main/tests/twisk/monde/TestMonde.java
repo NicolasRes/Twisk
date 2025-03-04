@@ -83,6 +83,7 @@ class TestMonde {
 
     @Test
     void testToC() {
+
         Monde monde = new Monde();
         Etape a1 = new Activite("e1",5,2);
         Guichet g1 = new Guichet("g1",2);
@@ -96,6 +97,7 @@ class TestMonde {
         monde.aCommeSortie(a2);
 
         System.out.println(monde.toC());
-    }
 
+
+    }
 }
