@@ -1,10 +1,17 @@
 package twisk.monde;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import twisk.outils.FabriqueNumero;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TestMonde {
+
+    @BeforeEach
+    void setUp() {
+        FabriqueNumero.getInstance().reset();
+    }
 
     @Test
     void aCommeEntree() {
@@ -78,12 +85,11 @@ class TestMonde {
                 "e3 : 1 successeur -> e5\n" +
                 "e4 : 1 successeur -> e5\n";
 
-        assertEquals(texteAttendu, monde.toString());
+        assertEquals(texteAttendu, monde.toString());;
     }
 
     @Test
     void testToC() {
-
         Monde monde = new Monde();
         Etape a1 = new Activite("e1",5,2);
         Guichet g1 = new Guichet("g1",2);
@@ -96,8 +102,16 @@ class TestMonde {
         monde.aCommeEntree(a1);
         monde.aCommeSortie(a2);
 
-        System.out.println(monde.toC());
+        String texteAttendu = "delai(0, 0); \n" +
+                "transfert(0, 2);\n" +
+                "delai(5, 2); \n" +
+                "transfert(2, 3);\n" +
+                "P(ids,1); \n" +
+                "transfert(3, 4); \n" +
+                "delai(5, 2); \n" +
+                "V(ids,1); \n" +
+                "transfert(4, 1); \n";
 
-
+        assertEquals(texteAttendu, monde.toC());
     }
 }
