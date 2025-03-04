@@ -33,8 +33,9 @@ static int tabjetons[NB_GUICHET] = {3};//nb jetons pour chaque guichet
      transfert(ACTIVITE2, GUICHET);
         P(ids,SEMAPHORE_GUICHET1);
         transfert(GUICHET, ACTIVITE3); //ici pas plus de 3 personnes
-        delai(6,1);
+
      V(ids,SEMAPHORE_GUICHET1);
+     delai(6,1);
      transfert(ACTIVITE3, SAS_SORTIE);
      delai(4,2);
 
