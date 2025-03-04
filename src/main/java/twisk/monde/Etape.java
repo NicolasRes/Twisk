@@ -104,9 +104,21 @@ public abstract class Etape implements Iterable<Etape> {
      */
     public abstract String toString();
 
+    /**
+     * Méthode abstraite qui renvoie le code C du parcours d'une étape par un client
+     * @return Le parcours du monde d'un client sous forme de String
+     */
     public abstract String toC();
 
+    /**
+     * Méthode abstraite qui renvoie la durée d'une étape
+     * @return La durée d'une étape
+     */
     public abstract int getTemps();
 
+    /**
+     * Méthode abstraite qui renvoie la partie variable de la durée d'une étape
+     * @return La partie variable de la durée d'une étape
+     */
     public abstract int getEcartTemps();
 }

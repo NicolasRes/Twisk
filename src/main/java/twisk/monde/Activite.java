@@ -70,23 +70,35 @@ public class Activite extends Etape {
 
         return sb.toString();
     }
-    public String toC(){
 
+    /**
+     * Méthode qui renvoie le parcours d'un client dans une activité
+     * @return Le parcours d'un client dans une activité sous forme de String
+     */
+    public String toC(){
         StringBuilder sb = new StringBuilder();
         String delai = "delai(" + this.temps + ", " + this.ecartTemps + "); \n";
         sb.append(delai);
-        String successeur = "transfert("+getNumero()+", "+this.getSuccesseur(0).getNumero()+"); \n";
+        String successeur = "transfert("+getNumero()+", "+this.getSuccesseur(0).getNumero()+");\n";
         sb.append(successeur);
         sb.append(this.getSuccesseur(0).toC());
 
         return sb.toString();
     }
 
+    /**
+     * Méthode qui renvoie la durée d'une activité
+     * @return La durée d'une activité
+     */
     public int getTemps() {
-        return temps;
+        return this.temps;
     }
 
+    /**
+     * Méthode qui renvoie la partie variable de la durée d'une activité
+     * @return La partie variable de la durée d'une activité
+     */
     public int getEcartTemps() {
-        return ecartTemps;
+        return this.ecartTemps;
     }
 }

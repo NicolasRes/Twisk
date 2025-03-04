@@ -65,8 +65,11 @@ public class Guichet extends Etape {
         return sb.toString();
     }
 
+    /**
+     * Méthode qui renvoie le parcours d'un client dans un guichet sous forme de String
+     * @return Le parcours d'un client dans un guichet sous forme de String
+     */
     public String toC(){
-
         StringBuilder sb = new StringBuilder();
 
         String guichet = "P(ids,"+this.getNumeroSemaphore()+"); \n";
@@ -89,10 +92,18 @@ public class Guichet extends Etape {
         return sb.toString();
     }
 
+    /**
+     * Méthode qui renvoie une erreur si on essaie d'accéder d'utiliser getTemps sur un guichet
+     * @return Le code d'erreur -1
+     */
     public int getTemps() {
         return -1;
     }
 
+    /**
+     * Méthode qui renvoie une erreur si on essaie d'accéder d'utiliser getEcartTemps sur un guichet
+     * @return Le code d'erreur -1
+     */
     public int getEcartTemps() {
         return -1;
     }
