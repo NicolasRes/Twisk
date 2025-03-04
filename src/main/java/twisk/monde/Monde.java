@@ -113,12 +113,13 @@ public class Monde implements Iterable<Etape> {
         return sb.toString();
     }
 
+    /**
+     * Méthode qui renvoie le code C du parcours du monde par un client
+     * @return Le parcours du monde d'un client sous forme de String
+     */
     public String toC(){
-
         StringBuilder sb = new StringBuilder();
-
-        sb.append(entree.toC());
-
+        sb.append(this.entree.toC());
         return sb.toString();
     }
 }
