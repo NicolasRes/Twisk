@@ -71,5 +71,7 @@ class TestGuichet extends Java.TestEtape {
                 "transfert(3, 4);\n";
 
         assertEquals(texteAttendu, g1.toC());
+
+        System.out.println(g1.toC());
     }
 }
