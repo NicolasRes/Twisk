@@ -27,5 +27,6 @@ public class Simulation {
 
         this.kitC.creerFichier(mondeC);
         this.kitC.compiler();
+        //this.kitC.construireLabBibliotheque();
     }
 }

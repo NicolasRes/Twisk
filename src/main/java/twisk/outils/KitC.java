@@ -59,4 +59,16 @@ public class KitC {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Méthode qui construit dynamiquement la bibliothèque
+     */
+    public void construireLabBibliotheque() {
+        ProcessBuilder pb = new ProcessBuilder("gcc", "-shared", "/tmp/twisk/client.o", "-o", "/tmp/twisk/libTwisk.so");
+        try {
+            pb.inheritIO().start().waitFor();
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
