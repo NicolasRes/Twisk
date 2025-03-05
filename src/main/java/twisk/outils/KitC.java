@@ -49,7 +49,7 @@ public class KitC {
      */
     public void compiler() {
         // Définir la commande à exécuter
-        ProcessBuilder pb = new ProcessBuilder("gcc", "Wall", "-ansi", "-pedantic", "-fPIC", "-c", "/tmp/twisk/client.c", "-o", "/tmp/twisk/client.o");
+        ProcessBuilder pb = new ProcessBuilder("gcc", "-Wall", "-ansi", "-pedantic", "-fPIC", "-c", "/tmp/twisk/client.c", "-o", "/tmp/twisk/client.o");
         try {
             /* Demander l'exécution de la compilation (start)
              inheritIO() permet de récupérer les affichages sur la sortie standard et la sortie d'erreur
