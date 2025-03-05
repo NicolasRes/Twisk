@@ -72,20 +72,15 @@ public class Guichet extends Etape {
     public String toC(){
         StringBuilder sb = new StringBuilder();
 
-        String guichet = "P(ids,"+this.getNumeroSemaphore()+"); \n";
-        sb.append(guichet);
+        sb.append("P(ids,").append(this.getNumeroSemaphore()).append("); \n");
 
-        String successeur = "transfert("+getNumero()+", "+this.getSuccesseur(0).getNumero()+"); \n";
-        sb.append(successeur);
+        sb.append("transfert(").append(getNumero()).append(", ").append(this.getSuccesseur(0).getNumero()).append("); \n");
 
-        String delaiSucc="delai("+this.getSuccesseur(0).getTemps()+", "+this.getSuccesseur(0).getEcartTemps()+"); \n";
-        sb.append(delaiSucc);
+        sb.append("delai(").append(this.getSuccesseur(0).getTemps()).append(", ").append(this.getSuccesseur(0).getEcartTemps()).append("); \n");
 
-        String liberation ="V(ids,"+this.getNumeroSemaphore()+"); \n";
-        sb.append(liberation);
+        sb.append("V(ids,").append(this.getNumeroSemaphore()).append("); \n");
 
-        String successeurActiviteRes = "transfert("+this.getSuccesseur(0).getNumero()+", "+this.getSuccesseur(0).getSuccesseur(0).getNumero()+"); \n";
-        sb.append(successeurActiviteRes);
+        sb.append("transfert(").append(this.getSuccesseur(0).getNumero()).append(", ").append(this.getSuccesseur(0).getSuccesseur(0).getNumero()).append("); \n");
 
         sb.append(this.getSuccesseur(0).getSuccesseur(0).toC());
 
