@@ -1,6 +1,7 @@
 package twisk.simulation;
 
 import twisk.monde.Monde;
+import twisk.outils.KitC;
 
 /**
  * Classe Simulation qui simule le monde
@@ -11,7 +12,10 @@ public class Simulation {
     /**
      * Constructeur de la classe Simulation
      */
-    public Simulation() {}
+    public Simulation() {
+        KitC kitC = new KitC();
+        kitC.creerEnvironment();
+    }
 
     /**
      * Méthode qui permet de lancer la simulation du monde
@@ -19,5 +23,6 @@ public class Simulation {
      */
     public void simuler(Monde monde){
         System.out.println(monde.toString());
+        monde.toC();
     }
 }
