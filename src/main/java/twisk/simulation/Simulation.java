@@ -14,7 +14,7 @@ public class Simulation {
      */
     public Simulation() {
         KitC kitC = new KitC();
-        kitC.creerEnvironment();
+        kitC.creerEnvironnement();
     }
 
     /**
