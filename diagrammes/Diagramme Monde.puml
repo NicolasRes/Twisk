@@ -5,105 +5,109 @@ interface Iterable {
     Iterator<Etape> iterator()
 }
 
-package "monde" #red {
+package "Twisk" {
 
-'Liens entre les classes
-Iterable <|.. Monde
-Iterable <|.. GestionnaireEtapes
-Iterable <|.. Etape
+    package "monde" #red {
 
-Monde -right-"1" "GestionnaireEtapes" : lesEtapes
-Monde --"1" "SasEntree" : Entrée
-Monde --"1" "SasSortie" : Sortie
+    'Liens entre les classes
+    Iterable <|.. Monde
+    Iterable <|.. GestionnaireEtapes
+    Iterable <|.. Etape
 
-Etape "*"-left-"1" GestionnaireEtapes
-Etape <|-- Activite
-Etape <|-- Guichet
+    Monde -right-"1" "GestionnaireEtapes" : lesEtapes
+    Monde --"1" "SasEntree" : Entrée
+    Monde --"1" "SasSortie" : Sortie
 
-Activite <|-- SasEntree
-Activite <|-- SasSortie
-Activite <|-- ActiviteRestreinte
+    Etape "*"-left-"1" GestionnaireEtapes
+    Etape <|-- Activite
+    Etape <|-- Guichet
 
-'Définition des classes
+    Activite <|-- SasEntree
+    Activite <|-- SasSortie
+    Activite <|-- ActiviteRestreinte
 
-class Activite {
-    - int temps
-    - int ecartTemps
-    + Activite(String nom)
-    + Activite(String nom, int temps, int ecartTemps)
+    'Définition des classes
+
+    class Activite {
+        - int temps
+        - int ecartTemps
+        + Activite(String nom)
+        + Activite(String nom, int temps, int ecartTemps)
+        + boolean estUneActivite()
+        + boolean estUneEntree()
+        + boolean estUneSortie()
+        + String toString()
+    }
+
+    class ActiviteRestreinte {
+    + ActiviteRestreinte(String nom)
+    + ActiviteRestreinte(String nom, int temps, int ecartTemps)
+    }
+
+    abstract class Etape {
+    - String nom
+    - int idEtape
+    + Etape(String nom)
+    + int getNumero
+    + void ajouterSuccesseur(Etape... e)
+    + int nbSuccesseur()
+    + Etape getSuccesseur(int index)
     + boolean estUneActivite()
+    + boolean estUnGuichet()
+    + Iterator<Etape> iterator()
+    + String getNom()
+    + GestionnaireEtapes getEtapes()
+    + {abstract} String toString()
+    }
+
+    class GestionnaireEtapes {
+    - ArrayList<Etape> etapes
+    + GestionnaireEtapes()
+    + void ajouter(Etape... etapes)
+    + int nbEtapes()
+    + Etape getEtapes(int index)
+    + Iterator<Etape> iterator()
+    }
+
+    class Guichet {
+    - int nbJetons
+    - int numeroSemaphore
+    + Guichet(String nom)
+    + Guichet(String nom, int nbJetons)
+    + boolean estUnGuichet()
+    + boolean getNumeroSemaphore()
+    + String toString()
+    }
+
+    class Monde {
+    + Monde()
+    + void aCommeEntree(Etape... etape)
+    + void aCommeSortie(Etape... etape)
+    + void ajouter(Etape... etape)
+    + int nbEtapes()
+    + int nbGuichets()
+    + Iterator<Etape> iterator()
+    + String toString()
+    }
+
+    class SasEntree {
+    + asEntree()
     + boolean estUneEntree()
+    + String toString()
+    }
+
+    class SasSortie {
+    + SasSortie()
     + boolean estUneSortie()
     + String toString()
-}
+    }
+    }
 
-class ActiviteRestreinte {
-+ ActiviteRestreinte(String nom)
-+ ActiviteRestreinte(String nom, int temps, int ecartTemps)
-}
+    skinparam class {
+        BackgroundColor aliceblue
+        BorderColor black
+    }
 
-abstract class Etape {
-- String nom
-- int idEtape
-+ Etape(String nom)
-+ int getNumero
-+ void ajouterSuccesseur(Etape... e)
-+ int nbSuccesseur()
-+ Etape getSuccesseur(int index)
-+ boolean estUneActivite()
-+ boolean estUnGuichet()
-+ Iterator<Etape> iterator()
-+ String getNom()
-+ GestionnaireEtapes getEtapes()
-+ {abstract} String toString()
-}
-
-class GestionnaireEtapes {
-- ArrayList<Etape> etapes
-+ GestionnaireEtapes()
-+ void ajouter(Etape... etapes)
-+ int nbEtapes()
-+ Etape getEtapes(int index)
-+ Iterator<Etape> iterator()
-}
-
-class Guichet {
-- int nbJetons
-- int numeroSemaphore
-+ Guichet(String nom)
-+ Guichet(String nom, int nbJetons)
-+ boolean estUnGuichet()
-+ boolean getNumeroSemaphore()
-+ String toString()
-}
-
-class Monde {
-+ Monde()
-+ void aCommeEntree(Etape... etape)
-+ void aCommeSortie(Etape... etape)
-+ void ajouter(Etape... etape)
-+ int nbEtapes()
-+ int nbGuichets()
-+ Iterator<Etape> iterator()
-+ String toString()
-}
-
-class SasEntree {
-+ asEntree()
-+ boolean estUneEntree()
-+ String toString()
-}
-
-class SasSortie {
-+ SasSortie()
-+ boolean estUneSortie()
-+ String toString()
-}
-}
-
-skinparam class {
-    BackgroundColor aliceblue
-    BorderColor black
 }
 
 @enduml
