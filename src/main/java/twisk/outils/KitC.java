@@ -30,4 +30,17 @@ public class KitC {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Méthode qui crée le fichier client.c dans le répertoire /tmp/twisk
+     * @param codeC Le code C à écrire dans le client.c
+     */
+    public void creerFichier(String codeC) {
+        Path directory = Paths.get("/tmp/twisk/client.c");  // Chemin du fichier à créer
+        try {
+            Files.writeString(directory, codeC);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
