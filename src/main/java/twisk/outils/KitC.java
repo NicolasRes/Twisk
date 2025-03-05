@@ -36,10 +36,26 @@ public class KitC {
      * @param codeC Le code C à écrire dans le client.c
      */
     public void creerFichier(String codeC) {
-        Path directory = Paths.get("/tmp/twisk/client.c");  // Chemin du fichier à créer
+        Path directory = Paths.get("/tmp/twisk/client.c");
         try {
             Files.writeString(directory, codeC);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Méthode qui compile un fichier C
+     */
+    public void compiler() {
+        // Définir la commande à exécuter
+        ProcessBuilder pb = new ProcessBuilder("gcc", "Wall", "-ansi", "-pedantic", "-fPIC", "-c", "/tmp/twisk/client.c", "-o", "/tmp/twisk/client.o");
+        try {
+            /* Demander l'exécution de la compilation (start)
+             inheritIO() permet de récupérer les affichages sur la sortie standard et la sortie d'erreur
+             waitFor s'assure que la tâche demandée se termine avant de passer à la suite en demandant au processus d'attendre sa fin */
+            pb.inheritIO().start().waitFor();
+        } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
     }

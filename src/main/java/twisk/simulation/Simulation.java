@@ -7,7 +7,6 @@ import twisk.outils.KitC;
  * Classe Simulation qui simule le monde
  */
 public class Simulation {
-    private Monde monde;    // Garder ?
     private KitC kitC;
 
     /**
@@ -27,5 +26,6 @@ public class Simulation {
         String mondeC = monde.toC();
 
         this.kitC.creerFichier(mondeC);
+        this.kitC.compiler();
     }
 }
