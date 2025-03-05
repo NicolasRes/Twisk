@@ -7,14 +7,15 @@ import twisk.outils.KitC;
  * Classe Simulation qui simule le monde
  */
 public class Simulation {
-    private Monde monde;
+    private Monde monde;    // Garder ?
+    private KitC kitC;
 
     /**
      * Constructeur de la classe Simulation
      */
     public Simulation() {
-        KitC kitC = new KitC();
-        kitC.creerEnvironnement();
+        this.kitC = new KitC();
+        this.kitC.creerEnvironnement();
     }
 
     /**
@@ -22,7 +23,9 @@ public class Simulation {
      * @param monde Le monde à simuler
      */
     public void simuler(Monde monde){
-        System.out.println(monde.toString());
-        monde.toC();
+        //System.out.println(monde.toString());
+        String mondeC = monde.toC();
+
+        this.kitC.creerFichier(mondeC);
     }
 }
