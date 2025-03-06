@@ -79,7 +79,7 @@ public class Activite extends Etape {
         StringBuilder sb = new StringBuilder();
 
         sb.append("delai(").append(this.temps).append(", ").append(this.ecartTemps).append("); \n");
-        sb.append("transfert(").append(getNumero()).append(", ").append(this.getSuccesseur(0).getNumero()).append(");\n");
+        sb.append("transfert(").append(getNom()).append(", ").append(this.getSuccesseur(0).getNom()).append(");\n");
         sb.append(this.getSuccesseur(0).toC());
 
         return sb.toString();

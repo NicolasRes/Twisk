@@ -8,7 +8,7 @@ public class SasEntree extends Activite {
      * Constructeur de la classe SasEntree
      */
     public SasEntree() {
-        super("Entrée");    // Nom par défaut
+        super("Entree");    // Nom par défaut
     }
 
     /**

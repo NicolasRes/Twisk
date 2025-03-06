@@ -110,6 +110,7 @@ public class Monde implements Iterable<Etape> {
         for(Etape e : this.lesEtapes) {
             sb.append(e.toString()).append("\n");
         }
+
         return sb.toString();
     }
 
@@ -122,6 +123,18 @@ public class Monde implements Iterable<Etape> {
 
         sb.append("#include \"def.h\"\n");
         sb.append("#include \"client.h\"\n\n");
+
+        for(Etape e : this.lesEtapes){
+            sb.append("#define ").append(e.getNom()).append(" ").append(e.getNumero()).append("\n");
+
+            if (e.estUnGuichet()){
+                sb.append("#define SEM_").append(e.getNom()).append(" ").append(e.getNumeroSemaphore()).append("\n");
+            }
+        }
+
+
+        sb.append("\n");
+
         sb.append("void simulation(int ids) {\n");
         sb.append(this.entree.toC()+"\n");
         sb.append("}\n");

@@ -20,7 +20,7 @@ public class TestSimulation {
 
         Simulation simu = new Simulation();
         simu.simuler(monde);
-        //System.out.println(monde.toC());
+        System.out.println(monde.toC());
 
         Path cheminClientC = Paths.get("/tmp/twisk/client.c");
         assertTrue(cheminClientC.toFile().exists());
@@ -35,7 +35,15 @@ public class TestSimulation {
             e.printStackTrace();
         }
 
-        Path cheminLib = Paths.get("/tmp/twisk/libTwisk.so");
-        assertTrue(cheminLib.toFile().exists());
+        if (System.getProperty("os.name").contains("Linux")) {
+            System.out.println(System.getProperty("os.name"));
+            Path cheminLib = Paths.get("/tmp/twisk/libTwisk.so");
+            assertTrue(cheminLib.toFile().exists());
+        }
+        else if (System.getProperty("os.name").contains("Mac")) {
+            Path cheminLib = Paths.get("/tmp/twisk/libTwisk.dylib");
+            assertTrue(cheminLib.toFile().exists());
+        }
+
     }
 }
