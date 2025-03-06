@@ -16,11 +16,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-// Constantes
+/* Constantes*/
 #define ACT1 1
 #define ACT2 2
 
-// fonctions déclarées dans programmeC, à utiliser dans le code C du client ******************************************************
+/* fonctions déclarées dans programmeC, à utiliser dans le code C du client */
 
 /**
  * @brief Fonction qui ajoute un délai variable entre deux étapes
@@ -63,7 +63,7 @@ int P(int semid, int numero) ;
  */
 int V(int semid, int numero) ;
 
-// fonctions déclarées dans programmeC, à utiliser dans le code java ************************************************************
+/*fonctions déclarées dans programmeC, à utiliser dans le code java */
 
 /**
  * @brief Fonction qui permet de démarrer une simulation en appelant la fonction simulation du fichier client
@@ -91,7 +91,7 @@ int* ou_sont_les_clients(int nbEtapes, int nbClients) ;
  */
 void nettoyage() ;
 
-// la fonction déclarée dans le code C des clients ******************************************************************************
+/* la fonction déclarée dans le code C des clients */
 
 /**
  * @brief Fonction qui simule le parcours d'un client dans le graphe

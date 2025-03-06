@@ -20,6 +20,7 @@ public class TestSimulation {
 
         Simulation simu = new Simulation();
         simu.simuler(monde);
+        //System.out.println(monde.toC());
 
         Path cheminClientC = Paths.get("/tmp/twisk/client.c");
         assertTrue(cheminClientC.toFile().exists());

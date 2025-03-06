@@ -119,9 +119,25 @@ public class Monde implements Iterable<Etape> {
      */
     public String toC(){
         StringBuilder sb = new StringBuilder();
+
         sb.append("#include \"def.h\"\n");
-        sb.append("#include \"client.h\"\n");
-        sb.append(this.entree.toC());
+        sb.append("#include \"client.h\"\n\n");
+        sb.append("void simulation(int ids) {\n");
+        sb.append(this.entree.toC()+"\n");
+        sb.append("}\n");
+
+        sb.append("int get_nb_etapes(){\n");
+        sb.append(" return "+this.nbEtapes()+";\n");
+        sb.append("}\n");
+
+        sb.append("int get_nb_guichets(){\n");
+        sb.append(" return "+this.nbGuichets()+";\n");
+        sb.append("}\n");
+
+        sb.append("int get_nb_clients(){\n");
+        sb.append(" return "+6+";\n");
+        sb.append("}\n");
+
         return sb.toString();
     }
 }

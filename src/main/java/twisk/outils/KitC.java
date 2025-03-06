@@ -20,7 +20,7 @@ public class KitC {
              Files.createDirectories(directory);
 
             // copie des fichiers programmeC.o, def.h et programmeCMac.o sous /tmp/twisk
-            String[] liste = {"programmeC.o", "def.h", "programmeCMac.o"};
+            String[] liste = {"programmeC.o", "def.h", "programmeCMac.o" , "client.h"};
             for (String nom : liste) {
                 InputStream src = getClass().getResourceAsStream("/codeC/" + nom);
                 Path dest = directory.resolve(nom);

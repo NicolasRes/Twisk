@@ -10,7 +10,7 @@
  */
 
 #include "../ressources/codeC/def.h"
-#include "client.h"
+#include "../ressources/codeC/client.h"
 
 #define NB_ETAPES 3
 #define NB_CLIENTS 5

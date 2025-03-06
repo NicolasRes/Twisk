@@ -24,7 +24,6 @@ public class Simulation {
     public void simuler(Monde monde){
         //System.out.println(monde.toString());
         String mondeC = monde.toC();
-
         this.kitC.creerFichier(mondeC);
         this.kitC.compiler();
         //this.kitC.construireLabBibliotheque();
