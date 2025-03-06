@@ -49,7 +49,7 @@ public class KitC {
      */
     public void compiler() {
         // Définir la commande à exécuter
-        ProcessBuilder pb = new ProcessBuilder("gcc", "-Wall", "-ansi", "-pedantic", "-fPIC", "-c", "/tmp/twisk/client.c", "-o", "/tmp/twisk/client.o");
+        ProcessBuilder pb = new ProcessBuilder("gcc", "-Wall", "-c", "/tmp/twisk/client.c", "-o", "/tmp/twisk/client.o");
         try {
             /* Demander l'exécution de la compilation (start)
              inheritIO() permet de récupérer les affichages sur la sortie standard et la sortie d'erreur
@@ -72,17 +72,13 @@ public class KitC {
                 e.printStackTrace();
             }
         }
-        else if (System.getProperty("os.name").contains("Mac")) {
-            ProcessBuilder pb = new ProcessBuilder("gcc", "-shared", "/tmp/twisk/client.o", "-o", "/tmp/twisk/libTwisk.dylib");
+         else if (System.getProperty("os.name").contains("Mac")) {
+            ProcessBuilder pb = new ProcessBuilder("gcc", "-dynamiclib", "/tmp/twisk/programmeCMac.o", "/tmp/twisk/client.o", "-o", "/tmp/twisk/libTwisk.dylib");
             try {
                 pb.inheritIO().start().waitFor();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
         }
-
     }
-
-    //if system est sur mac
-
 }

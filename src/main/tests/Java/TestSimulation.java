@@ -44,6 +44,5 @@ public class TestSimulation {
             Path cheminLib = Paths.get("/tmp/twisk/libTwisk.dylib");
             assertTrue(cheminLib.toFile().exists());
         }
-
     }
 }
