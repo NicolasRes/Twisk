@@ -34,5 +34,8 @@ public class TestSimulation {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        Path cheminLib = Paths.get("/tmp/twisk/libTwisk.so");
+        assertTrue(cheminLib.toFile().exists());
     }
 }

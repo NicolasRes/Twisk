@@ -64,11 +64,25 @@ public class KitC {
      * Méthode qui construit dynamiquement la bibliothèque
      */
     public void construireLabBibliotheque() {
-        ProcessBuilder pb = new ProcessBuilder("gcc", "-shared", "/tmp/twisk/client.o", "-o", "/tmp/twisk/libTwisk.so");
-        try {
-            pb.inheritIO().start().waitFor();
-        } catch (InterruptedException | IOException e) {
-            e.printStackTrace();
+        if (System.getProperty("os.name").contains("Linux")) {
+            ProcessBuilder pb = new ProcessBuilder("gcc", "-shared", "/tmp/twisk/client.o", "-o", "/tmp/twisk/libTwisk.so");
+            try {
+                pb.inheritIO().start().waitFor();
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
         }
+        else if (System.getProperty("os.name").contains("Mac")) {
+            ProcessBuilder pb = new ProcessBuilder("gcc", "-shared", "/tmp/twisk/client.o", "-o", "/tmp/twisk/libTwisk.dylib");
+            try {
+                pb.inheritIO().start().waitFor();
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
+
+    //if system est sur mac
+
 }

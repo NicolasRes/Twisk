@@ -26,6 +26,6 @@ public class Simulation {
         String mondeC = monde.toC();
         this.kitC.creerFichier(mondeC);
         this.kitC.compiler();
-        //this.kitC.construireLabBibliotheque();
+        this.kitC.construireLabBibliotheque();
     }
 }
