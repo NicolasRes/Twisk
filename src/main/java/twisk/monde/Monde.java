@@ -119,6 +119,8 @@ public class Monde implements Iterable<Etape> {
      */
     public String toC(){
         StringBuilder sb = new StringBuilder();
+        sb.append("#include \"def.h\"\n");
+        sb.append("#include \"client.h\"\n");
         sb.append(this.entree.toC());
         return sb.toString();
     }
