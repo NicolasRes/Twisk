@@ -7,6 +7,7 @@ import twisk.outils.KitC;
  * Classe Simulation qui simule le monde
  */
 public class Simulation {
+    private Monde monde;
     private KitC kitC;
     public native int[]start_simulation(int nbEtapes, int nbGuichets, int nbClients, int []tabJetonsGuichets);
     public native int[] ou_sont_les_clients(int nbEtapes, int nbClients);
@@ -25,6 +26,7 @@ public class Simulation {
      * @param monde Le monde à simuler
      */
     public void simuler(Monde monde){
+        this.monde = monde;
         //System.out.println(monde.toString());
         String mondeC = monde.toC();
         this.kitC.creerFichier(mondeC);
@@ -39,6 +41,14 @@ public class Simulation {
 
         //ajouter main en dessous
 
+        lancerSimulation();
+
+
+    }
+
+    public void lancerSimulation(){
+
+        int nbEtapes = this.monde.nbEtapes();
 
     }
 }
