@@ -129,6 +129,7 @@ public class Monde implements Iterable<Etape> {
 
             if (e.estUnGuichet()){
                 sb.append("#define SEM_").append(e.getNom()).append(" ").append(e.getNumeroSemaphore()).append("\n");
+
             }
         }
 

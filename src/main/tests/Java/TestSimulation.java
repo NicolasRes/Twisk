@@ -36,7 +36,6 @@ public class TestSimulation {
         }
 
         if (System.getProperty("os.name").contains("Linux")) {
-            System.out.println(System.getProperty("os.name"));
             Path cheminLib = Paths.get("/tmp/twisk/libTwisk.so");
             assertTrue(cheminLib.toFile().exists());
         }

@@ -7,3 +7,5 @@ nm -D libTwisk.so //pour voir les dépendances
 gcc -Wall -L. main.c -o main -lTwisk
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
+
+gcc -Wall -ansi -pedantic -fPIC -I /usr/lib/jvm/java-11-openjdk-amd64/include/ -I /usr/lib/jvm/java-11-openjdk-amd64/include/linux/ -c codeNatif.c

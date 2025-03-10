@@ -20,7 +20,7 @@ public class KitC {
              Files.createDirectories(directory);
 
             // copie des fichiers programmeC.o, def.h et programmeCMac.o sous /tmp/twisk
-            String[] liste = {"programmeC.o", "def.h", "programmeCMac.o" , "client.h"};
+            String[] liste = {"programmeC.o", "def.h", "programmeCMac.o" , "client.h" , "codeNatif.o"};
             for (String nom : liste) {
                 InputStream src = getClass().getResourceAsStream("/codeC/" + nom);
                 Path dest = directory.resolve(nom);
@@ -65,7 +65,7 @@ public class KitC {
      */
     public void construireLabBibliotheque() {
         if (System.getProperty("os.name").contains("Linux")) {
-            ProcessBuilder pb = new ProcessBuilder("gcc", "-shared", "/tmp/twisk/client.o", "-o", "/tmp/twisk/libTwisk.so");
+            ProcessBuilder pb = new ProcessBuilder("gcc", "-shared", "/tmp/twisk/programmeC.o", "/tmp/twisk/codeNatif.o","/tmp/twisk/client.o", "-o", "/tmp/twisk/libTwisk.so");
             try {
                 pb.inheritIO().start().waitFor();
             } catch (InterruptedException | IOException e) {
@@ -81,4 +81,5 @@ public class KitC {
             }
         }
     }
+
 }
