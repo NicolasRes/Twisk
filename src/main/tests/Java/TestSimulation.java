@@ -19,8 +19,10 @@ public class TestSimulation {
         Monde monde = FabriqueMonde.fabriqueMondeBasique();
 
         Simulation simu = new Simulation();
-        simu.simuler(monde);
+
         System.out.println(monde.toC());
+
+        simu.simuler(monde);
 
         Path cheminClientC = Paths.get("/tmp/twisk/client.c");
         assertTrue(cheminClientC.toFile().exists());

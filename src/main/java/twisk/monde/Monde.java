@@ -21,6 +21,7 @@ public class Monde implements Iterable<Etape> {
         this.lesEtapes.ajouterEtape(this.entree);
         this.lesEtapes.ajouterEtape(this.sortie);
         this.nbClients = 6;
+        this.tabJetonsGuichets = new int[1];
     }
 
     /**
@@ -53,6 +54,13 @@ public class Monde implements Iterable<Etape> {
         for(Etape e : etape){
             assert (e != null) : "Erreur : Etape null";
             this.lesEtapes.ajouterEtape(e);
+            if(e.estUnGuichet()){
+
+                tabJetonsGuichets[e.getNumeroSemaphore()-1] = e.getNbJetons();
+                System.out.println("Ajout de "+ e.getNbJetons() + " Jetons sur la Semaphore " + e.getNumeroSemaphore());
+                //taille du tableau augmente de 1
+                int[] tabJetonsGuichets = new int[this.tabJetonsGuichets.length + 1];
+            }
         }
     }
 

@@ -46,10 +46,13 @@ public class Simulation {
 
     }
 
-    public void afficher_info_simu(int nb_client, int nb_guichet, int nb_etape) {
+    public void afficher_info_simu(int nb_client, int nb_guichet, int nb_etape , int[] tabJetonsGuichets) {
         System.out.println("nb client: " + nb_client);
         System.out.println("nb guichet: " + nb_guichet);
         System.out.println("nb etape: " + nb_etape);
+        for (int i =0; i< nb_guichet; i++) {
+            System.out.println("Jetons Guichet " + tabJetonsGuichets[i]);
+        }
     }
 
     public void afficher_pid_client(int[] tabPid, int nb_client) {
@@ -90,10 +93,12 @@ public class Simulation {
         int nbClients = this.monde.nbClients();
         int[] tabJetonsGuichets = this.monde.getTabJetonsGuichets();
 
-        afficher_info_simu(nbClients, nbGuichets, nbEtapes);
+        afficher_info_simu(nbClients, nbGuichets, nbEtapes, tabJetonsGuichets);
+
+
         int[] tabPid = start_simulation(nbEtapes, nbGuichets, nbClients, tabJetonsGuichets);
-        //afficher_pid_client(tabPid, nbClients);
-        //simule_clients(nbClients, nbEtapes);
+        afficher_pid_client(tabPid, nbClients);
+        simule_clients(nbClients, nbEtapes);
         nettoyage();
 
     }

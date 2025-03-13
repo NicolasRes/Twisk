@@ -13,6 +13,8 @@ public class Activite extends Etape {
      */
     public Activite(String nom) {
         super(nom);
+        this.temps = 3;
+        this.ecartTemps = 1;
     }
 
     /**
