@@ -9,7 +9,8 @@ public class Monde implements Iterable<Etape> {
     private GestionnaireEtapes lesEtapes;
     private SasEntree entree;
     private SasSortie sortie;
-
+    private int nbClients;
+    private int[] tabJetonsGuichets;
     /**
      * Constructeur de la classe Monde
      */
@@ -19,6 +20,7 @@ public class Monde implements Iterable<Etape> {
         this.sortie = new SasSortie();
         this.lesEtapes.ajouterEtape(this.entree);
         this.lesEtapes.ajouterEtape(this.sortie);
+        this.nbClients = 6;
     }
 
     /**
@@ -74,6 +76,10 @@ public class Monde implements Iterable<Etape> {
             }
         }
         return nbGuichets;
+    }
+
+    public int []getTabJetonsGuichets(){
+        return tabJetonsGuichets;
     }
 
     /**
@@ -133,7 +139,13 @@ public class Monde implements Iterable<Etape> {
             }
         }
 
-
+        sb.append("static int tabjetons[").append(this.nbGuichets()).append("] = {");
+        for (Etape e : this.lesEtapes) {
+            if (e.estUnGuichet()) {
+                sb.append(e.getNbJetons()).append(",");
+            }
+        }
+        sb.replace(sb.length()-1, sb.length(), "};\n");
         sb.append("\n");
 
         sb.append("void simulation(int ids) {\n");
@@ -152,6 +164,15 @@ public class Monde implements Iterable<Etape> {
         sb.append(" return "+6+";\n");
         sb.append("}\n");
 
+        sb.append("int * getTabJetonsGuichets(){\n");
+        sb.append("return tabjetons;");
+        sb.append("}\n");
+
+
         return sb.toString();
+    }
+
+    public int nbClients(){
+        return this.nbClients;
     }
 }

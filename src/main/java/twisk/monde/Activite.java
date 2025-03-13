@@ -100,4 +100,8 @@ public class Activite extends Etape {
     public int getEcartTemps() {
         return this.ecartTemps;
     }
+
+    public int getNbJetons(){
+        return 0;
+    }
 }

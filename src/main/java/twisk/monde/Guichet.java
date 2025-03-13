@@ -102,4 +102,8 @@ public class Guichet extends Etape {
     public int getEcartTemps() {
         return -1;
     }
+
+    public int getNbJetons(){
+        return nbJetons;
+    }
 }

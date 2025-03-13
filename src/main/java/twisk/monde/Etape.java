@@ -127,4 +127,6 @@ public abstract class Etape implements Iterable<Etape> {
      * @return La partie variable de la durée d'une étape
      */
     public abstract int getEcartTemps();
+
+    public abstract int getNbJetons();
 }
