@@ -66,6 +66,13 @@ public class Simulation {
 
     public void simule_clients(int nb_client, int nb_etape) {
         int[]position = ou_sont_les_clients(nb_etape,nb_client);
+
+        System.out.println("Position des clients");
+        for (int i=0; i< position.length; i++) {
+            System.out.println(position[i]);
+        }
+
+
         while (position[(nb_client + 1)] < nb_client) { //  Tant que tous les clients ne sont pas dans la dernière activité, nbact-1 car on commence à 0
             position = ou_sont_les_clients(nb_etape, nb_client);
             for (int i = 0; i < nb_etape; i++) {
@@ -97,10 +104,11 @@ public class Simulation {
         int nbClients = this.monde.nbClients();
         int[] tabJetonsGuichets = this.monde.getTabJetonsGuichets();
 
+
         afficher_info_simu(nbClients, nbGuichets, nbEtapes, tabJetonsGuichets);
 
-
         int[] tabPid = start_simulation(nbEtapes, nbGuichets, nbClients, tabJetonsGuichets);
+
         afficher_pid_client(tabPid, nbClients);
         simule_clients(nbClients, nbEtapes);
         nettoyage();
