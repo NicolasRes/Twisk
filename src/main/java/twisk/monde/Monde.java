@@ -151,35 +151,15 @@ public class Monde implements Iterable<Etape> {
 
             if (e.estUnGuichet()){
                 sb.append("#define SEM_").append(e.getNom()).append(" ").append(e.getNumeroSemaphore()).append("\n");
-
             }
         }
 
         sb.append("\n");
 
         sb.append("void simulation(int ids) {\n");
+        sb.append(" entrer(Entree);\n");
         sb.append(this.entree.toC()+"\n");
         sb.append("}\n");
-
-        /*
-        sb.append("int get_nb_etapes(){\n");
-        sb.append(" return "+this.nbEtapes()+";\n");
-        sb.append("}\n");
-
-        sb.append("int get_nb_guichets(){\n");
-        sb.append(" return "+this.nbGuichets()+";\n");
-        sb.append("}\n");
-
-        sb.append("int get_nb_clients(){\n");
-        sb.append(" return "+6+";\n");
-        sb.append("}\n");
-
-        sb.append("int getTabJetonsGuichets() []{\n");
-        sb.append("return tabjetons;\n");
-        sb.append("}\n");
-
-         */
-
 
         return sb.toString();
     }

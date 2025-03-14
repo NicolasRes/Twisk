@@ -67,21 +67,17 @@ public class Simulation {
     public void simule_clients(int nb_client, int nb_etape) {
         int[]position = ou_sont_les_clients(nb_etape,nb_client);
 
-        System.out.println("Position des clients");
-        for (int i=0; i< position.length; i++) {
-            System.out.println(position[i]);
-        }
-
-
         while (position[(nb_client + 1)] < nb_client) { //  Tant que tous les clients ne sont pas dans la dernière activité, nbact-1 car on commence à 0
             position = ou_sont_les_clients(nb_etape, nb_client);
             for (int i = 0; i < nb_etape; i++) {
                 int nb_clients = position[i * (nb_client + 1)];
-                System.out.println("Étape " + i + " : " + nb_clients + " clients :");
+                System.out.print("Étape " + i + " : " + nb_clients + " clients :"); // Pas de println ici
+
                 for (int j = 0; j < nb_clients; j++) {
-                    System.out.println(position[i * (nb_client + 1) + 1 + j]); // ex activité 1, 6 = index de nb clients, PIDs 7, 8, 9, 10, 11 (6 + 1 + j)
+                    System.out.print(" " + position[i * (nb_client + 1) + 1 + j]); // Affichage sur la même ligne
                 }
-                System.out.println();
+
+                System.out.println(); // Saut de ligne après chaque étape
             }
 
             try{

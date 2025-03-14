@@ -22,9 +22,9 @@ public class KitC {
             // copie des fichiers programmeC.o, def.h et programmeCMac.o sous /tmp/twisk
             String[] liste = {"programmeC.o", "def.h", "programmeCMac.o" , "client.h" , "codeNatif.o"};
             for (String nom : liste) {
-                InputStream src = getClass().getResourceAsStream("/codeC/" + nom);
-                Path dest = directory.resolve(nom);
-                Files.copy(src, dest, StandardCopyOption.REPLACE_EXISTING);
+
+                Path fichier = Paths.get("src/main/ressources/codeC/" + nom);
+                Files.copy(fichier, directory.resolve(nom), StandardCopyOption.REPLACE_EXISTING);
             }
         } catch (IOException e) {
             e.printStackTrace();

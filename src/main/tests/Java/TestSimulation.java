@@ -1,6 +1,7 @@
 package Java;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 import twisk.monde.Monde;
 import twisk.outils.FabriqueMonde;
 import twisk.simulation.Simulation;
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TestSimulation {
 
     @Test
-    void testSimuler() {
+    public void testSimuler() {
         Monde monde = FabriqueMonde.fabriqueMondeBasique();
 
         Simulation simu = new Simulation();
