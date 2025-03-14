@@ -72,15 +72,15 @@ public class Guichet extends Etape {
     public String toC(){
         StringBuilder sb = new StringBuilder();
 
-        sb.append("P(ids,").append("SEM_").append(this.getNom()).append("); \n");
+        sb.append(" P(ids,").append("SEM_").append(this.getNom()).append("); \n");
 
-        sb.append("transfert(").append(getNom()).append(", ").append(this.getSuccesseur(0).getNom()).append("); \n");
+        sb.append(" transfert(").append(getNom()).append(", ").append(this.getSuccesseur(0).getNom()).append("); \n");
 
-        sb.append("delai(").append(this.getSuccesseur(0).getTemps()).append(", ").append(this.getSuccesseur(0).getEcartTemps()).append("); \n");
+        sb.append(" delai(").append(this.getSuccesseur(0).getTemps()).append(", ").append(this.getSuccesseur(0).getEcartTemps()).append("); \n");
 
-        sb.append("V(ids,").append("SEM_").append(this.getNom()).append("); \n");
+        sb.append(" V(ids,").append("SEM_").append(this.getNom()).append("); \n");
 
-        sb.append("transfert(").append(this.getSuccesseur(0).getNom()).append(", ").append(this.getSuccesseur(0).getSuccesseur(0).getNom()).append("); \n");
+        sb.append(" transfert(").append(this.getSuccesseur(0).getNom()).append(", ").append(this.getSuccesseur(0).getSuccesseur(0).getNom()).append("); \n");
 
         sb.append(this.getSuccesseur(0).getSuccesseur(0).toC());
 

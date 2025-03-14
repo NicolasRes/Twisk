@@ -54,13 +54,21 @@ public class Monde implements Iterable<Etape> {
         for(Etape e : etape){
             assert (e != null) : "Erreur : Etape null";
             this.lesEtapes.ajouterEtape(e);
-            if(e.estUnGuichet()){
 
-                tabJetonsGuichets[e.getNumeroSemaphore()-1] = e.getNbJetons();
-                System.out.println("Ajout de "+ e.getNbJetons() + " Jetons sur la Semaphore " + e.getNumeroSemaphore());
-                //taille du tableau augmente de 1
-                int[] tabJetonsGuichets = new int[this.tabJetonsGuichets.length + 1];
+            if(e.estUnGuichet()){
+                int numeroSemaphore = e.getNumeroSemaphore() -1;
+
+                if (numeroSemaphore >= this.tabJetonsGuichets.length) {
+
+                    int[] nouveauTab = new int[numeroSemaphore + 1];
+                    System.arraycopy(this.tabJetonsGuichets, 0, nouveauTab, 0, this.tabJetonsGuichets.length);
+                    this.tabJetonsGuichets = nouveauTab;
+                }
+                this.tabJetonsGuichets[numeroSemaphore] = e.getNbJetons();
+
+                // System.out.println("Ajout de " + e.getNbJetons() + " Jetons sur la Semaphore " + e.getNumeroSemaphore());
             }
+
         }
     }
 
@@ -147,19 +155,13 @@ public class Monde implements Iterable<Etape> {
             }
         }
 
-        sb.append("static int tabjetons[").append(this.nbGuichets()).append("] = {");
-        for (Etape e : this.lesEtapes) {
-            if (e.estUnGuichet()) {
-                sb.append(e.getNbJetons()).append(",");
-            }
-        }
-        sb.replace(sb.length()-1, sb.length(), "};\n");
         sb.append("\n");
 
         sb.append("void simulation(int ids) {\n");
         sb.append(this.entree.toC()+"\n");
         sb.append("}\n");
 
+        /*
         sb.append("int get_nb_etapes(){\n");
         sb.append(" return "+this.nbEtapes()+";\n");
         sb.append("}\n");
@@ -172,13 +174,16 @@ public class Monde implements Iterable<Etape> {
         sb.append(" return "+6+";\n");
         sb.append("}\n");
 
-        sb.append("int * getTabJetonsGuichets(){\n");
-        sb.append("return tabjetons;");
+        sb.append("int getTabJetonsGuichets() []{\n");
+        sb.append("return tabjetons;\n");
         sb.append("}\n");
+
+         */
 
 
         return sb.toString();
     }
+
 
     public int nbClients(){
         return this.nbClients;

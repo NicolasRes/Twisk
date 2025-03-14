@@ -22,7 +22,7 @@ typedef struct {
     int nb_client;
     int nb_guichet;
     int nb_etape;
-    int* tabjetons;.
+    int* tabjetons;
 } info_simu;
 
 /**

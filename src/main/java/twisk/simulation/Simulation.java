@@ -12,7 +12,7 @@ public class Simulation {
     public native int[]start_simulation(int nbEtapes, int nbGuichets, int nbClients, int []tabJetonsGuichets);
     public native int[] ou_sont_les_clients(int nbEtapes, int nbClients);
     public native void nettoyage();
-    private int TMP_ATTENTE = 1;
+    private int TMP_ATTENTE = 2;
 
 
     /**
@@ -31,6 +31,7 @@ public class Simulation {
         this.monde = monde;
         //System.out.println(monde.toString());
         String mondeC = monde.toC();
+
         this.kitC.creerFichier(mondeC);
         this.kitC.compiler();
         this.kitC.construireLabBibliotheque();
@@ -51,7 +52,7 @@ public class Simulation {
         System.out.println("nb guichet: " + nb_guichet);
         System.out.println("nb etape: " + nb_etape);
         for (int i =0; i< nb_guichet; i++) {
-            System.out.println("Jetons Guichet " + tabJetonsGuichets[i]);
+            System.out.println("Jetons Guichet: " + (i+1)+ " " + tabJetonsGuichets[i]+" Jetons");
         }
     }
 
@@ -75,12 +76,15 @@ public class Simulation {
                 }
                 System.out.println();
             }
+
             try{
-                Thread.sleep(TMP_ATTENTE);
+                Thread.sleep(TMP_ATTENTE*1000);
             }catch (InterruptedException e){
                 e.printStackTrace();
             }
             System.out.println();
+
+
         }
         System.out.println("Fin simulation");
     }
