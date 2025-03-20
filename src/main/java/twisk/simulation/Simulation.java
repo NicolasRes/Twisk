@@ -85,14 +85,13 @@ public class Simulation {
             nomEtapes[etape.getNumero()] = etape.getNom();
         }
 
-
         int[]position = ou_sont_les_clients(nb_etape,nb_client);
 
         while (position[(nb_client + 1)] < nb_client) { //  Tant que tous les clients ne sont pas dans la dernière activité, nbact-1 car on commence à 0
             position = ou_sont_les_clients(nb_etape, nb_client);
             for (int i = 0; i < nb_etape; i++) {
                 int nb_clients = position[i * (nb_client + 1)];
-                System.out.print(nomEtapes[i]+ " : " + nb_clients + " clients :");
+                System.out.print(nomEtapes[i]+ " " + nb_clients + " clients :");
 
 
                 for (int j = 0; j < nb_clients; j++) {

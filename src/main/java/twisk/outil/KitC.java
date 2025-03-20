@@ -1,6 +1,7 @@
 package twisk.outil;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,8 +27,10 @@ public class KitC {
             String[] liste = {"programmeC.o", "def.h", "programmeCMac.o" , "client.h" , "codeNatif.o"};
             for (String nom : liste) {
 
-                Path fichier = Paths.get("src/main/ressources/codeC/" + nom);
-                Files.copy(fichier, directory.resolve(nom), StandardCopyOption.REPLACE_EXISTING);
+                InputStream src = getClass().getResourceAsStream("/codeC/" + nom);
+                Path dest = directory.resolve(nom);
+                Files.copy(src, dest, StandardCopyOption.REPLACE_EXISTING);
+
             }
         } catch (IOException e) {
             e.printStackTrace();
