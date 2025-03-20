@@ -50,26 +50,32 @@ public class Simulation {
             System.load("/tmp/twisk/libTwisk.dylib");
         }
 
-        System.out.println("Lancement de la simulation");
+        System.out.println("Lancement de la simulation\n");
+
         lancerSimulation();
 
     }
 
     public void afficher_info_simu(int nb_client, int nb_guichet, int nb_etape , int[] tabJetonsGuichets) {
+
+        System.out.println(monde.toString());
+
         System.out.println("nb client: " + nb_client);
         System.out.println("nb guichet: " + nb_guichet);
         System.out.println("nb etape: " + nb_etape);
         for (int i =0; i< nb_guichet; i++) {
             System.out.println("Jetons Guichet: " + (i+1)+ " " + tabJetonsGuichets[i]+" Jetons");
         }
+        System.out.println();
     }
 
     public void afficher_pid_client(int[] tabPid, int nb_client) {
-        System.out.println("Les clients: ");
+        System.out.print("Les clients: ");
         for (int i = 0; i < nb_client-1; i++) {
-            System.out.println(tabPid[i]);
+            System.out.print(tabPid[i] +" ");
         }
         System.out.println(tabPid[nb_client-1]);
+        System.out.println();
     }
 
     public void simule_clients(int nb_client, int nb_etape) {
