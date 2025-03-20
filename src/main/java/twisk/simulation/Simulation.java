@@ -1,5 +1,6 @@
 package twisk.simulation;
 
+import twisk.monde.Etape;
 import twisk.monde.Monde;
 import twisk.outil.KitC;
 
@@ -52,7 +53,7 @@ public class Simulation {
 
         System.out.println("Lancement de la simulation\n");
 
-        lancerSimulation();
+        lancerSimulation(this.monde);
 
     }
 
@@ -78,20 +79,26 @@ public class Simulation {
         System.out.println();
     }
 
-    public void simule_clients(int nb_client, int nb_etape) {
+    public void simule_clients(int nb_client, int nb_etape, Monde monde) {
+        String [] nomEtapes = new String[nb_etape];
+        for (Etape etape : monde) {
+            nomEtapes[etape.getNumero()] = etape.getNom();
+        }
+
+
         int[]position = ou_sont_les_clients(nb_etape,nb_client);
 
         while (position[(nb_client + 1)] < nb_client) { //  Tant que tous les clients ne sont pas dans la dernière activité, nbact-1 car on commence à 0
             position = ou_sont_les_clients(nb_etape, nb_client);
             for (int i = 0; i < nb_etape; i++) {
                 int nb_clients = position[i * (nb_client + 1)];
-                System.out.print("Étape " + i + " : " + nb_clients + " clients :"); // Pas de println ici
+                System.out.print(nomEtapes[i]+ " : " + nb_clients + " clients :");
+
 
                 for (int j = 0; j < nb_clients; j++) {
-                    System.out.print(" " + position[i * (nb_client + 1) + 1 + j]); // Affichage sur la même ligne
+                    System.out.print(" " + position[i * (nb_client + 1) + 1 + j]);
                 }
-
-                System.out.println(); // Saut de ligne après chaque étape
+                System.out.println();
             }
 
             try{
@@ -107,7 +114,7 @@ public class Simulation {
     }
 
 
-    public void lancerSimulation(){
+    public void lancerSimulation(Monde monde){
 
         int nbEtapes = this.monde.nbEtapes();
         int nbGuichets = this.monde.nbGuichets();
@@ -120,7 +127,7 @@ public class Simulation {
         int[] tabPid = start_simulation(nbEtapes, nbGuichets, nbClients, tabJetonsGuichets);
 
         afficher_pid_client(tabPid, nbClients);
-        simule_clients(nbClients, nbEtapes);
+        simule_clients(nbClients, nbEtapes , this.monde);
         nettoyage();
 
     }
