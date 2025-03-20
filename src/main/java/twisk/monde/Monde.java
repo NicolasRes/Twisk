@@ -20,7 +20,6 @@ public class Monde implements Iterable<Etape> {
         this.sortie = new SasSortie();
         this.lesEtapes.ajouterEtape(this.entree);
         this.lesEtapes.ajouterEtape(this.sortie);
-        this.nbClients = 6;
         this.tabJetonsGuichets = new int[1];
     }
 
@@ -167,5 +166,9 @@ public class Monde implements Iterable<Etape> {
 
     public int nbClients(){
         return this.nbClients;
+    }
+
+    public void setNbClients(int nbClients) {
+        this.nbClients = nbClients;
     }
 }

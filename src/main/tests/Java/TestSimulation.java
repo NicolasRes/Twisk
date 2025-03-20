@@ -20,6 +20,7 @@ public class TestSimulation {
         Monde monde = FabriqueMonde.fabriqueMondeBasique();
 
         Simulation simu = new Simulation();
+        simu.setNbClients(12);
 
         System.out.println(monde.toC());
 

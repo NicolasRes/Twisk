@@ -12,7 +12,8 @@ public class Simulation {
     public native int[]start_simulation(int nbEtapes, int nbGuichets, int nbClients, int []tabJetonsGuichets);
     public native int[] ou_sont_les_clients(int nbEtapes, int nbClients);
     public native void nettoyage();
-    private int TMP_ATTENTE = 2;
+    private int TMP_ATTENTE = 1;
+    private int nbCLient;
 
 
     /**
@@ -21,6 +22,11 @@ public class Simulation {
     public Simulation() {
         this.kitC = new KitC();
         this.kitC.creerEnvironnement();
+        this.nbCLient=0;
+    }
+
+    public void setNbClients(int nbClients) {
+        this.nbCLient=nbClients;
     }
 
     /**
@@ -28,7 +34,9 @@ public class Simulation {
      * @param monde Le monde à simuler
      */
     public void simuler(Monde monde){
+
         this.monde = monde;
+        this.monde.setNbClients(nbCLient);
         //System.out.println(monde.toString());
         String mondeC = monde.toC();
 
