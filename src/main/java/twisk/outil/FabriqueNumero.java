@@ -1,4 +1,4 @@
-package twisk.outils;
+package twisk.outil;
 
 /**
  * Classe FabriqueNumero qui gère la numérotation des étapes

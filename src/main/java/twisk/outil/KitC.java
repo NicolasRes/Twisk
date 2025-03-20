@@ -1,13 +1,16 @@
-package twisk.outils;
+package twisk.outil;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 public class KitC {
+
+    public KitC() {
+
+    }
 
     /**
      * Méthode qui crée des copies de fichiers dans un répertoire temporaire en vue d'intégrer du code C dans Java

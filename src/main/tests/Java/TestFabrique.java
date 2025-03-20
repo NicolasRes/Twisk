@@ -3,7 +3,7 @@ package Java;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import twisk.monde.Activite;
-import twisk.outils.FabriqueNumero;
+import twisk.outil.FabriqueNumero;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

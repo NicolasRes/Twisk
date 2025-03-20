@@ -20,7 +20,7 @@ public class GestionnaireEtapes implements Iterable<Etape> {
      * Méthode qui ajoute une étape au gestionnaire d'étapes
      * @param etape Les étapes à ajouter à la liste d'étapes
      */
-    void ajouterEtape(Etape ... etape) {
+    void ajouter(Etape ... etape) {
         for(Etape e : etape){
             //assert (e != null) : "Erreur : Etape null";
             this.etapes.add(e);

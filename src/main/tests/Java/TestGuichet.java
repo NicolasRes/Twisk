@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import twisk.monde.Activite;
 import twisk.monde.Guichet;
 import twisk.monde.SasSortie;
-import twisk.outils.FabriqueNumero;
+import twisk.outil.FabriqueNumero;
 
 import static org.junit.jupiter.api.Assertions.*;
 

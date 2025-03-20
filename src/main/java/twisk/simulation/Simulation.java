@@ -1,7 +1,7 @@
 package twisk.simulation;
 
 import twisk.monde.Monde;
-import twisk.outils.KitC;
+import twisk.outil.KitC;
 
 /**
  * Classe Simulation qui simule le monde

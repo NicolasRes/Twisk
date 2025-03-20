@@ -1,6 +1,7 @@
-package twisk.outils;
+package twisk.outil;
 
 import twisk.monde.Activite;
+import twisk.monde.ActiviteRestreinte;
 import twisk.monde.Guichet;
 import twisk.monde.Monde;
 
@@ -19,9 +20,9 @@ public class FabriqueMonde {
         Monde monde = new Monde();
         Activite act1 = new Activite("A1",8,3);
         Guichet g1 = new Guichet("G1",3);
-        Activite act2 = new Activite("A2",4,2);
+        Activite act2 = new ActiviteRestreinte("A2",4,2);
         Guichet g2 = new Guichet("G2",6);
-        Activite act3 = new Activite("A3",2,1);
+        Activite act3 = new ActiviteRestreinte("A3",2,1);
 
         act1.ajouterSuccesseur(g1);
         g1.ajouterSuccesseur(act2);

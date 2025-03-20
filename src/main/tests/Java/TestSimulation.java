@@ -3,7 +3,7 @@ package Java;
 
 import org.junit.Test;
 import twisk.monde.Monde;
-import twisk.outils.FabriqueMonde;
+import twisk.outil.FabriqueMonde;
 import twisk.simulation.Simulation;
 
 import java.nio.file.Files;
@@ -20,7 +20,7 @@ public class TestSimulation {
         Monde monde = FabriqueMonde.fabriqueMondeBasique();
 
         Simulation simu = new Simulation();
-        simu.setNbClients(12);
+        simu.setNbClients(6);
 
         System.out.println(monde.toC());
 

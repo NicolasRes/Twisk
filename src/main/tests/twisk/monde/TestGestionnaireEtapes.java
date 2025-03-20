@@ -15,10 +15,10 @@ class TestGestionnaireEtapes {
 
         assertEquals(0, gest.nbEtapes());
 
-        gest.ajouterEtape(e1);
+        gest.ajouter(e1);
         assertEquals(1, gest.nbEtapes());
 
-        gest.ajouterEtape(e2, e3);
+        gest.ajouter(e2, e3);
         assertEquals(3, gest.nbEtapes());
     }
 
@@ -28,8 +28,8 @@ class TestGestionnaireEtapes {
         Etape e1 = new Activite("e1");
         Etape e2 = new Activite("e2");
 
-        gest.ajouterEtape(e1);
-        gest.ajouterEtape(e2);
+        gest.ajouter(e1);
+        gest.ajouter(e2);
 
         assertEquals(e1, gest.getEtape(0));
         assertEquals(e2, gest.getEtape(1));

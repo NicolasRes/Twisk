@@ -1,6 +1,6 @@
 package twisk.monde;
 
-import twisk.outils.FabriqueNumero;
+import twisk.outil.FabriqueNumero;
 
 import java.util.Iterator;
 
@@ -38,7 +38,7 @@ public abstract class Etape implements Iterable<Etape> {
     public void ajouterSuccesseur(Etape... e) {
         for(Etape etape : e){
             assert (etape != null) : "Erreur : Etape null";
-            this.etapes.ajouterEtape(etape);
+            this.etapes.ajouter(etape);
         }
     }
 

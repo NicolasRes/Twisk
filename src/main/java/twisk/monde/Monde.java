@@ -18,8 +18,8 @@ public class Monde implements Iterable<Etape> {
         this.lesEtapes = new GestionnaireEtapes();
         this.entree = new SasEntree();
         this.sortie = new SasSortie();
-        this.lesEtapes.ajouterEtape(this.entree);
-        this.lesEtapes.ajouterEtape(this.sortie);
+        this.lesEtapes.ajouter(this.entree);
+        this.lesEtapes.ajouter(this.sortie);
         this.tabJetonsGuichets = new int[1];
     }
 
@@ -52,7 +52,7 @@ public class Monde implements Iterable<Etape> {
     public void ajouter(Etape... etape) {
         for(Etape e : etape){
             assert (e != null) : "Erreur : Etape null";
-            this.lesEtapes.ajouterEtape(e);
+            this.lesEtapes.ajouter(e);
 
             if(e.estUnGuichet()){
                 int numeroSemaphore = e.getNumeroSemaphore() -1;
