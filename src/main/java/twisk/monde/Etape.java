@@ -75,6 +75,10 @@ public abstract class Etape implements Iterable<Etape> {
         return false;
     }
 
+    /**
+     * Méthode qui retourne le numéro de sémaphore associé à l'étape
+     * @return Le numéro de sémaphore
+     */
     public int getNumeroSemaphore(){
         return 0;
     }

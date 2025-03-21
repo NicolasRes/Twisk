@@ -5,14 +5,6 @@
       <element id="archive" name="Twisk.jar">
         <element id="module-output" name="Twisk" />
       </element>
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:linux:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:linux:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:linux:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:linux:21" />
     </root>
   </artifact>
 </component>

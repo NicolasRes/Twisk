@@ -1,5 +1,4 @@
 Manifest-Version: 1.0
-Main-Class: 
 Class-Path: javafx-controls-21-linux.jar javafx-graphics-21.jar javafx-g
  raphics-21-linux.jar javafx-controls-21.jar javafx-fxml-21.jar javafx-b
  ase-21.jar javafx-fxml-21-linux.jar javafx-base-21-linux.jar
