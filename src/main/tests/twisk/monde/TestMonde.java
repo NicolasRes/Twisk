@@ -114,4 +114,11 @@ class TestMonde {
 
         assertEquals(texteAttendu, monde.toC());
     }
+
+    @Test
+    void testReplaceCarac() {
+        Monde monde = new Monde();
+        String nom = ("Téèst");
+        System.out.println(monde.replaceCarac(nom));
+    }
 }

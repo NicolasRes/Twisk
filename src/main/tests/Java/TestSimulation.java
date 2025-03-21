@@ -48,4 +48,20 @@ public class TestSimulation {
             assertTrue(cheminLib.toFile().exists());
         }
     }
+
+    @Test
+    public void testCarac() {
+        String nom = "téèst";
+        nom = nom.replaceAll("[^\\p{Alpha}]+", "_");
+        System.out.println(nom);
+
+        String nom2 = "téèst";
+        nom2 = nom2.replace("é", "e");
+        nom2 = nom2.replace("è", "e");
+        System.out.println(nom2);
+
+        String nom3 = "téèst";
+        nom3 = nom3.replaceAll("é", "e, e");
+        System.out.println(nom3);
+    }
 }
