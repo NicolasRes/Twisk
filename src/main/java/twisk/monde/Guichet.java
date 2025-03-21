@@ -112,6 +112,10 @@ public class Guichet extends Etape {
         return -1;
     }
 
+    /**
+     * Méthode abstraite qui récupère le nombre de jetons
+     * @return Le nombre de jetons
+     */
     public int getNbJetons(){
         return nbJetons;
     }

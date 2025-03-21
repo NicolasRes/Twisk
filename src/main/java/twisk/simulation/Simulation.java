@@ -56,6 +56,13 @@ public class Simulation {
 
     }
 
+    /**
+     * @brief Fonction qui affiche les informations relatives à la simulation
+     *
+     * @param nb_client Le nombre de clients
+     * @param nb_guichet Le nombre de guichets
+     * @param nb_etape Le nombre d'étapes
+     */
     public void afficher_info_simu(int nb_client, int nb_guichet, int nb_etape , int[] tabJetonsGuichets) {
 
         System.out.println(monde.toString());
@@ -69,6 +76,12 @@ public class Simulation {
         System.out.println();
     }
 
+    /**
+     * @brief Fonction qui affiche le PID d'un tableau de clients
+     *
+     * @param tabPid Le tableau de PID des clients
+     * @param nb_client Le nombre de clients
+     */
     public void afficher_pid_client(int[] tabPid, int nb_client) {
         System.out.print("Les clients: ");
         for (int i = 0; i < nb_client-1; i++) {
@@ -78,6 +91,12 @@ public class Simulation {
         System.out.println();
     }
 
+    /**
+     * @brief Fonction qui exécute une simulation de parcours de clients dans un graphe
+     *
+     * @param nb_client Le nombre de clients de la simulation
+     * @param nb_etape Le nombre d'étapes de la simulation
+     */
     public void simule_clients(int nb_client, int nb_etape, Monde monde) {
         String [] nomEtapes = new String[nb_etape];
         for (Etape etape : monde) {
@@ -111,14 +130,15 @@ public class Simulation {
         System.out.println("Fin simulation");
     }
 
-
+    /**
+     * Méthode qui lance la simulation du monde
+     * @param monde Le monde à simuler
+     */
     public void lancerSimulation(Monde monde){
-
         int nbEtapes = this.monde.nbEtapes();
         int nbGuichets = this.monde.nbGuichets();
         int nbClients = this.monde.nbClients();
         int[] tabJetonsGuichets = this.monde.getTabJetonsGuichets();
-
 
         afficher_info_simu(nbClients, nbGuichets, nbEtapes, tabJetonsGuichets);
 
@@ -127,6 +147,5 @@ public class Simulation {
         afficher_pid_client(tabPid, nbClients);
         simule_clients(nbClients, nbEtapes , this.monde);
         nettoyage();
-
     }
 }

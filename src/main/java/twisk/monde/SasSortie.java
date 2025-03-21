@@ -30,9 +30,11 @@ public class SasSortie extends Activite {
         return sb.toString();
     }
 
+    /**
+     * Méthode qui renvoie le code C du parcours du SAS Sortie par un client
+     * @return Le parcours du monde d'un client sous forme de String
+     */
     public String toC(){
-
         return "";
     }
-
 }

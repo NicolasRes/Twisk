@@ -128,8 +128,17 @@ public abstract class Etape implements Iterable<Etape> {
      */
     public abstract int getEcartTemps();
 
+    /**
+     * Méthode abstraite qui récupère le nombre de jetons
+     * @return Le nombre de jetons
+     */
     public abstract int getNbJetons();
 
+    /**
+     * Méthode qui remplace les caractères spéciaux par les caractères correspondant sans accents
+     * @param chaine La chaine de caractères sur laquelle appliquer les transformations
+     * @return La chaine de caractères modifiée
+     */
     public String replaceCarac(String chaine) {
         chaine = chaine.replace(" ", "_");
 

@@ -109,8 +109,11 @@ public class Activite extends Etape {
         return this.ecartTemps;
     }
 
+    /**
+     * Méthode qui renvoie le nombre de jetons
+     * @return Le nombre de jetons
+     */
     public int getNbJetons(){
         return 0;
     }
-
 }

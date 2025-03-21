@@ -166,19 +166,29 @@ public class Monde implements Iterable<Etape> {
         return sb.toString();
     }
 
-
+    /**
+     * Méthode qui récupère le nombre de jetons
+     * @return Le nombre de jetons
+     */
     public int nbClients(){
         return this.nbClients;
     }
 
+    /**
+     * Méthode qui définie le nombre de clients
+     * @param nbClients Le nombre de clients à définir
+     */
     public void setNbClients(int nbClients) {
         this.nbClients = nbClients;
     }
 
+    /**
+     * Méthode qui remplace les caractères spéciaux par les caractères correspondant sans accents
+     * @param chaine La chaine de caractères sur laquelle appliquer les transformations
+     * @return La chaine de caractères modifiée
+     */
     public String replaceCarac(String chaine) {
-
         chaine = chaine.replace(" ", "_");
-
         chaine = chaine.replace("é", "e");
         chaine = chaine.replace("è", "e");
         chaine = chaine.replace("É", "E");
