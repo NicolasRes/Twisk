@@ -18,10 +18,10 @@ public class FabriqueMonde {
     public static Monde fabriqueMondeBasique() {
 
         Monde monde = new Monde();
-        Activite act1 = new Activite("A1",8,3);
-        Guichet g1 = new Guichet("G1",3);
-        Activite act2 = new ActiviteRestreinte("A2",4,2);
-        Guichet g2 = new Guichet("G2",6);
+        Activite act1 = new Activite("étape 1 tobogan",8,3);
+        Guichet g1 = new Guichet("ètape 2 g1",3);
+        Activite act2 = new ActiviteRestreinte("etape 3 piscine",4,2);
+        Guichet g2 = new Guichet("ETAPE 4 g2",6);
         Activite act3 = new ActiviteRestreinte("A3",2,1);
 
         act1.ajouterSuccesseur(g1);

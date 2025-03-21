@@ -16,7 +16,6 @@ public class Simulation {
     private int TMP_ATTENTE = 1;
     private int nbCLient;
 
-
     /**
      * Constructeur de la classe Simulation
      */

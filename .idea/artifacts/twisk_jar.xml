@@ -3,19 +3,16 @@
     <output-path>$PROJECT_DIR$/out/artifacts/twisk_jar</output-path>
     <root id="root">
       <element id="archive" name="Twisk.jar">
-        <element id="directory" name="META-INF">
-          <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
-        </element>
         <element id="module-output" name="Twisk" />
       </element>
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:linux:21" />
       <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:mac-aarch64:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:mac-aarch64:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:mac-aarch64:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:21" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:linux:21" />
       <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:mac-aarch64:21" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:21" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:21" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:linux:21" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:linux:21" />
     </root>
   </artifact>
 </component>

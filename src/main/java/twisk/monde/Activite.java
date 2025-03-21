@@ -80,8 +80,14 @@ public class Activite extends Etape {
     public String toC(){
         StringBuilder sb = new StringBuilder();
 
+        String nom = this.getNom();
+        nom = this.replaceCarac(nom);
+
+        String nomSuccesseur = this.getSuccesseur(0).getNom();
+        nomSuccesseur =this.replaceCarac(nomSuccesseur);
+
         sb.append(" delai(").append(this.temps).append(", ").append(this.ecartTemps).append("); \n");
-        sb.append(" transfert(").append(getNom()).append(", ").append(this.getSuccesseur(0).getNom()).append(");\n");
+        sb.append(" transfert(").append(nom).append(", ").append(nomSuccesseur).append(");\n");
         sb.append(this.getSuccesseur(0).toC());
 
         return sb.toString();
@@ -106,4 +112,5 @@ public class Activite extends Etape {
     public int getNbJetons(){
         return 0;
     }
+
 }

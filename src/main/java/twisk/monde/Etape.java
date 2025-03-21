@@ -129,4 +129,21 @@ public abstract class Etape implements Iterable<Etape> {
     public abstract int getEcartTemps();
 
     public abstract int getNbJetons();
+
+    public String replaceCarac(String chaine) {
+        chaine = chaine.replace(" ", "_");
+
+        chaine = chaine.replace("é", "e");
+        chaine = chaine.replace("è", "e");
+        chaine = chaine.replace("É", "E");
+        chaine = chaine.replace("È", "E");
+        chaine = chaine.replace("à", "a");
+        chaine = chaine.replace("ù", "u");
+        chaine = chaine.replace("î", "i");
+        chaine = chaine.replace("ô", "o");
+        chaine = chaine.replace("â", "a");
+        chaine = chaine.replace("ç", "c");
+
+        return chaine;
+    }
 }

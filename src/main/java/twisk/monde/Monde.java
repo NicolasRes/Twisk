@@ -146,10 +146,13 @@ public class Monde implements Iterable<Etape> {
         sb.append("#include \"client.h\"\n\n");
 
         for(Etape e : this.lesEtapes){
-            sb.append("#define ").append(e.getNom()).append(" ").append(e.getNumero()).append("\n");
+            String nom = e.getNom();
+            nom =replaceCarac(nom);
+
+            sb.append("#define ").append(nom).append(" ").append(e.getNumero()).append("\n");
 
             if (e.estUnGuichet()){
-                sb.append("#define SEM_").append(e.getNom()).append(" ").append(e.getNumeroSemaphore()).append("\n");
+                sb.append("#define SEM_").append(nom).append(" ").append(e.getNumeroSemaphore()).append("\n");
             }
         }
 
@@ -170,5 +173,23 @@ public class Monde implements Iterable<Etape> {
 
     public void setNbClients(int nbClients) {
         this.nbClients = nbClients;
+    }
+
+    public String replaceCarac(String chaine) {
+
+        chaine = chaine.replace(" ", "_");
+
+        chaine = chaine.replace("é", "e");
+        chaine = chaine.replace("è", "e");
+        chaine = chaine.replace("É", "E");
+        chaine = chaine.replace("È", "E");
+        chaine = chaine.replace("à", "a");
+        chaine = chaine.replace("ù", "u");
+        chaine = chaine.replace("î", "i");
+        chaine = chaine.replace("ô", "o");
+        chaine = chaine.replace("â", "a");
+        chaine = chaine.replace("ç", "c");
+
+        return chaine;
     }
 }
