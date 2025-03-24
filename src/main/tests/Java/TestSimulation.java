@@ -17,7 +17,7 @@ public class TestSimulation {
 
     @Test
     public void testSimuler() {
-        Monde monde = FabriqueMonde.fabriqueMondeBasique();
+        Monde monde = FabriqueMonde.fabriqueMondeBifurc();
 
         Simulation simu = new Simulation();
         simu.setNbClients(6);

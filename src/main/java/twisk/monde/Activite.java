@@ -80,16 +80,29 @@ public class Activite extends Etape {
     public String toC(){
         StringBuilder sb = new StringBuilder();
 
+        int nbSuccesseur = this.nbSuccesseur();
+
         String nom = this.getNom();
         nom = this.replaceCarac(nom);
+        /*
+        */
+        sb.append("srand(getpid() * time(NULL));\n");
+        sb.append("int nb").append(this.getNumero()).append("= (int) ((rand() / (float)RAND_MAX) * ").append(nbSuccesseur).append(");\n");
+        sb.append("switch (nb").append(this.getNumero()).append("){ \n");
 
-        String nomSuccesseur = this.getSuccesseur(0).getNom();
-        nomSuccesseur =this.replaceCarac(nomSuccesseur);
+        for (int i = 0; i < nbSuccesseur; i++) {
+            sb.append(" case ").append(i).append(":{\n");
+            sb.append("    delai(").append(this.temps).append(", ").append(this.ecartTemps).append("); \n");
 
-        sb.append(" delai(").append(this.temps).append(", ").append(this.ecartTemps).append("); \n");
-        sb.append(" transfert(").append(nom).append(", ").append(nomSuccesseur).append(");\n");
-        sb.append(this.getSuccesseur(0).toC());
+            String nomSuccesseur = this.getSuccesseur(i).getNom();
+            nomSuccesseur =this.replaceCarac(nomSuccesseur);
+            sb.append("    transfert(").append(nom).append(", ").append(nomSuccesseur).append(");\n");
+            sb.append(this.getSuccesseur(i).toC());
+            sb.append(" break;\n");
+            sb.append("}\n");
 
+        }
+        sb.append("}\n");
         return sb.toString();
     }
 
