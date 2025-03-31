@@ -143,7 +143,10 @@ public class Monde implements Iterable<Etape> {
         StringBuilder sb = new StringBuilder();
 
         sb.append("#include \"def.h\"\n");
-        sb.append("#include \"client.h\"\n\n");
+        sb.append("#include \"client.h\"\n");
+        sb.append("#include \"stdlib.h\"\n");
+        sb.append("#include \"time.h\"\n\n");
+        sb.append("#include <sys/types.h>\n\n");
 
         for(Etape e : this.lesEtapes){
             String nom = e.getNom();
