@@ -17,6 +17,7 @@ public class Client {
     public Client(int numero) {
         this.numeroClient = numero;
         this.rang = 0;
+        this.etape = null;
     }
 
     /**
@@ -43,5 +44,14 @@ public class Client {
      */
     public int getRang() {
         return this.rang;
+    }
+
+
+    /**
+     * Méthode qui renvoie l'étape du client
+     * @return L'étape du client
+     */
+    public Etape getEtape() {
+        return this.etape;
     }
 }

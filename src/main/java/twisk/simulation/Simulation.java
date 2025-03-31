@@ -55,7 +55,6 @@ public class Simulation {
         }
 
         System.out.println("Lancement de la simulation\n");
-
         lancerSimulation(this.monde);
 
     }
@@ -93,6 +92,12 @@ public class Simulation {
         }
         System.out.println(tabPid[nb_client-1]);
         System.out.println();
+
+
+        //gestionnaireClient
+        for (Client c : gestionnaireClients) {
+            System.out.println(c.getNumeroClient() + " " + c.getRang() + " " + c.getEtape().getNom());
+        }
     }
 
     /**
@@ -111,6 +116,8 @@ public class Simulation {
 
         while (position[(nb_client + 1)] < nb_client) { //  Tant que tous les clients ne sont pas dans la dernière activité, nbact-1 car on commence à 0
             position = ou_sont_les_clients(nb_etape, nb_client);
+            gestionnaireClients.allerA(position[(nb_client+1)];//a finr )
+
             for (int i = 0; i < nb_etape; i++) {
                 int nb_clients = position[i * (nb_client + 1)];
                 System.out.print(nomEtapes[i]+ " " + nb_clients + " clients :");
@@ -121,15 +128,12 @@ public class Simulation {
                 }
                 System.out.println();
             }
-
             try{
                 Thread.sleep(TMP_ATTENTE*1000);
             }catch (InterruptedException e){
                 e.printStackTrace();
             }
             System.out.println();
-
-
         }
         System.out.println("Fin simulation");
     }
@@ -147,6 +151,7 @@ public class Simulation {
         afficher_info_simu(nbClients, nbGuichets, nbEtapes, tabJetonsGuichets);
 
         int[] tabPid = start_simulation(nbEtapes, nbGuichets, nbClients, tabJetonsGuichets);
+        gestionnaireClients.setClients(tabPid);
 
         afficher_pid_client(tabPid, nbClients);
         simule_clients(nbClients, nbEtapes , this.monde);
