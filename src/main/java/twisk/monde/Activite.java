@@ -80,6 +80,7 @@ public class Activite extends Etape {
     public String toC(){
         StringBuilder sb = new StringBuilder();
 
+
         String nom = this.getNom();
         nom = this.replaceCarac(nom);
 

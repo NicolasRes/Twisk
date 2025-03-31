@@ -4,6 +4,8 @@ import twisk.monde.Etape;
 import twisk.monde.Monde;
 import twisk.outil.KitC;
 
+import java.util.Iterator;
+
 /**
  * Classe Simulation qui simule le monde
  */
@@ -14,7 +16,8 @@ public class Simulation {
     public native int[] ou_sont_les_clients(int nbEtapes, int nbClients);
     public native void nettoyage();
     private int TMP_ATTENTE = 1;
-    private int nbCLient;
+    private int nbCLients;
+    private GestionnaireClients gestionnaireClients;
 
     /**
      * Constructeur de la classe Simulation
@@ -22,11 +25,12 @@ public class Simulation {
     public Simulation() {
         this.kitC = new KitC();
         this.kitC.creerEnvironnement();
-        this.nbCLient=0;
+        this.nbCLients =0;
+        this.gestionnaireClients = new GestionnaireClients();
     }
 
     public void setNbClients(int nbClients) {
-        this.nbCLient=nbClients;
+        this.nbCLients = nbClients;
     }
 
     /**
@@ -36,7 +40,7 @@ public class Simulation {
     public void simuler(Monde monde){
 
         this.monde = monde;
-        this.monde.setNbClients(nbCLient);
+        this.monde.setNbClients(nbCLients);
         //System.out.println(monde.toString());
         String mondeC = monde.toC();
 
