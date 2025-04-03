@@ -1,31 +1,54 @@
 package twisk;
 
 import twisk.monde.*;
-import twisk.simulation.Simulation;
+import twisk.outil.ClassLoaderPerso;
+import twisk.outil.FabriqueMonde;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class ClientTwisk {
+    public Object instance;
+    public Method setNbClient;
+    public Method simuler;
+    public ClassLoaderPerso clp;
+    public int nbClients;
 
-    public static void main(String[] args) {
-        Monde monde = new Monde();
+    public void simulation(Monde monde) {
+        this.nbClients = 6;
+        try {
+            clp = new ClassLoaderPerso(getClass().getClassLoader());
 
-        Activite act1 = new Activite("1", 2, 1) ;
-        Activite act2 = new Activite("2", 2, 1) ;
-        Activite act3 = new Activite("3", 2, 1) ;
-        Activite act4 = new Activite("4", 2, 1);
-        Activite act5 = new Activite("5", 2, 1);
+            Class<?> simulationClass = clp.loadClass("twisk.simulation.Simulation");
 
-        Guichet guich = new Guichet("ticket", 2) ;
+            Constructor<?> constructeur = simulationClass.getConstructor();
+            instance = constructeur.newInstance();
+            System.out.println("Constructeur");
 
-        act2.ajouterSuccesseur(act3);
-        act4.ajouterSuccesseur(guich);
-        guich.ajouterSuccesseur(act5);
+            setNbClient = simulationClass.getMethod("setNbClients", int.class);
+            setNbClient.invoke(instance, nbClients);
 
-        monde.aCommeEntree(act1, act2, act4);
-        monde.aCommeSortie(act1, act3, act5);
+            simuler = simulationClass.getMethod("simuler", Monde.class);
+            simuler.invoke(instance, monde);
+        } catch (ClassNotFoundException e) {
+            System.err.println("La classe Simulation n'a pas été trouvée");
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            System.err.println("La méthode demandée n'existe pas");
+            e.printStackTrace();
+        } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
+            System.err.println("Erreur lors de l'appel de la méthode");
+            e.printStackTrace();
+        }
+    }
 
-        monde.ajouter(act1, act2, act3, act4, guich,act5);
+    public void main(String[] args) {
+        Monde monde1 = FabriqueMonde.fabriqueMondeBasique();
+        Monde monde2 = FabriqueMonde.fabriqueMondeBifurc();
+        simulation(monde1);
 
-        Simulation sim = new Simulation();
-        sim.simuler(monde);
+        System.gc();
+        simulation(monde2);
     }
 }
