@@ -52,8 +52,8 @@ public class GestionnaireClients implements Iterable<Client> {
     }
 
     /**
-     * Méthode qui permet d'itérer sur un gestionnaire d'étapes
-     * @return L'itérateur du gestionnaire d'étapes
+     * Méthode qui permet d'itérer sur un gestionnaire de clients
+     * @return L'itérateur du gestionnaire de clients
      */
     public Iterator<Client> iterator() {
         return this.clients.iterator();
