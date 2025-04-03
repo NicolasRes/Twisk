@@ -9,16 +9,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class ClientTwisk {
-    public Object instance;
-    public Method setNbClient;
-    public Method simuler;
-    public ClassLoaderPerso clp;
-    public int nbClients;
+    public static Object instance;
+    public static Method setNbClient;
+    public static Method simuler;
+    public static ClassLoaderPerso clp;
+    public static int nbClients;
 
-    public void simulation(Monde monde) {
-        this.nbClients = 6;
+    public static void simulation(Monde monde) {
+        nbClients = 6;
         try {
-            clp = new ClassLoaderPerso(getClass().getClassLoader());
+            clp = new ClassLoaderPerso(ClientTwisk.class.getClassLoader());
 
             Class<?> simulationClass = clp.loadClass("twisk.simulation.Simulation");
 
@@ -43,7 +43,7 @@ public class ClientTwisk {
         }
     }
 
-    public void main(String[] args) {
+    public static void main(String[] args) {
         Monde monde1 = FabriqueMonde.fabriqueMondeBasique();
         Monde monde2 = FabriqueMonde.fabriqueMondeBifurc();
         simulation(monde1);
