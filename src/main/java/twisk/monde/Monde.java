@@ -205,4 +205,11 @@ public class Monde implements Iterable<Etape> {
 
         return chaine;
     }
+
+    public Etape getEtape(int i) {
+        if(i < this.lesEtapes.nbEtapes()) {
+            return this.lesEtapes.getEtape(i);
+        }
+        return null;
+    }
 }

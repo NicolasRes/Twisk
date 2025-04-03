@@ -1,6 +1,5 @@
 package Java;
 
-
 import org.junit.Test;
 import twisk.monde.Monde;
 import twisk.outil.FabriqueMonde;
