@@ -2,6 +2,7 @@ package twisk.simulation;
 
 import twisk.monde.Etape;
 import twisk.monde.Monde;
+import twisk.outil.FabriqueNumero;
 import twisk.outil.KitC;
 
 import java.util.Iterator;
@@ -18,6 +19,12 @@ public class Simulation {
     private int TMP_ATTENTE = 1;
     private int nbCLients;
     private GestionnaireClients gestionnaireClients;
+
+    private String nomBibliotheque = "libTwisk";
+
+    public void setNomBibliotheque(String nom) {
+        this.nomBibliotheque = nom;
+    }
 
     /**
      * Constructeur de la classe Simulation
@@ -37,25 +44,26 @@ public class Simulation {
      * Méthode qui permet de lancer la simulation du monde
      * @param monde Le monde à simuler
      */
-    public void simuler(Monde monde){
-
+    public void simuler(Monde monde) {
         this.monde = monde;
         this.monde.setNbClients(nbCLients);
         String mondeC = monde.toC();
 
+        int numSimulation = FabriqueNumero.getInstance().getNumeroSimulation();
+
+        this.setNomBibliotheque("libTwisk" + numSimulation);
         this.kitC.creerFichier(mondeC);
         this.kitC.compiler();
-        this.kitC.construireLabBibliotheque();
-        if(System.getProperty("os.name").contains("Linux")){
-            System.load("/tmp/twisk/libTwisk.so");
-        }
-        else if(System.getProperty("os.name").contains("Mac")){
-            System.load("/tmp/twisk/libTwisk.dylib");
+        this.kitC.construireLabBibliotheque(nomBibliotheque);
+
+        if(System.getProperty("os.name").contains("Linux")) {
+            System.load("/tmp/twisk/" + nomBibliotheque + ".so");
+        } else if(System.getProperty("os.name").contains("Mac")) {
+            System.load("/tmp/twisk/" + nomBibliotheque + ".dylib");
         }
 
-        System.out.println("Lancement de la simulation\n");
+        System.out.println("==========Lancement de la simulation==========\n");
         lancerSimulation(this.monde);
-
     }
 
     /**
@@ -101,6 +109,8 @@ public class Simulation {
      * @param nb_etape Le nombre d'étapes de la simulation
      */
     public void simule_clients(int nb_client, int nb_etape, Monde monde) {
+
+
         String[] nomEtapes = new String[nb_etape];
 
         for (Etape etape : monde) {
@@ -127,7 +137,7 @@ public class Simulation {
             System.out.println("\nGestionnaire Clients :");
             for (Client c : gestionnaireClients) {
                 if (c.getEtape() != null) {
-                    System.out.println("Client " + c.getNumeroClient() + " est à l'étape " + c.getEtape().getNom() + " avec rang " + c.getRang());
+                    System.out.println("Client " + c.getNumeroClient() + " est à l'étape " + c.getEtape().getNom());
                 }
             }
 
@@ -140,7 +150,7 @@ public class Simulation {
             System.out.println();
         }
 
-        System.out.println("Fin simulation");
+        System.out.println("==========Fin simulation==========\n");
         gestionnaireClients.nettoyer();
     }
 
@@ -159,7 +169,6 @@ public class Simulation {
 
         int[] tabPid = start_simulation(nbEtapes, nbGuichets, nbClients, tabJetonsGuichets);
         gestionnaireClients.setClients(tabPid);
-
 
         afficher_pid_client(tabPid, nbClients);
         simule_clients(nbClients, nbEtapes , this.monde);

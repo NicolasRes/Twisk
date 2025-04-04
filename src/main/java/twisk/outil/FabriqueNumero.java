@@ -7,6 +7,7 @@ public class FabriqueNumero {
     private static FabriqueNumero instance;
     private int cptEtape;
     private int cptSemaphore;
+    private int cptSimulation;
 
     /**
      * Constructeur de la classe FabriqueNumero
@@ -14,6 +15,7 @@ public class FabriqueNumero {
     private FabriqueNumero() {
         this.cptEtape = 0;
         this.cptSemaphore = 1;
+        this.cptSimulation = 0;
     }
 
     /**
@@ -45,11 +47,17 @@ public class FabriqueNumero {
         return this.cptSemaphore -1 ;
     }
 
+    public int getNumeroSimulation() {
+        this.cptSimulation++;
+        return this.cptSimulation;
+    }
+
     /**
      * Méthode qui remet à 0 le compteur d'étapes
      */
     public void reset() {
         this.cptEtape = 0;
         this.cptSemaphore = 1;
+        this.cptSimulation = 0;
     }
 }

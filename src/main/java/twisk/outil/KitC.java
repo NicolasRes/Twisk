@@ -16,23 +16,28 @@ public class KitC {
     /**
      * Méthode qui crée des copies de fichiers dans un répertoire temporaire en vue d'intégrer du code C dans Java
      */
-    public void creerEnvironnement(){
+    public void creerEnvironnement() {
         Path directory = Paths.get("/tmp/twisk");
+
         try {
-            // création du répertoire twisk sous /tmp.
-            // Ne déclenche pas d’erreur si le répertoire existe déjà
-             Files.createDirectories(directory);
+            Files.createDirectories(directory);
 
-            // copie des fichiers programmeC.o, def.h et programmeCMac.o sous /tmp/twisk
-            String[] liste = {"programmeC.o", "def.h", "programmeCMac.o" , "client.h" , "codeNatif.o"};
+            String projectRoot = System.getProperty("user.dir");
+            Path resourcePath = Paths.get(projectRoot, "src", "main", "ressources", "codeC");
+
+            String[] liste = {"programmeC.o", "def.h", "programmeCMac.o", "client.h", "codeNatif.o"};
+
             for (String nom : liste) {
-
-                InputStream src = getClass().getResourceAsStream("/codeC/" + nom);
+                Path sourcePath = resourcePath.resolve(nom);
+                if (!Files.exists(sourcePath)) {
+                    System.err.println("ERREUR: Fichier non trouvé: " + sourcePath);
+                    continue;
+                }
                 Path dest = directory.resolve(nom);
-                Files.copy(src, dest, StandardCopyOption.REPLACE_EXISTING);
-
+                Files.copy(sourcePath, dest, StandardCopyOption.REPLACE_EXISTING);
             }
         } catch (IOException e) {
+            System.err.println("Erreur d'E/S lors de la création de l'environnement:");
             e.printStackTrace();
         }
     }
@@ -57,9 +62,6 @@ public class KitC {
         // Définir la commande à exécuter
         ProcessBuilder pb = new ProcessBuilder("gcc", "-Wall", "-c", "/tmp/twisk/client.c", "-o", "/tmp/twisk/client.o");
         try {
-            /* Demander l'exécution de la compilation (start)
-             inheritIO() permet de récupérer les affichages sur la sortie standard et la sortie d'erreur
-             waitFor s'assure que la tâche demandée se termine avant de passer à la suite en demandant au processus d'attendre sa fin */
             pb.inheritIO().start().waitFor();
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
@@ -69,17 +71,16 @@ public class KitC {
     /**
      * Méthode qui construit dynamiquement la bibliothèque
      */
-    public void construireLabBibliotheque() {
+    public void construireLabBibliotheque(String nomBibliotheque) {
         if (System.getProperty("os.name").contains("Linux")) {
-            ProcessBuilder pb = new ProcessBuilder("gcc", "-shared", "/tmp/twisk/programmeC.o", "/tmp/twisk/codeNatif.o","/tmp/twisk/client.o", "-o", "/tmp/twisk/libTwisk.so");
+            ProcessBuilder pb = new ProcessBuilder("gcc", "-shared", "/tmp/twisk/programmeC.o", "/tmp/twisk/codeNatif.o", "/tmp/twisk/client.o", "-o", "/tmp/twisk/" + nomBibliotheque + ".so");
             try {
                 pb.inheritIO().start().waitFor();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
-        }
-         else if (System.getProperty("os.name").contains("Mac")) {
-            ProcessBuilder pb = new ProcessBuilder("gcc", "-dynamiclib", "/tmp/twisk/programmeCMac.o", "/tmp/twisk/client.o", "-o", "/tmp/twisk/libTwisk.dylib");
+        } else if (System.getProperty("os.name").contains("Mac")) {
+            ProcessBuilder pb = new ProcessBuilder("gcc", "-dynamiclib", "/tmp/twisk/programmeCMac.o", "/tmp/twisk/client.o", "-o", "/tmp/twisk/" + nomBibliotheque + ".dylib");
             try {
                 pb.inheritIO().start().waitFor();
             } catch (InterruptedException | IOException e) {
