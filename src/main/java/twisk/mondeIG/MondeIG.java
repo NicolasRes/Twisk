@@ -210,9 +210,14 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
             supprimerArcsAssocies(etape);
             this.etapes.remove(etape.getIdentifiant());
         }
+        for(ArcIG arc : this.arcsSelectionnes) {
+            this.arcs.remove(arc);
+        }
 
         this.pointsSelectionnes.clear();
         this.etapesSelectionnees.clear();
+        this.arcsSelectionnes.clear();
+
         notifierObservateurs();
     }
 
