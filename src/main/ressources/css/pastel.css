@@ -1,0 +1,81 @@
+/*
+Feuille de style pastel CSS liée au projet twiskIG
+ */
+
+.button {
+    -fx-border-width: 5px;
+    -fx-border-color: #D8BEE5;
+    -fx-background-color: #F3E4F5;
+    -fx-font-size: 12;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: #F8D9F4;
+}
+
+.TilePane {
+    -fx-background-color: #A7ABDE;
+}
+
+.hbox {
+    -fx-border-width: 3px;
+    -fx-border-color: #A7ABDE;
+    -fx-background-color: #D8BEE5;
+    -fx-background-insets: 0, 0, -1, 0, 0, 1, 2;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+}
+
+.Pane {
+    -fx-background-color: #C8CEEE;
+}
+
+.label {
+    -fx-text-fill: black;
+    -fx-font-family: "Times New Roman";
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+    -fx-background-color: #FCDCE1;
+}
+
+.vbox {
+    -fx-border-width: 3px;
+    -fx-border-color: #A7ABDE;
+    -fx-background-color: #FCDCE1;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-padding: 10px;
+    -fx-spacing: 5px;
+    -fx-background-insets: 0, 0, -1, 0, 0, 1, 2;
+}
+
+.etapeSelection {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.2, 0, 0);
+    -fx-border-color: red;
+}
+
+.circle {
+    -fx-fill: #7A4E8E;
+}
+
+.circle:hover {
+    -fx-fill: #9C66A1;
+}
+
+.line {
+    -fx-stroke: black;
+    -fx-stroke-width: 5;
+}
+
+.polyline {
+    -fx-fill: black;
+}
+
+.lineSelection {
+    -fx-stroke: red;
+}
+
+.polylineSelection {
+    -fx-fill: red;
+}
