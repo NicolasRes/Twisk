@@ -11,14 +11,15 @@ Feuille de style pastel CSS liée au projet twiskIG
 }
 
 .button:hover {
-    -fx-background-color: #F8D9F4;
+    -fx-background-color: #A1D69B;
 }
 
+/*
 .buttonGuichet {
     -fx-border-color: #A3CFA3;
     -fx-background-color: #B8E6B4;
 }
-
+*/
 .buttonGuichet:hover {
     -fx-background-color: #A1D69B;
 }
