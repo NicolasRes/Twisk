@@ -4,12 +4,20 @@ package twisk.outils;
  * Classe responsable de la taille des différents composants
  */
 public class TailleComposants {
-    public static final int LARGEUR_ETAPE = 150;
-    public static final int HAUTEUR_ETAPE = 100;
+    // Fenêtre principale
     public static final int LARGEUR_FENETRE = 800;
     public static final int HAUTEUR_FENETRE = 800;
     public static final int MARGE_BAS = 70;
+
+    // Etapes
+    public static final int LARGEUR_ETAPE = 150;
+    public static final int HAUTEUR_ETAPE = 100;
     public static final int HAUTEUR_MINI_ACT = 50;  // Nécessaire car notre hbox est vide
+
+    // Guichets
+    public static final int LARGEUR_GUICHET = 300;
+    public static final int HAUTEUR_GUICHET = 100;
+    public static final int HAUTEUR_MINI_GUI = 50;
 
     // Variables utilisées pour compenser le spacing et le padding attribués à la vbox et ainsi réajuster les points de contrôle
     public static final int PADDING_X = 10;
@@ -23,5 +31,6 @@ public class TailleComposants {
     public static final int LONG_FLECHE = 10;
     public static final double ANGLE_FLECHE = Math.PI / 6;
 
+    // Menu
     public static final int HAUTEUR_MENU = 32;
 }

@@ -85,9 +85,16 @@ public class VueMondeIG extends Pane implements Observateur {
      */
     public void afficherEtapes() {
         for(EtapeIG e : this.monde) {
-            VueEtapeIG act = new VueActiviteIG(this.monde, e);
-            this.getChildren().add(act);
-            act.relocate(e.getPosX(), e.getPosY());
+            if(e.getType() == "Activite") {
+                VueEtapeIG act = new VueActiviteIG(this.monde, e);
+                this.getChildren().add(act);
+                act.relocate(e.getPosX(), e.getPosY());
+            }
+            else if (e.getType() == "Guichet") {
+                VueEtapeIG gui = new VueGuichetIG(this.monde, e);
+                this.getChildren().add(gui);
+                gui.relocate(e.getPosX(), e.getPosY());
+            }
 
             afficherPointDeControle(e);
         }

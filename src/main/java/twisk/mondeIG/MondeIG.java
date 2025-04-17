@@ -1,6 +1,7 @@
 package twisk.mondeIG;
 
 import twisk.exceptions.TwiskArcException;
+import twisk.exceptions.TwiskJetonsException;
 import twisk.exceptions.TwiskMenuException;
 import twisk.outils.TailleComposants;
 
@@ -41,6 +42,11 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         if(type.equals("Activité")) {
             EtapeIG act = new ActiviteIG("Act", TailleComposants.LARGEUR_ETAPE, TailleComposants.HAUTEUR_ETAPE);
             this.etapes.put(act.getIdentifiant(), act);
+            notifierObservateurs();
+        }
+        if(type.equals("Guichet")) {
+            EtapeIG gui = new GuichetIG("Gui", TailleComposants.LARGEUR_GUICHET, TailleComposants.HAUTEUR_GUICHET);
+            this.etapes.put(gui.getIdentifiant(), gui);
             notifierObservateurs();
         }
     }
@@ -275,24 +281,6 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
     }
 
     /**
-     * Méthode qui supprime les étapes et les arcs sélectionnés
-     */
-    public void supprimerSelection() {
-        for(EtapeIG etape : this.etapesSelectionnees) {
-            this.etapes.remove(etape.getIdentifiant());
-        }
-        for(ArcIG arc : this.arcsSelectionnes) {
-            this.arcs.remove(arc);
-        }
-
-        this.pointsSelectionnes.clear();
-        this.etapesSelectionnees.clear();
-        this.arcsSelectionnes.clear();
-
-        notifierObservateurs();
-    }
-
-    /**
      * Méthode qui désélectionne les étapes sélectionnées
      */
     public void deselectionnerEtapes() {
@@ -386,6 +374,22 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         }
         else {
             throw new TwiskMenuException("Erreur, l'étape sélectionnée n'est pas une activité");
+        }
+    }
+
+    /**
+     * Méthode qui définit le nombre de jetons d'un guichet
+     * @param jetons Le nombre de jetons à associer au guichet
+     * @throws TwiskJetonsException Exception déclenchée si le nombre de jetons attribué au guichet est incorrect
+     */
+    public void definirJetons(int jetons) throws TwiskJetonsException {
+        if(this.etapesSelectionnees.getFirst().getType().equals("Guichet")) {
+            GuichetIG gui = (GuichetIG) this.etapesSelectionnees.getFirst();
+            gui.setNbJetons(jetons);
+            notifierObservateurs();
+        }
+        else {
+            throw new TwiskJetonsException("Erreur, l'étape sélectionnée n'est pas un guichet");
         }
     }
 

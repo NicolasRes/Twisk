@@ -14,6 +14,15 @@ Feuille de style pastel CSS liée au projet twiskIG
     -fx-background-color: #F8D9F4;
 }
 
+.buttonGuichet {
+    -fx-border-color: #A3CFA3;
+    -fx-background-color: #B8E6B4;
+}
+
+.buttonGuichet:hover {
+    -fx-background-color: #A1D69B;
+}
+
 .TilePane {
     -fx-background-color: #A7ABDE;
 }
@@ -22,6 +31,15 @@ Feuille de style pastel CSS liée au projet twiskIG
     -fx-border-width: 3px;
     -fx-border-color: #A7ABDE;
     -fx-background-color: #D8BEE5;
+    -fx-background-insets: 0, 0, -1, 0, 0, 1, 2;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+}
+
+.hboxGuichet {
+    -fx-border-width: 3px;
+    -fx-border-color: #A2B9A6;
+    -fx-background-color: #D3E4CD;
     -fx-background-insets: 0, 0, -1, 0, 0, 1, 2;
     -fx-background-radius: 15px;
     -fx-border-radius: 15px;
@@ -45,6 +63,17 @@ Feuille de style pastel CSS liée au projet twiskIG
     -fx-background-color: #FCDCE1;
     -fx-background-radius: 15px;
     -fx-border-radius: 15px;
+    -fx-padding: 10px;
+    -fx-spacing: 5px;
+    -fx-background-insets: 0, 0, -1, 0, 0, 1, 2;
+}
+
+.vboxGuichet {
+    -fx-border-width: 3px;
+    -fx-border-color: #A2B9A6;
+    -fx-background-color: #FCDCE1;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 12px;
     -fx-padding: 10px;
     -fx-spacing: 5px;
     -fx-background-insets: 0, 0, -1, 0, 0, 1, 2;

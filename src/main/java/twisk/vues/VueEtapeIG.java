@@ -39,14 +39,34 @@ public abstract class VueEtapeIG extends VBox {
         this.icone = new Label();
         this.hbox = new HBox();
 
-        // Taille VBox
-        this.setMinWidth(TailleComposants.LARGEUR_ETAPE);
-        this.setMinHeight(TailleComposants.HAUTEUR_ETAPE);
-        this.setMaxWidth(TailleComposants.LARGEUR_ETAPE + TailleComposants.PADDING_X + TailleComposants.PADDING_SPACING);
-        this.setMaxHeight(TailleComposants.HAUTEUR_ETAPE);
+        // Configuration de la VBox en fonction du type d'activité
+        if(this.etape.getType() == "Activite") {
+            // Taille VBox activité
+            this.setMinWidth(TailleComposants.LARGEUR_ETAPE);
+            this.setMinHeight(TailleComposants.HAUTEUR_ETAPE);
+            this.setMaxWidth(TailleComposants.LARGEUR_ETAPE + TailleComposants.PADDING_X + TailleComposants.PADDING_SPACING);
+            this.setMaxHeight(TailleComposants.HAUTEUR_ETAPE);
 
-        // Taille titre
-        this.titre.setPrefWidth(TailleComposants.LARGEUR_ETAPE);
+            // Taille titre activité
+            this.titre.setPrefWidth(TailleComposants.LARGEUR_ETAPE);
+
+            // Style VBox activité
+            this.getStyleClass().add("vbox");
+        }
+        else if(this.etape.getType() == "Guichet") {
+            // Taille VBox guichet
+            this.setMinWidth(TailleComposants.LARGEUR_GUICHET);
+            this.setMinHeight(TailleComposants.HAUTEUR_GUICHET);
+            this.setMaxWidth(TailleComposants.LARGEUR_GUICHET + TailleComposants.PADDING_X + TailleComposants.PADDING_SPACING);
+            this.setMaxHeight(TailleComposants.HAUTEUR_GUICHET);
+
+            // Taille titre guichet
+            this.titre.setPrefWidth(TailleComposants.LARGEUR_GUICHET);
+
+            // Style VBox guichet
+            this.getStyleClass().add("vboxGuichet");
+        }
+
         this.titre.setAlignment(Pos.CENTER);
 
         // Ajout des enfants
@@ -60,7 +80,7 @@ public abstract class VueEtapeIG extends VBox {
 
         // Ajout style CSS
         this.titre.getStyleClass().add("Label");
-        this.getStyleClass().add("vbox");
+
 
         // Mise à jour dynamique des attributs
         updateCouleurSelection();

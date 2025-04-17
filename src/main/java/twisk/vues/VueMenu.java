@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import twisk.exceptions.TwiskJetonsException;
 import twisk.exceptions.TwiskMenuException;
 import twisk.mondeIG.MondeIG;
 
@@ -26,7 +27,7 @@ public class VueMenu extends MenuBar implements Observateur {
     private Menu menuMonde;
     private Menu parametres;
     private Menu style;
-    private MenuItem delai, ecart, renommer;
+    private MenuItem delai, ecart, renommer, jetons;
 
     /**
      * Constructeur de la classe VueMenu
@@ -54,12 +55,13 @@ public class VueMenu extends MenuBar implements Observateur {
         MenuItem sortie = new MenuItem("Sortie");
         this.delai = new MenuItem("Délai");
         this.ecart = new MenuItem("Écart");
+        this.jetons = new MenuItem("Jetons");
         MenuItem pastel = new MenuItem("Pastel");
         MenuItem vanille = new MenuItem("Vanille");
 
-        initialiserImages(quitter, supprimer, renommer, desactiverSelection, entree, sortie, delai, ecart,
+        initialiserImages(quitter, supprimer, this.renommer, desactiverSelection, entree, sortie, this.delai, this.ecart, this.jetons,
                 pastel, vanille);
-        initialiserEvenements(quitter, supprimer, renommer, desactiverSelection, entree, sortie, delai, ecart,
+        initialiserEvenements(quitter, supprimer, this.renommer, desactiverSelection, entree, sortie, this.delai, this.ecart, this.jetons,
                 pastel, vanille);
 
         updateMenuItems();
@@ -75,12 +77,13 @@ public class VueMenu extends MenuBar implements Observateur {
      * @param sortie Le MenuItem qui permet de désigner les activités sélectionnées comme sorties du monde
      * @param delai Le MenuItem qui permet d'assigner un délai à une activité
      * @param ecart Le MenuItem qui permet d'assigner un écart de temps à une activité
+     * @param jetons Le MenuItem qui permet de modifier le nombre de jetons d'un guichet
      * @param pastel Le MenuItem qui permet de choisir le style pastel
      * @param vanille Le MenuItem qui permet de choisir le style vanille
      */
     private void initialiserImages(MenuItem quitter, MenuItem supprimer, MenuItem renommer,
                                    MenuItem desactiverSelection, MenuItem entree, MenuItem sortie, MenuItem delai,
-                                   MenuItem ecart, MenuItem pastel, MenuItem vanille) {
+                                   MenuItem ecart, MenuItem jetons, MenuItem pastel, MenuItem vanille) {
         // Quitter
         Image imQuitter = new Image(getClass().getResourceAsStream("/images/leave.png"), 30, 30, true, true);
         quitter.setGraphic(new ImageView(imQuitter));
@@ -113,11 +116,15 @@ public class VueMenu extends MenuBar implements Observateur {
         Image imEcart = new Image(getClass().getResourceAsStream("/images/gap.png"), 30, 30, true, true);
         ecart.setGraphic(new ImageView(imEcart));
 
+        // Jetons
+        Image imJetons = new Image(getClass().getResourceAsStream("/images/jeton.png"), 30, 30, true, true);
+        jetons.setGraphic(new ImageView(imJetons));
+
         // On ajoute les items aux menus
         this.fichier.getItems().add(quitter);
         this.edition.getItems().addAll(supprimer, renommer, desactiverSelection);
         this.menuMonde.getItems().addAll(entree, sortie);
-        this.parametres.getItems().addAll(delai, ecart);
+        this.parametres.getItems().addAll(delai, ecart, jetons);
         this.style.getItems().addAll(pastel, vanille);
     }
 
@@ -131,10 +138,11 @@ public class VueMenu extends MenuBar implements Observateur {
      * @param sortie Le MenuItem qui permet de désigner les activités sélectionnées comme sorties du monde
      * @param delai Le MenuItem qui permet d'assigner un délai à une activité
      * @param ecart Le MenuItem qui permet d'assigner un écart de temps à une activité
+     * @param jetons Le MenuItem qui permet de modifier le nombre de jetons d'un guichet
      */
     private void initialiserEvenements(MenuItem quitter, MenuItem supprimer, MenuItem renommer,
                                        MenuItem desactiverSelection, MenuItem entree, MenuItem sortie, MenuItem delai,
-                                       MenuItem ecart, MenuItem pastel, MenuItem vanille)   {
+                                       MenuItem ecart, MenuItem jetons, MenuItem pastel, MenuItem vanille)   {
         supprimer.setOnAction(e -> {
             this.monde.supprimerEtapesArcs();
         });
@@ -168,7 +176,7 @@ public class VueMenu extends MenuBar implements Observateur {
                 this.monde.definirDelai(dialogueDelaiEcart());
             }
             catch (TwiskMenuException exception) {
-                afficherErreurDelaiEcart(exception.getMessage());
+                afficherErreur(exception.getMessage());
             }
         });
 
@@ -177,7 +185,16 @@ public class VueMenu extends MenuBar implements Observateur {
                 this.monde.definirEcart(dialogueDelaiEcart());
             }
             catch (TwiskMenuException exception) {
-                afficherErreurDelaiEcart(exception.getMessage());
+                afficherErreur(exception.getMessage());
+            }
+        });
+
+        jetons.setOnAction(e -> {
+            try {
+                this.monde.definirJetons(dialogueJetons());
+            }
+            catch (TwiskJetonsException exception) {
+                afficherErreur(exception.getMessage());
             }
         });
 
@@ -200,20 +217,6 @@ public class VueMenu extends MenuBar implements Observateur {
         dialog.setHeaderText("Renommer l'activité");
         dialog.setContentText("Entrez le nouveau nom de l'activité :");
         return dialog.showAndWait().orElse(null);   // Renvoie le texte entré ou null si action annulée
-    }
-
-    /**
-     * Méthode qui affiche une erreur lorsqu'on tente de créer un arc mais qu'il ne respecte pas les conditions requises
-     */
-    private void afficherErreur(String message) {
-        Alert alert = new Alert(ERROR);
-        alert.setTitle("Erreur Menu");
-        alert.setHeaderText("Impossible de renommer");
-        alert.setContentText(message);
-        PauseTransition pause = new PauseTransition(seconds(3));
-        pause.setOnFinished(event -> alert.close());
-        pause.play();
-        alert.showAndWait();
     }
 
     /**
@@ -252,10 +255,9 @@ public class VueMenu extends MenuBar implements Observateur {
     }
 
     /**
-     * Méthode qui affiche une erreur lorsqu'on tente d'attribuer un délai / un écart de temps à une activité sans respecter
-     * les conditions requises
+     * Méthode qui affiche une erreur lorsqu'on tente d'attribuer une valeur à une étape sans respecter les conditions requises
      */
-    private void afficherErreurDelaiEcart(String message) {
+    private void afficherErreur(String message) {
         Alert alert = new Alert(ERROR);
         alert.setTitle("Erreur Menu");
         alert.setHeaderText("Valeur entrée incorrecte");
@@ -267,6 +269,41 @@ public class VueMenu extends MenuBar implements Observateur {
     }
 
     /**
+     * Méthode menu dialogue qui attend un nouveau nombre de jetons pour un guichet
+     * @return Le nouveau nombre de jetons du guichet
+     */
+    private int dialogueJetons() {
+        TextInputDialog dialog = new TextInputDialog("Nouveau nom");
+        dialog.setTitle("Jetons");
+        dialog.setHeaderText("Définir un nombre de jetons");
+        dialog.setContentText("Entrez le nouveau nombre de jetons du guichet :");
+
+        Optional <String> choix = dialog.showAndWait();
+
+        if(choix.isPresent()) {
+            String choixSansEspace = choix.get().trim();
+
+            if (choixSansEspace.isEmpty()) {
+                throw new TwiskJetonsException("Aucune valeur saisie");
+            }
+
+            try {
+                int val = Integer.parseInt(choixSansEspace);
+                if (val <= 0) {
+                    throw new TwiskJetonsException("La valeur doit être un entier positif");
+                }
+                return val;
+            }
+            catch (NumberFormatException exception) {
+                throw new TwiskJetonsException("La saisie ne peut pas être autre chose qu'un entier");
+            }
+        }
+        else {
+            throw new TwiskJetonsException("Aucune saisie");
+        }
+    }
+
+    /**
      * Méthode qui offre l'accès aux menu items delai et ecart si une seule étape est sélectionnée
      */
     public void updateMenuItems() {
@@ -274,11 +311,13 @@ public class VueMenu extends MenuBar implements Observateur {
             this.delai.setDisable(true);
             this.ecart.setDisable(true);
             this.renommer.setDisable(true);
+            this.jetons.setDisable(true);
         }
         else {
             this.delai.setDisable(false);
             this.ecart.setDisable(false);
             this.renommer.setDisable(false);
+            this.jetons.setDisable(false);
         }
     }
 

@@ -13,7 +13,7 @@ import javafx.scene.control.Button;
  */
 public class VueOutils extends TilePane implements Observateur {
     private MondeIG monde;
-    private Button ajouterActivite;
+    private Button ajouterActivite, ajouterGuichet;
 
     /**
      * Constructeur de la classe VueOutils
@@ -25,14 +25,14 @@ public class VueOutils extends TilePane implements Observateur {
         this.monde = monde;
         this.monde.ajouterObservateur(this);
 
-        // Création du bouton pour ajouter une activité
+        // Création des boutons pour ajouter des activités / guichets
         createButtonAjouterActivite();
+        createButtonAjouterGuichet();
 
-        this.ajouterActivite.setOnAction(actionEvent -> {
-            this.monde.ajouter("Activité");
-        });
+        this.ajouterActivite.setOnAction(actionEvent -> {this.monde.ajouter("Activité");});
+        this.ajouterGuichet.setOnAction(e -> this.monde.ajouter("Guichet"));
 
-        this.getChildren().add(this.ajouterActivite);
+        this.getChildren().addAll(this.ajouterActivite, this.ajouterGuichet);
 
         // Ajout style CSS
         this.getStyleClass().add("TilePane");
@@ -47,6 +47,18 @@ public class VueOutils extends TilePane implements Observateur {
         Image imAjouterActivite = new Image(getClass().getResourceAsStream("/images/add.png"), 50, 50, true, true);
         ImageView iconAjouterActivite = new ImageView(imAjouterActivite);
         this.ajouterActivite.setGraphic(iconAjouterActivite);
+    }
+
+    /**
+     * Méthode qui crée un bouton pour ajouter une activité
+     */
+    public void createButtonAjouterGuichet() {
+        this.ajouterGuichet = new Button("");
+        this.ajouterGuichet.setTooltip(new Tooltip("Ajoute un guichet"));
+        Image imAjouterGuichet = new Image(getClass().getResourceAsStream("/images/add.png"), 50, 50, true, true);
+        ImageView iconAjouterGuichet = new ImageView(imAjouterGuichet);
+        this.ajouterGuichet.setGraphic(iconAjouterGuichet);
+        this.ajouterGuichet.getStyleClass().add("buttonGuichet");   // Style différent pour le bouton du guichet
     }
 
     /**

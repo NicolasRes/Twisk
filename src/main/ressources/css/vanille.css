@@ -14,6 +14,17 @@ Feuille de style vanille CSS liée au projet twiskIG
     -fx-background-color: #DDDDDD;
 }
 
+.buttonGuichet {
+    -fx-border-color: #BBBBBB;
+    -fx-background-color: #F0F0F0;
+}
+
+.buttonGuichet:hover {
+    -fx-background-color: #E0E0E0;
+    -fx-border-color: #999999;
+}
+
+
 .TilePane {
     -fx-background-color: #BBBBBB;
 }
