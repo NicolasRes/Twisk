@@ -11,7 +11,7 @@ import java.util.Random;
  * Classe du modèle qui décrit une étape graphique
  */
 public abstract class EtapeIG implements Iterable<PointDeControleIG> {
-    private String nom;
+    protected String nom;
     private String identifiant;
     private double posX;
     private double posY;
@@ -65,9 +65,7 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
      * Méthode qui modifie le nom d'une étape
      * @param nom Le nom choisi pour l'étape
      */
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+    public abstract void setNom(String nom);
 
     /**
      * Méthode qui renvoie le nom d'une étape

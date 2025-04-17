@@ -273,7 +273,7 @@ public class VueMenu extends MenuBar implements Observateur {
      * @return Le nouveau nombre de jetons du guichet
      */
     private int dialogueJetons() {
-        TextInputDialog dialog = new TextInputDialog("Nouveau nom");
+        TextInputDialog dialog = new TextInputDialog("5");
         dialog.setTitle("Jetons");
         dialog.setHeaderText("Définir un nombre de jetons");
         dialog.setContentText("Entrez le nouveau nombre de jetons du guichet :");

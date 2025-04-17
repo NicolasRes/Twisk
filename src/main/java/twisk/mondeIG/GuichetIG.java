@@ -14,8 +14,8 @@ public class GuichetIG extends EtapeIG {
      */
     public GuichetIG (String nom, int larg, int haut) {
         super(nom, larg, haut);
-        setNom(nom + "-" + super.getIdentifiant() + " : " + this.nbJetons + " jetons");
         this.nbJetons = 1;
+        this.setNom(nom);
     }
 
     /**
@@ -24,7 +24,16 @@ public class GuichetIG extends EtapeIG {
      */
     public void setNbJetons(int nbJetons) {
         this.nbJetons = nbJetons;
-        this.setNom("Gui-" + super.getIdentifiant() + " : " + this.nbJetons + " jetons");
+        this.setNom(this.nom);
+    }
+
+    /**
+     * Méthode qui initialise le nom du guichet
+     * @param nom Le nom choisi pour le guichet par l'utilisateur
+     */
+    @Override
+    public void setNom(String nom) {
+        this.nom = nom + "-" + super.getIdentifiant() + " : " + this.nbJetons + " jetons";
     }
 
     /**
