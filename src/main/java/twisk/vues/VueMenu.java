@@ -26,7 +26,7 @@ public class VueMenu extends MenuBar implements Observateur {
     private Menu menuMonde;
     private Menu parametres;
     private Menu style;
-    private MenuItem delai, ecart;
+    private MenuItem delai, ecart, renommer;
 
     /**
      * Constructeur de la classe VueMenu
@@ -48,7 +48,7 @@ public class VueMenu extends MenuBar implements Observateur {
 
         MenuItem quitter = new MenuItem("Quitter");
         MenuItem supprimer = new MenuItem("Supprimer");
-        MenuItem renommer = new MenuItem("Renommer");
+        this.renommer = new MenuItem("Renommer");
         MenuItem desactiverSelection = new MenuItem("Désactiver la sélection");
         MenuItem entree = new MenuItem("Entrée");
         MenuItem sortie = new MenuItem("Sortie");
@@ -144,16 +144,11 @@ public class VueMenu extends MenuBar implements Observateur {
         });
 
         renommer.setOnAction(e -> {
-            try {
                 String nouveauNom = dialogueRenommerActivite();
-                if(nouveauNom == null) {
+                if(nouveauNom == null || nouveauNom.isEmpty()) {
                     return;
                 }
                 this.monde.renommerEtape(nouveauNom);
-            }
-            catch (TwiskMenuException exception) {
-                afficherErreur(exception.getMessage());
-            }
         });
 
         desactiverSelection.setOnAction(e -> {
@@ -278,10 +273,12 @@ public class VueMenu extends MenuBar implements Observateur {
         if(!this.monde.uneEtapeSelectionnee()) {
             this.delai.setDisable(true);
             this.ecart.setDisable(true);
+            this.renommer.setDisable(true);
         }
         else {
             this.delai.setDisable(false);
             this.ecart.setDisable(false);
+            this.renommer.setDisable(false);
         }
     }
 

@@ -219,20 +219,11 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
     /**
      * Méthode qui permet de renommer l'étape sélectionnée à partir du menu
      * @param nom Le nouveau nom entré par l'utilisateur
-     * @throws TwiskMenuException Il doit y avoir exactement une seule étape sélectionnée
      */
     public void renommerEtape(String nom) throws TwiskMenuException {
-        if(this.etapesSelectionnees.size() == 1) {
-            EtapeIG etape = this.etapesSelectionnees.get(0);
+            EtapeIG etape = this.etapesSelectionnees.getFirst();
             etape.setNom(nom);
             notifierObservateurs();
-        }
-        else if(this.etapesSelectionnees.isEmpty()) {
-            throw new TwiskMenuException("Au moins une activité doit être sélectionnée pour un renommage");
-        }
-        else {
-            throw new TwiskMenuException("Impossible de renommer plusieurs activités à la fois");
-        }
     }
 
     /**
