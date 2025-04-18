@@ -8,6 +8,7 @@ import twisk.exceptions.TwiskMenuException;
 public class ActiviteIG extends EtapeIG {
     private int delai;
     private int ecart;
+    private boolean activiteRestreinte;
 
     /**
      * Constructeur de la classe ActiviteIG
@@ -20,6 +21,7 @@ public class ActiviteIG extends EtapeIG {
         this.delai = 2;
         this.ecart = 1;
         this.setNom(nom);
+        this.activiteRestreinte = false;
     }
 
     /**

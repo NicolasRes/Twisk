@@ -33,6 +33,11 @@ public class SimulationIG {
     /*
     public void verifierMondeIG() throws MondeException {
 
+        // guichet suivit restreinte + 1 succ pas plusieurs
+        // guichet pas que sortie
+        // chaque entrée/ sortie a bien un prédecesseur et un successeur
+
+
     }
     */
     /**
