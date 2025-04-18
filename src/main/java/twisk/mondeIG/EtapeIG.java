@@ -21,6 +21,8 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
     private boolean selection;
     private boolean estEntree;
     private boolean estSortie;
+    private ArrayList<EtapeIG> successeurs;
+    private ArrayList<EtapeIG> predecesseurs;
 
     /**
      * Constructeur de la classe EtapeIG
@@ -33,6 +35,8 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         assert(larg >= 0);
         assert(haut >= 0);
 
+        predecesseurs = new ArrayList<>();
+        successeurs = new ArrayList<>();
         this.nom = nom;
         this.largeur = larg;
         this.hauteur = haut;
@@ -179,4 +183,21 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         sb.append("identifiant = ").append(this.identifiant).append("]");
         return sb.toString();
     }
+
+    public void ajouterSuccesseur(EtapeIG e) {
+        this.successeurs.add(e);
+    }
+
+    public void ajouterPredecesseur(EtapeIG e) {
+        this.predecesseurs.add(e);
+    }
+
+    public ArrayList<EtapeIG> getSuccesseurs() {
+        return this.successeurs;
+    }
+
+    public ArrayList<EtapeIG> getPredecesseurs() {
+        return this.predecesseurs;
+    }
+
 }
