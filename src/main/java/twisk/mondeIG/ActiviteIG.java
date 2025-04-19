@@ -55,6 +55,21 @@ public class ActiviteIG extends EtapeIG {
     }
 
     /**
+     * Méthode qui inverse l'état du booléen activiteRestreinte
+     */
+    public void switchActiviteRestreinte() {
+        this.activiteRestreinte = !this.activiteRestreinte;
+    }
+
+    /**
+     * Méthode qui renvoie si l'activité est une activité restreinte ou non
+     * @return Vrai si l'activité est une activité restreinte, faux sinon
+     */
+    public boolean estActiviteRestreinte() {
+        return this.activiteRestreinte;
+    }
+
+    /**
      * Méthode qui renvoie le type d'étape, ici activité
      * @return Le type d'étape "Activite"
      */
