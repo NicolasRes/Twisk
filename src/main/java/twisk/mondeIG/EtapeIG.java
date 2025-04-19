@@ -35,8 +35,6 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         assert(larg >= 0);
         assert(haut >= 0);
 
-        predecesseurs = new ArrayList<>();
-        successeurs = new ArrayList<>();
         this.nom = nom;
         this.largeur = larg;
         this.hauteur = haut;
@@ -45,6 +43,8 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         this.selection = false;
         this.estEntree = false;
         this.estSortie = false;
+        this.predecesseurs = new ArrayList<>();
+        this.successeurs = new ArrayList<>();
 
         Random rand = new Random();
         this.posX = rand.nextDouble(0, TailleComposants.LARGEUR_FENETRE - this.largeur - TailleComposants.PADDING_X - TailleComposants.PADDING_SPACING - TailleComposants.MARGE_X_SUP);
@@ -170,6 +170,38 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
     public abstract String getType();
 
     /**
+     * Méthode qui permet d'ajouter un successeur à la liste des successeurs de l'étape
+     * @param e L'étape à ajouter en tant que successeur
+     */
+    public void ajouterSuccesseur(EtapeIG e) {
+        this.successeurs.add(e);
+    }
+
+    /**
+     * Méthode qui permet d'ajouter un prédécesseur à la liste des prédécesseurs de l'étape
+     * @param e L'étape à ajouter en tant que prédécessseur
+     */
+    public void ajouterPredecesseur(EtapeIG e) {
+        this.predecesseurs.add(e);
+    }
+
+    /**
+     * Méthode qui permet de récupérer les successeurs de l'étape
+     * @return La liste de successeurs de l'étape
+     */
+    public ArrayList<EtapeIG> getSuccesseurs() {
+        return this.successeurs;
+    }
+
+    /**
+     * Méthode qui permet de récupérer les prédécesseurs de l'étape
+     * @return La liste de prédécesseurs de l'étape
+     */
+    public ArrayList<EtapeIG> getPredecesseurs() {
+        return this.predecesseurs;
+    }
+
+    /**
      * Méthode qui renvoie une version String d'une étape
      * @return Les informations d'une étape sous forme de String
      */
@@ -183,21 +215,4 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         sb.append("identifiant = ").append(this.identifiant).append("]");
         return sb.toString();
     }
-
-    public void ajouterSuccesseur(EtapeIG e) {
-        this.successeurs.add(e);
-    }
-
-    public void ajouterPredecesseur(EtapeIG e) {
-        this.predecesseurs.add(e);
-    }
-
-    public ArrayList<EtapeIG> getSuccesseurs() {
-        return this.successeurs;
-    }
-
-    public ArrayList<EtapeIG> getPredecesseurs() {
-        return this.predecesseurs;
-    }
-
 }
