@@ -202,6 +202,15 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
     }
 
     /**
+     * Méthode qui renvoie le premier successeur d'une étape
+     * @param e L'étape dont on veut le premier successeur
+     * @return Le premier successeur de l'étape
+     */
+    public EtapeIG premierSuccesseur(EtapeIG e) {
+        return e.getSuccesseurs().getFirst();
+    }
+
+    /**
      * Méthode qui renvoie une version String d'une étape
      * @return Les informations d'une étape sous forme de String
      */
