@@ -27,12 +27,40 @@ public class SimulationIG {
      * Méthode qui vérifie que les conditions du monde à simuler sont bien remplies
      */
     private void verifierMondeIG() {
+
         for(EtapeIG e : this.monde) {
             if (e.getType().equals("Guichet")) {
                 guichetSansSuccesseur(e);
                 succGuichetValide(e);
+                guichetUnSuccesseur(e);
+                guichetPasQueSortie(e);
                 identifierActiviteRestreinte(e);
+
+            }else{
+                activiteVerifNbSuccPred(e);
             }
+        }
+    }
+
+    private void activiteVerifNbSuccPred(EtapeIG e) {
+        if(e.estEntree() && (e.getPredecesseurs().isEmpty())){
+            System.out.println("Erreur, l'activité " + e.getNom() + " est une entrée, donc elle doit avoir au moins un prédecesseur");
+        }
+        
+        if(e.estSortie() && (e.getSuccesseurs().isEmpty())){
+            System.out.println("Erreur, l'activité " + e.getNom() + " est une sortie, donc elle doit avoir au moins un successeur");
+        }
+    }
+
+    private void guichetPasQueSortie(EtapeIG e) {
+        if(!e.estSortie() || !e.estEntree()){
+            System.out.println("Erreur, le guichet "+ e.getNom() + "doit être une Entrée/ Sortie");
+        }
+    }
+
+    public void guichetUnSuccesseur(EtapeIG e){
+        if(e.getSuccesseurs().size()!=1){
+            System.out.println("Erreur, le guichet " + e.getNom() + " a un nombre de successeurs incorrecte, il doit avoir un seul successeur.");
         }
     }
 
