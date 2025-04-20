@@ -7,6 +7,7 @@ public class FabriqueIdentifiant {
     private static FabriqueIdentifiant instance;
     private int noEtape;
     private int noIdentifiantPDC;
+    private int noIdentifiantGuichet;
 
     /**
      * Constructeur de la classe FabriqueIdentifiant
@@ -14,6 +15,7 @@ public class FabriqueIdentifiant {
     public FabriqueIdentifiant() {
         this.noEtape = 0;
         this.noIdentifiantPDC = 0;
+        this.noIdentifiantGuichet = 0;
     }
 
     /**
@@ -46,10 +48,21 @@ public class FabriqueIdentifiant {
     }
 
     /**
+     * Méthode qui produit des identifiants basés sur le compteur noIdentifiantGuichet
+     * @return Un String d'un nouvel identifiant de guichet
+     */
+    public String getIdentifiantGuichet() {
+        String identifiant = "N°" + this.noIdentifiantGuichet;
+        this.noIdentifiantGuichet++;
+        return identifiant;
+    }
+
+    /**
      * Méthode qui réinitialise le compteur d'identifiants des points de contrôle
      */
     public void reset() {
-        noEtape = 0;
-        noIdentifiantPDC = 0;
+        this.noEtape = 0;
+        this.noIdentifiantPDC = 0;
+        this.noIdentifiantGuichet = 0;
     }
 }
