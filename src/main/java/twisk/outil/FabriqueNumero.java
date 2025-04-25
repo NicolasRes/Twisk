@@ -47,6 +47,10 @@ public class FabriqueNumero {
         return this.cptSemaphore -1 ;
     }
 
+    /**
+     * Méthode qui renvoie le numéro de la simulation
+     * @return Le numéro de la simulation
+     */
     public int getNumeroSimulation() {
         this.cptSimulation++;
         return this.cptSimulation;
