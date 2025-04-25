@@ -12,7 +12,6 @@ import java.util.Random;
  */
 public abstract class EtapeIG implements Iterable<PointDeControleIG> {
     protected String nom;
-    private String identifiant;
     private double posX;
     private double posY;
     private int largeur;
@@ -38,8 +37,6 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         this.nom = nom;
         this.largeur = larg;
         this.hauteur = haut;
-        FabriqueIdentifiant id = FabriqueIdentifiant.getInstance();
-        this.identifiant = id.getIdentifiantEtape();
         this.selection = false;
         this.estEntree = false;
         this.estSortie = false;
@@ -61,9 +58,7 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
      * Méthode qui renvoie l'identifiant de l'étape
      * @return L'identifiant de l'étape sous forme de String
      */
-    public String getIdentifiant() {
-        return this.identifiant;
-    }
+    public abstract String getIdentifiant();
 
     /**
      * Méthode qui modifie le nom d'une étape
@@ -220,8 +215,7 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         sb.append("largeur = ").append(this.largeur).append(", ");
         sb.append("hauteur = ").append(this.hauteur).append(", ");
         sb.append("posX = ").append(this.posX).append(", ");
-        sb.append("posY = ").append(this.posY).append(", ");
-        sb.append("identifiant = ").append(this.identifiant).append("]");
+        sb.append("posY = ").append(this.posY);
         return sb.toString();
     }
 }

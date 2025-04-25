@@ -1,10 +1,13 @@
 package twisk.mondeIG;
 
+import twisk.outils.FabriqueIdentifiant;
+
 /**
  * Classe du modèle qui décrit un guichet
  */
 public class GuichetIG extends EtapeIG {
     private int nbJetons;
+    private String identifiant;
 
     /**
      * Constructeur de la classe GuichetIG
@@ -14,6 +17,9 @@ public class GuichetIG extends EtapeIG {
      */
     public GuichetIG (String nom, int larg, int haut) {
         super(nom, larg, haut);
+
+        FabriqueIdentifiant id = FabriqueIdentifiant.getInstance();
+        this.identifiant = id.getIdentifiantGuichet();
         this.nbJetons = 1;
         this.setNom(nom);
     }
@@ -33,7 +39,15 @@ public class GuichetIG extends EtapeIG {
      */
     @Override
     public void setNom(String nom) {
-        this.nom = nom + "-" + super.getIdentifiant() + " : " + this.nbJetons + " jetons";
+        this.nom = nom + "-" + getIdentifiant() + " : " + this.nbJetons + " jetons";
+    }
+
+    /**
+     * Méthode qui renvoie l'identifiant du guichet
+     * @return L'identifiant du guichet sous forme de String
+     */
+    public String getIdentifiant() {
+        return this.identifiant;
     }
 
     /**
@@ -51,7 +65,7 @@ public class GuichetIG extends EtapeIG {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(super.getNom()).append( " : ");
-        sb.append("Identifiant : ").append(super.getIdentifiant()).append("\n");
+        sb.append("Identifiant : ").append(getIdentifiant()).append("\n");
         sb.append("Nombre de jetons : ").append(this.nbJetons);
         return sb.toString();
     }

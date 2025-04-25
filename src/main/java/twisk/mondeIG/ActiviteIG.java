@@ -1,6 +1,7 @@
 package twisk.mondeIG;
 
 import twisk.exceptions.TwiskMenuException;
+import twisk.outils.FabriqueIdentifiant;
 
 /**
  * Classe du modèle qui décrit une activité
@@ -9,6 +10,7 @@ public class ActiviteIG extends EtapeIG {
     private int delai;
     private int ecart;
     private boolean activiteRestreinte;
+    private String identifiant;
 
     /**
      * Constructeur de la classe ActiviteIG
@@ -18,6 +20,9 @@ public class ActiviteIG extends EtapeIG {
      */
     public ActiviteIG(String nom, int larg, int haut) {
         super(nom, larg, haut);
+
+        FabriqueIdentifiant id = FabriqueIdentifiant.getInstance();
+        this.identifiant = id.getIdentifiantEtape();
         this.delai = 2;
         this.ecart = 1;
         this.setNom(nom);
@@ -30,7 +35,7 @@ public class ActiviteIG extends EtapeIG {
      */
     public void setDelai(int delai) {
         this.delai = delai;
-        this.setNom("Act-" + super.getIdentifiant() + "   " + this.delai + " +/- " + this.ecart);
+        this.setNom("Act-" + getIdentifiant() + "   " + this.delai + " +/- " + this.ecart);
     }
 
     /**
@@ -42,7 +47,7 @@ public class ActiviteIG extends EtapeIG {
             throw new TwiskMenuException("L'écart ne peut pas être supérieur au délai");
         }
         this.ecart = ecart;
-        this.setNom("Act-" + super.getIdentifiant() + "   " + this.delai + " +/- " + this.ecart);
+        this.setNom("Act-" + getIdentifiant() + "   " + this.delai + " +/- " + this.ecart);
     }
 
     /**
@@ -51,7 +56,7 @@ public class ActiviteIG extends EtapeIG {
      */
     @Override
     public void setNom(String nom) {
-        this.nom = nom + "-"  + super.getIdentifiant() + "   " + this.delai + " +/- " + this.ecart;
+        this.nom = nom + "-"  + getIdentifiant() + "   " + this.delai + " +/- " + this.ecart;
     }
 
     /**
@@ -70,6 +75,14 @@ public class ActiviteIG extends EtapeIG {
     }
 
     /**
+     * Méthode qui renvoie l'identifiant de l'activité
+     * @return L'identifiant de l'activité sous forme de String
+     */
+    public String getIdentifiant() {
+        return this.identifiant;
+    }
+
+    /**
      * Méthode qui renvoie le type d'étape, ici activité
      * @return Le type d'étape "Activite"
      */
@@ -84,7 +97,7 @@ public class ActiviteIG extends EtapeIG {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(super.getNom()).append( " : ");
-        sb.append("Identifiant : ").append(super.getIdentifiant());
+        sb.append("Identifiant : ").append(getIdentifiant());
         return sb.toString();
     }
 }

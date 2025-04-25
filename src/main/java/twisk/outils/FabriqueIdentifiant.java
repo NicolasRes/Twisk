@@ -34,7 +34,7 @@ public class FabriqueIdentifiant {
      * @return Un String d'un nouvel identifiant d'étape
      */
     public String getIdentifiantEtape() {
-        String identifiant = "N°" + this.noEtape;
+        String identifiant = "A" + this.noEtape;
         this.noEtape++;
         return identifiant;
     }
@@ -52,7 +52,7 @@ public class FabriqueIdentifiant {
      * @return Un String d'un nouvel identifiant de guichet
      */
     public String getIdentifiantGuichet() {
-        String identifiant = "N°" + this.noIdentifiantGuichet;
+        String identifiant = "G" + this.noIdentifiantGuichet;
         this.noIdentifiantGuichet++;
         return identifiant;
     }
