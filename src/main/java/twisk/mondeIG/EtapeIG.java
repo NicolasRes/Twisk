@@ -1,6 +1,5 @@
 package twisk.mondeIG;
 
-import twisk.outils.FabriqueIdentifiant;
 import twisk.outils.TailleComposants;
 
 import java.util.ArrayList;
