@@ -32,6 +32,10 @@ public class GuichetIG extends EtapeIG {
         this.nbJetons = nbJetons;
     }
 
+    /**
+     * Méthode  qui renvoie le nombre de jetons d'un guichet
+     * @return Le nombre de jetons d'un guichet
+     */
     public int getNbJetons() {
         return this.nbJetons;
     }
@@ -42,7 +46,7 @@ public class GuichetIG extends EtapeIG {
      */
     @Override
     public void setNom(String nom) {
-        this.nom = nom + "-" + getIdentifiant();
+        this.nom = nom + "_" + getIdentifiant();
     }
 
     /**
@@ -61,14 +65,26 @@ public class GuichetIG extends EtapeIG {
         return false;
     }
 
-    public int getDelai() {
-        return -1;
+    /**
+     * Méthode qui renvoie le délai d'une étape
+     * @return Le délai d'une étape (0 pour guichet)
+     */
+    public int getDelai() { // Remplacer par exception ?
+        return 0;
     }
 
-    public int getEcart() {
-        return -1;
+    /**
+     * Méthode qui renvoie l'écart d'une étape
+     * @return L'écart d'une étape (0 pour guichet)
+     */
+    public int getEcart() { // Remplacer par exception ?
+        return 0;
     }
 
+    /**
+     * Méthode abstraite qui renvoie les attributs d'un guichet
+     * @return Les attributs d'un guichet (nombre de jetons)
+     */
     public String getAttributs() {
         return " : " + this.nbJetons + " jetons";
     }

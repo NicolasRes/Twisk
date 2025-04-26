@@ -57,21 +57,13 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         System.out.println("noIdentifiantEtape " + this.identifiant);
     }
 
+    /**
+     * Méthode qui renvoie l'identifiant d'une étape
+     * @return L'identifiant d'une étape
+     */
     public int getIdentifiantEtape() {
         return this.identifiant;
     }
-
-    /**
-     * Méthode qui renvoie l'identifiant de l'étape
-     * @return L'identifiant de l'étape sous forme de String
-     */
-    public abstract String getIdentifiant();
-
-    /**
-     * Méthode qui modifie le nom d'une étape
-     * @param nom Le nom choisi pour l'étape
-     */
-    public abstract void setNom(String nom);
 
     /**
      * Méthode qui renvoie le nom d'une étape
@@ -167,11 +159,6 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
     }
 
     /**
-     * Méthode abstraite qui renvoie le type d'étape
-     */
-    public abstract String getType();
-
-    /**
      * Méthode qui permet d'ajouter un successeur à la liste des successeurs de l'étape
      * @param e L'étape à ajouter en tant que successeur
      */
@@ -216,16 +203,6 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         return null;
     }
 
-    public abstract boolean estActiviteRestreinte();
-
-    public abstract int getDelai();
-
-    public abstract int getEcart();
-
-    public abstract int getNbJetons();
-
-    public abstract String getAttributs();
-
     /**
      * Méthode qui renvoie une version String d'une étape
      * @return Les informations d'une étape sous forme de String
@@ -239,4 +216,53 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         sb.append("posY = ").append(this.posY);
         return sb.toString();
     }
+
+    /// Méthodes abstraites ///
+
+    /**
+     * Méthode qui indique si une étape est une activité restreinte
+     * @return Vrai si l'étape est une activité restreinte, Faux sinon
+     */
+    public abstract boolean estActiviteRestreinte();
+
+    /**
+     * Méthode abstraite qui renvoie le délai d'une étape
+     * @return Le délai d'une étape
+     */
+    public abstract int getDelai();
+
+    /**
+     * Méthode abstraite qui renvoie l'écart d'une étape
+     * @return L'écart d'une étape
+     */
+    public abstract int getEcart();
+
+    /**
+     * Méthode abstraite qui renvoie le nombre de jetons d'une étape
+     * @return Le nombre de jetons d'une étape
+     */
+    public abstract int getNbJetons();
+
+    /**
+     * Méthode abstraite qui renvoie les attributs d'une étape
+     * @return Les attributs d'une étape
+     */
+    public abstract String getAttributs();
+
+    /**
+     * Méthode qui renvoie l'identifiant de l'étape
+     * @return L'identifiant de l'étape sous forme de String
+     */
+    public abstract String getIdentifiant();
+
+    /**
+     * Méthode qui modifie le nom d'une étape
+     * @param nom Le nom choisi pour l'étape
+     */
+    public abstract void setNom(String nom);
+
+    /**
+     * Méthode abstraite qui renvoie le type d'étape
+     */
+    public abstract String getType();
 }

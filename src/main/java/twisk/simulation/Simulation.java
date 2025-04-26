@@ -19,12 +19,7 @@ public class Simulation {
     private int TMP_ATTENTE = 1;
     private int nbCLients;
     private GestionnaireClients gestionnaireClients;
-
     private String nomBibliotheque = "libTwisk";
-
-    public void setNomBibliotheque(String nom) {
-        this.nomBibliotheque = nom;
-    }
 
     /**
      * Constructeur de la classe Simulation
@@ -34,10 +29,6 @@ public class Simulation {
         this.kitC.creerEnvironnement();
         this.nbCLients =0;
         this.gestionnaireClients = new GestionnaireClients();
-    }
-
-    public void setNbClients(int nbClients) {
-        this.nbCLients = nbClients;
     }
 
     /**
@@ -67,6 +58,22 @@ public class Simulation {
     }
 
     /**
+     * Méthode qui définit le nombre de clients du monde à simuler
+     * @param nbClients
+     */
+    public void setNbClients(int nbClients) {
+        this.nbCLients = nbClients;
+    }
+
+    /**
+     * Méthode qui définit le nom de la bibliothèque
+     * @param nom Le nom à assigner à la bibliothèque
+     */
+    public void setNomBibliotheque(String nom) {
+        this.nomBibliotheque = nom;
+    }
+
+    /**
      * @brief Fonction qui affiche les informations relatives à la simulation
      *
      * @param nb_client Le nombre de clients
@@ -74,12 +81,12 @@ public class Simulation {
      * @param nb_etape Le nombre d'étapes
      */
     public void afficher_info_simu(int nb_client, int nb_guichet, int nb_etape , int[] tabJetonsGuichets) {
-
         System.out.println(monde.toString());
 
         System.out.println("nb client: " + nb_client);
         System.out.println("nb guichet: " + nb_guichet);
         System.out.println("nb etape: " + nb_etape);
+
         for (int i =0; i< nb_guichet; i++) {
             System.out.println("Jetons Guichet: " + (i+1)+ " " + tabJetonsGuichets[i]+" Jetons");
         }
@@ -109,8 +116,6 @@ public class Simulation {
      * @param nb_etape Le nombre d'étapes de la simulation
      */
     public void simule_clients(int nb_client, int nb_etape, Monde monde) {
-
-
         String[] nomEtapes = new String[nb_etape];
 
         for (Etape etape : monde) {
@@ -128,7 +133,7 @@ public class Simulation {
 
                 for (int j = 0; j < nb_clients; j++) {
                     System.out.print(position[i * (nb_client + 1) + 1 + j] + " ");
-                    gestionnaireClients.allerA(position[i * (nb_client + 1) + 1 + j], monde.getEtape(i), 0);
+                    this.gestionnaireClients.allerA(position[i * (nb_client + 1) + 1 + j], monde.getEtape(i), 0);
                 }
                 System.out.println();
 
@@ -151,7 +156,7 @@ public class Simulation {
         }
 
         System.out.println("==========Fin simulation==========\n");
-        gestionnaireClients.nettoyer();
+        this.gestionnaireClients.nettoyer();
     }
 
 
@@ -168,7 +173,7 @@ public class Simulation {
         afficher_info_simu(nbClients, nbGuichets, nbEtapes, tabJetonsGuichets);
 
         int[] tabPid = start_simulation(nbEtapes, nbGuichets, nbClients, tabJetonsGuichets);
-        gestionnaireClients.setClients(tabPid);
+        this.gestionnaireClients.setClients(tabPid);
 
         afficher_pid_client(tabPid, nbClients);
         simule_clients(nbClients, nbEtapes , this.monde);

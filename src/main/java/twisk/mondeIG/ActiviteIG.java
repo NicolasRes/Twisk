@@ -48,18 +48,34 @@ public class ActiviteIG extends EtapeIG {
         this.ecart = ecart;
     }
 
+    /**
+     * Méthode qui renvoie le délai d'une activité
+     * @return Le délai de l'activité
+     */
     public int getDelai() {
         return this.delai;
     }
 
+    /**
+     * Méthode qui renvoie l'écart d'une activité
+     * @return L'écart de l'activité
+     */
     public int getEcart() {
         return this.ecart;
     }
 
+    /**
+     * Méthode qui renvoie le nombre de jetons
+     * @return Le délai de l'activité
+     */
     public int getNbJetons() {
-        return -1;
-    }
+        return 0;
+    }   // Remplacer par exception ?
 
+    /**
+     * Méthode qui renvoie les attributs délai et écart de l'activité
+     * @return String avec le délai et l'écart de l'activité
+     */
     public String getAttributs() {
         return this.delai + " +/- " + this.ecart;
     }
@@ -70,7 +86,7 @@ public class ActiviteIG extends EtapeIG {
      */
     @Override
     public void setNom(String nom) {
-        this.nom = nom + "-"  + getIdentifiant();
+        this.nom = nom + "_"  + getIdentifiant();
     }
 
     /**
