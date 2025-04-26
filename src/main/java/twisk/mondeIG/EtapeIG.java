@@ -1,5 +1,6 @@
 package twisk.mondeIG;
 
+import twisk.outils.FabriqueIdentifiant;
 import twisk.outils.TailleComposants;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Random;
  */
 public abstract class EtapeIG implements Iterable<PointDeControleIG> {
     protected String nom;
+    int identifiant;
     private double posX;
     private double posY;
     private int largeur;
@@ -34,6 +36,7 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         assert(haut >= 0);
 
         this.nom = nom;
+        this.identifiant = FabriqueIdentifiant.getInstance().getIdentifiantEtape();
         this.largeur = larg;
         this.hauteur = haut;
         this.selection = false;
@@ -51,6 +54,11 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         this.pdc.add(new PointDeControleIG(0, haut/2, this));   // Gauche
         this.pdc.add(new PointDeControleIG(larg + TailleComposants.PADDING_SPACING, haut/2, this));   // Droite
         this.pdc.add(new PointDeControleIG((larg + TailleComposants.PADDING_X)/2, haut - TailleComposants.PADDING_Y, this));   // Bas
+        System.out.println("noIdentifiantEtape " + this.identifiant);
+    }
+
+    public int getIdentifiantEtape() {
+        return this.identifiant;
     }
 
     /**
@@ -201,8 +209,20 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
      * @return Le premier successeur de l'étape
      */
     public EtapeIG premierSuccesseur(EtapeIG e) {
-        return e.getSuccesseurs().getFirst();
+        if(!e.getSuccesseurs().isEmpty()) {
+            return e.getSuccesseurs().getFirst();
+        }
+        System.out.println("Pas de succ");
+        return null;
     }
+
+    public abstract boolean estActiviteRestreinte();
+
+    public abstract int getDelai();
+
+    public abstract int getEcart();
+
+    public abstract int getNbJetons();
 
     /**
      * Méthode qui renvoie une version String d'une étape

@@ -6,6 +6,7 @@ package twisk.outils;
 public class FabriqueIdentifiant {
     private static FabriqueIdentifiant instance;
     private int noEtape;
+    private int noActivite;
     private int noIdentifiantPDC;
     private int noIdentifiantGuichet;
 
@@ -14,8 +15,9 @@ public class FabriqueIdentifiant {
      */
     public FabriqueIdentifiant() {
         this.noEtape = 0;
+        this.noActivite = 0;
         this.noIdentifiantPDC = 0;
-        this.noIdentifiantGuichet = 0;
+        this.noIdentifiantGuichet = 1;
     }
 
     /**
@@ -31,11 +33,20 @@ public class FabriqueIdentifiant {
 
     /**
      * Méthode qui produit des identifiants basés sur le compteur noEtape
-     * @return Un String d'un nouvel identifiant d'étape
+     * @return Un entier d'un nouvel identifiant d'étape
      */
-    public String getIdentifiantEtape() {
-        String identifiant = "A" + this.noEtape;
-        this.noEtape++;
+    public int getIdentifiantEtape() {
+        return this.noEtape++;
+    }
+
+
+    /**
+     * Méthode qui produit des identifiants basés sur le compteur noActivite
+     * @return Un String d'un nouvel identifiant d'activité
+     */
+    public String getIdentifiantActivite() {
+        String identifiant = "A" + this.noActivite;
+        this.noActivite++;
         return identifiant;
     }
 
@@ -62,6 +73,7 @@ public class FabriqueIdentifiant {
      */
     public void reset() {
         this.noEtape = 0;
+        this.noActivite = 0;
         this.noIdentifiantPDC = 0;
         this.noIdentifiantGuichet = 0;
     }

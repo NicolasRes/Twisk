@@ -142,6 +142,7 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         System.out.println("ajout successeur");
         pt2.getEtape().ajouterPredecesseur(pt1.getEtape());
         System.out.println("ajout predecesseur");
+        System.out.println(arc);
 
         this.arcs.add(arc);
         notifierObservateurs();
@@ -414,7 +415,6 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
      * Méthode qui renvoie une version String d'un MondeIG
      * @return Les informations d'un MondeIG sous forme de String
      */
-    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("MondeIG \n");

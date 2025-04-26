@@ -33,6 +33,10 @@ public class GuichetIG extends EtapeIG {
         this.setNom(this.nom);
     }
 
+    public int getNbJetons() {
+        return this.nbJetons;
+    }
+
     /**
      * Méthode qui initialise le nom du guichet
      * @param nom Le nom choisi pour le guichet par l'utilisateur
@@ -48,6 +52,22 @@ public class GuichetIG extends EtapeIG {
      */
     public String getIdentifiant() {
         return this.identifiant;
+    }
+
+    /**
+     * Méthode qui renvoie si le guichet est une activité restreinte ou non
+     * @return Vrai si l'activité est une activité restreinte, faux sinon
+     */
+    public boolean estActiviteRestreinte() {
+        return false;
+    }
+
+    public int getDelai() {
+        return -1;
+    }
+
+    public int getEcart() {
+        return -1;
     }
 
     /**

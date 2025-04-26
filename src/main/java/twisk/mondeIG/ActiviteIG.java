@@ -22,7 +22,7 @@ public class ActiviteIG extends EtapeIG {
         super(nom, larg, haut);
 
         FabriqueIdentifiant id = FabriqueIdentifiant.getInstance();
-        this.identifiant = id.getIdentifiantEtape();
+        this.identifiant = id.getIdentifiantActivite();
         this.delai = 2;
         this.ecart = 1;
         this.setNom(nom);
@@ -48,6 +48,18 @@ public class ActiviteIG extends EtapeIG {
         }
         this.ecart = ecart;
         this.setNom("Act-" + getIdentifiant() + "   " + this.delai + " +/- " + this.ecart);
+    }
+
+    public int getDelai() {
+        return this.delai;
+    }
+
+    public int getEcart() {
+        return this.ecart;
+    }
+
+    public int getNbJetons() {
+        return -1;
     }
 
     /**
