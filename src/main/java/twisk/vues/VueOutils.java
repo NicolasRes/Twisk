@@ -70,7 +70,7 @@ public class VueOutils extends TilePane implements Observateur {
     public void createButtonSimulation() {
         this.simuler = new Button("");
         this.simuler.setTooltip(new Tooltip("Simu"));
-        Image imAjouterGuichet = new Image(getClass().getResourceAsStream("/images/addGui.png"), 50, 50, true, true);
+        Image imAjouterGuichet = new Image(getClass().getResourceAsStream("/images/simu.png"), 50, 50, true, true);
         ImageView iconAjouterGuichet = new ImageView(imAjouterGuichet);
         this.simuler.setGraphic(iconAjouterGuichet);
         this.simuler.getStyleClass().add("buttonGuichet");   // Style différent pour le bouton du guichet
