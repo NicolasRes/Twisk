@@ -1,6 +1,7 @@
 package twisk.mondeIG;
 
 import twisk.monde.*;
+import twisk.simulation.Simulation;
 
 /**
  * Classe qui gère la simulation de l'interface graphique
@@ -8,6 +9,7 @@ import twisk.monde.*;
 public class SimulationIG {
     private MondeIG mondeIG;
     private CorrespondancesEtapes correspondance;
+    private Simulation simulation;
 
     /**
      * Constructeur de la classe SimulationIG
@@ -17,18 +19,22 @@ public class SimulationIG {
         assert(monde != null);
 
         this.mondeIG = monde;
+        this.simulation = new Simulation();
     }
 
     public void simuler() {
         verifierMondeIG();
-        creerMonde();
-        System.out.println("Fin vérif");
+        Monde monde = creerMonde();
+        this.simulation.simuler(monde);
+        System.out.println("Fin simuler");
     }
 
     /**
      * Méthode qui vérifie que les conditions du monde à simuler sont bien remplies
      */
     private void verifierMondeIG() {
+        boolean aEntree = false;
+        boolean aSortie = false;
         for(EtapeIG e : this.mondeIG) {
             if(e.getType().equals("Guichet")) {
                 if(guichetUnSuccesseur(e)) {
@@ -36,6 +42,14 @@ public class SimulationIG {
                     identifierActiviteRestreinte(e);
                 }
             }
+            aEntree = aEntree(e);
+            aSortie = aSortie(e);
+        }
+        if(!aEntree) {
+            System.out.println("Erreur, le monde n'a aucune entrée");
+        }
+        if(!aSortie) {
+            System.out.println("Erreur, le monde n'a aucune sortie");
         }
         mondeVide();
     }
@@ -69,7 +83,7 @@ public class SimulationIG {
      * Méthode qui vérifie si un guichet a exactement un seul et unique successeur
      * @param e Le guichet à vérifier
      */
-    public boolean guichetUnSuccesseur(EtapeIG e){
+    private boolean guichetUnSuccesseur(EtapeIG e){
         if(e.getSuccesseurs().size()!=1){
             System.out.println("Erreur, le guichet " + e.getNom() + " a un nombre de successeurs incorrect, il doit avoir un seul successeur");
             return false;
@@ -77,10 +91,24 @@ public class SimulationIG {
         return true;
     }
 
-    public void mondeVide() {
+    private void mondeVide() {
         if(this.mondeIG.getEtapes().isEmpty()) {
             System.out.println("Erreur, le monde n'a aucune étape");
         }
+    }
+
+    private boolean aEntree(EtapeIG e) {
+        if(e.estEntree()) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean aSortie(EtapeIG e) {
+        if(e.estSortie()) {
+            return true;
+        }
+        return false;
     }
 
     private Monde creerMonde() {
