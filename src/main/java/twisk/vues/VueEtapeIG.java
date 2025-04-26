@@ -19,6 +19,7 @@ import twisk.outils.TailleComposants;
  */
 public abstract class VueEtapeIG extends VBox {
     private Label titre;
+    private Label attributs;
     private MondeIG monde;
     private EtapeIG etape;
     private Label icone;
@@ -36,6 +37,7 @@ public abstract class VueEtapeIG extends VBox {
         this.monde = monde;
         this.etape = etape;
         this.titre = new Label(this.etape.getNom() + " " );
+        this.attributs = new Label(this.etape.getAttributs());
         this.icone = new Label();
         this.hbox = new HBox();
 
@@ -47,8 +49,9 @@ public abstract class VueEtapeIG extends VBox {
             this.setMaxWidth(TailleComposants.LARGEUR_ETAPE + TailleComposants.PADDING_X + TailleComposants.PADDING_SPACING);
             this.setMaxHeight(TailleComposants.HAUTEUR_ETAPE);
 
-            // Taille titre activité
+            // Taille titre et attributs
             this.titre.setPrefWidth(TailleComposants.LARGEUR_ETAPE);
+            this.attributs.setPrefWidth(TailleComposants.LARGEUR_ETAPE);
 
             // Style VBox activité
             this.getStyleClass().add("vbox");
@@ -60,19 +63,21 @@ public abstract class VueEtapeIG extends VBox {
             this.setMaxWidth(TailleComposants.LARGEUR_GUICHET + TailleComposants.PADDING_X + TailleComposants.PADDING_SPACING);
             this.setMaxHeight(TailleComposants.HAUTEUR_GUICHET);
 
-            // Taille titre guichet
+            // Taille titre / attributs guichet
             this.titre.setPrefWidth(TailleComposants.LARGEUR_GUICHET);
+            this.attributs.setPrefWidth(TailleComposants.LARGEUR_GUICHET);
 
             // Style VBox guichet
             this.getStyleClass().add("vboxGuichet");
         }
 
-        this.titre.setAlignment(Pos.CENTER);
+        this.titre.setAlignment(Pos.CENTER_RIGHT);
 
         // Ajout des enfants
-        this.hbox.getChildren().addAll(this.icone, this.titre);
+        this.hbox.getChildren().addAll(this.icone, this.titre, this.attributs);
         this.getChildren().add(this.hbox);
 
+        // Sélection de l'étape
         this.setOnMouseClicked(event -> {
             this.etape.switchSelection();
             this.monde.etapesSelection(this.etape);
@@ -80,7 +85,7 @@ public abstract class VueEtapeIG extends VBox {
 
         // Ajout style CSS
         this.titre.getStyleClass().add("Label");
-
+        this.attributs.getStyleClass().add("Label");
 
         // Mise à jour dynamique des attributs
         updateCouleurSelection();

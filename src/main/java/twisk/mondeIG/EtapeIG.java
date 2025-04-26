@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public abstract class EtapeIG implements Iterable<PointDeControleIG> {
     protected String nom;
-    int identifiant;
+    private int identifiant;
     private double posX;
     private double posY;
     private int largeur;
@@ -223,6 +223,8 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
     public abstract int getEcart();
 
     public abstract int getNbJetons();
+
+    public abstract String getAttributs();
 
     /**
      * Méthode qui renvoie une version String d'une étape

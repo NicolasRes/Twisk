@@ -30,7 +30,6 @@ public class GuichetIG extends EtapeIG {
      */
     public void setNbJetons(int nbJetons) {
         this.nbJetons = nbJetons;
-        this.setNom(this.nom);
     }
 
     public int getNbJetons() {
@@ -43,7 +42,7 @@ public class GuichetIG extends EtapeIG {
      */
     @Override
     public void setNom(String nom) {
-        this.nom = nom + "-" + getIdentifiant() + " : " + this.nbJetons + " jetons";
+        this.nom = nom + "-" + getIdentifiant();
     }
 
     /**
@@ -68,6 +67,10 @@ public class GuichetIG extends EtapeIG {
 
     public int getEcart() {
         return -1;
+    }
+
+    public String getAttributs() {
+        return " : " + this.nbJetons + " jetons";
     }
 
     /**

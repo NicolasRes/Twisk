@@ -35,7 +35,6 @@ public class ActiviteIG extends EtapeIG {
      */
     public void setDelai(int delai) {
         this.delai = delai;
-        this.setNom("Act-" + getIdentifiant() + "   " + this.delai + " +/- " + this.ecart);
     }
 
     /**
@@ -47,7 +46,6 @@ public class ActiviteIG extends EtapeIG {
             throw new TwiskMenuException("L'écart ne peut pas être supérieur au délai");
         }
         this.ecart = ecart;
-        this.setNom("Act-" + getIdentifiant() + "   " + this.delai + " +/- " + this.ecart);
     }
 
     public int getDelai() {
@@ -62,13 +60,17 @@ public class ActiviteIG extends EtapeIG {
         return -1;
     }
 
+    public String getAttributs() {
+        return this.delai + " +/- " + this.ecart;
+    }
+
     /**
      * Méthode qui initialise le nom de l'activité
      * @param nom Le nom choisi pour l'activité par l'utilisateur
      */
     @Override
     public void setNom(String nom) {
-        this.nom = nom + "-"  + getIdentifiant() + "   " + this.delai + " +/- " + this.ecart;
+        this.nom = nom + "-"  + getIdentifiant();
     }
 
     /**
