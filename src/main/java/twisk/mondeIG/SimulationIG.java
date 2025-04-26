@@ -60,6 +60,10 @@ public class SimulationIG {
             if (e.estSortie()) {
                 aSortie = true;
             }
+            verifEntreePrede(e);
+            verifSortieSucc(e);
+            verifSortiePasSucc(e);
+            // entrée préde??
         }
 
         if (!aEntree) {
@@ -67,6 +71,22 @@ public class SimulationIG {
         }
         if (!aSortie) {
             throw new MondeException("Aucune sortie n'a été définie dans le monde", MondeException.TypeErreur.AUCUNE_SORTIE);
+        }
+    }
+
+    private void verifEntreePrede(EtapeIG e) throws MondeException{
+        if(!e.estEntree() && e.getPredecesseurs().isEmpty())
+                throw new MondeException("L'activité " + e.getNom()+ " n'a pas de predecesseurs donc doit être mise en Entrée", MondeException.TypeErreur.ERREUR_NON_ENTREE_NON_PRED);
+    }
+
+    private void verifSortieSucc(EtapeIG e) throws MondeException{
+        if(!e.estSortie() && e.getSuccesseurs().isEmpty())
+            throw new MondeException("L'activité " + e.getNom()+ " n'a pas de successeurs donc doit être mise en Sortie", MondeException.TypeErreur.ERREUR_NON_SORTIE_NON_SUCC);
+    }
+
+    private void verifSortiePasSucc(EtapeIG e) throws MondeException{
+        if(e.estSortie()&& !e.getSuccesseurs().isEmpty()){
+            throw new MondeException("L'activité " + e.getNom()+ " est mise en sortie mais a un ou plusieurs successeurs !", MondeException.TypeErreur.ERREUR_SORTIE_NON_VIDE);
         }
     }
 
@@ -196,6 +216,8 @@ public class SimulationIG {
             }
         }
     }
+
+
 
     /**
      * Méthode qui ajoute les entrées et sorties au Monde

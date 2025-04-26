@@ -37,7 +37,11 @@ public class MondeException extends RuntimeException {
         SUCCESSEUR_GUICHET_INVALIDE("Le successeur d'un guichet ne peut pas être un guichet"),
         NOMBRE_SUCCESSEURS_GUICHET("Un guichet doit avoir exactement un successeur"),
         SUCCESSEUR_NON_TROUVE("Successeur non trouvé"),
-        ERREUR_GENERALE("Erreur dans la simulation");
+        ERREUR_GENERALE("Erreur dans la simulation"),
+        ERREUR_NON_ENTREE_NON_PRED("Une activité sans prédécesseur doit être déclarée comme entrée"),
+        ERREUR_NON_SORTIE_NON_SUCC("Une activité sans successeur doit être déclarée comme sortie"),
+        ERREUR_SORTIE_NON_VIDE("Une sortie ne doit pas avoir de successeur");
+
 
         private final String message;
 

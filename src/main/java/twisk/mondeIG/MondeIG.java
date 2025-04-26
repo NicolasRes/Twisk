@@ -138,11 +138,17 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         arcValide(pt1, pt2);
 
         ArcIG arc = new ArcIG(pt1, pt2);
-        pt1.getEtape().ajouterSuccesseur(pt2.getEtape());
-        pt2.getEtape().ajouterPredecesseur(pt1.getEtape());
+
+        if(!pt1.getEtape().getSuccesseurs().contains(pt2.getEtape())) {
+            pt1.getEtape().ajouterSuccesseur(pt2.getEtape());
+            pt2.getEtape().ajouterPredecesseur(pt1.getEtape());
+            System.out.println(arc.toString());
+        }
+        System.out.println("liste des successeurs de " + pt1.getEtape().getNom() +": " +pt1.getEtape().getSuccesseurs());
 
         this.arcs.add(arc);
         notifierObservateurs();
+
     }
 
     /**
