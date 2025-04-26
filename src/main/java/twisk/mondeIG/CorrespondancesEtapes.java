@@ -15,7 +15,7 @@ public class CorrespondancesEtapes {
 
     public void ajouter(EtapeIG etapeIG, Etape etape) {
         int identifiant = etapeIG.getIdentifiantEtape();
-        this.etapesIG.put(etape.getNumero(), etapeIG);
+        this.etapesIG.put(identifiant, etapeIG);
         this.etapes.put(identifiant, etape);
     }
 
@@ -26,11 +26,9 @@ public class CorrespondancesEtapes {
     public void afficherHashmap(CorrespondancesEtapes c) {
         for(Integer e : c.getHashmapIG().keySet()) {
             System.out.println("IG " + e + "->" + this.getHashmapIG().get(e));
-            System.out.println();
         }
         for(Integer e : c.getHashmap().keySet()) {
             System.out.println("Monde " + e + "->" + this.getHashmap().get(e));
-            System.out.println();
         }
         System.out.println();
     }

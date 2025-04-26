@@ -98,20 +98,18 @@ public class SimulationIG {
                     System.out.println("Activite restreinte créée " + actRest.getNom());
                     monde.ajouter(actRest);
                     this.correspondance.ajouter(e, actRest);
-                    //this.correspondance.afficherHashmap(correspondance);
+                } else {
+                    Activite act = new Activite(e.getNom(), e.getDelai(), e.getEcart());
+                    System.out.println("Activite créée " + act.getNom());
+                    monde.ajouter(act);
+                    this.correspondance.ajouter(e, act);
                 }
-                Activite act = new Activite(e.getNom(), e.getDelai(), e.getEcart());
-                System.out.println("Activite créée " + act.getNom());
-                monde.ajouter(act);
-                this.correspondance.ajouter(e, act);
-                //this.correspondance.afficherHashmap(correspondance);
             }
             else {
                 Guichet gui = new Guichet(e.getNom(), e.getNbJetons());
                 System.out.println("Guichet créé " + gui.getNom());
                 monde.ajouter(gui);
                 this.correspondance.ajouter(e, gui);
-                //this.correspondance.afficherHashmap(correspondance);
             }
 
             // Gestion des entrées / sorties
@@ -139,6 +137,8 @@ public class SimulationIG {
         }
 
         this.correspondance.afficherHashmap(this.correspondance);
+
+        System.out.println(monde.toString());
 
         return monde;
     }
