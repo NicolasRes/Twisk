@@ -1,21 +1,23 @@
 package twisk.mondeIG;
 
+import twisk.exceptions.MondeException;
 import twisk.monde.*;
 import twisk.simulation.Simulation;
+import twisk.vues.DialogueErreur;
 
 /**
  * Classe qui gère la simulation de l'interface graphique
  */
 public class SimulationIG {
-    private MondeIG mondeIG;
+    private final MondeIG mondeIG;
     private CorrespondancesEtapes correspondance;
-    private Simulation simulation;
+    private final Simulation simulation;
 
     /**
      * Constructeur de la classe SimulationIG
      * @param monde Le monde à simuler
      */
-    public SimulationIG (MondeIG monde) {
+    public SimulationIG(MondeIG monde) {
         assert(monde != null);
 
         this.mondeIG = monde;
@@ -26,68 +28,89 @@ public class SimulationIG {
      * Méthode qui lance une simulation à partir d'un Monde créé selon un MondeIG valide
      */
     public void simuler() {
-        verifierMondeIG();
-        Monde monde = creerMonde();
-        this.simulation.setNbClients(6);  // Pour rendre la simulation fonctionnelle
-        this.simulation.simuler(monde);
+        try {
+            verifierMondeIG();
+            Monde monde = creerMonde();
+            this.simulation.setNbClients(6);  // Pour rendre la simulation fonctionnelle
+            this.simulation.simuler(monde);
+        } catch (MondeException e) {
+            DialogueErreur.afficherErreur(e);
+        }
     }
 
     /**
      * Méthode qui vérifie que les conditions de validité du Monde à simuler sont bien remplies
+     * @throws MondeException Si le monde n'est pas valide
      */
-    private void verifierMondeIG() {
+    private void verifierMondeIG() throws MondeException {
         boolean aEntree = false;
         boolean aSortie = false;
 
-        for(EtapeIG e : this.mondeIG) {
-            if(e.getType().equals("Guichet")) {
-                if(guichetUnSuccesseur(e)) {
-                    succGuichetValide(e);
-                    identifierActiviteRestreinte(e);
-                }
+        if (this.mondeIG.getEtapes().isEmpty()) {
+            throw new MondeException("Le monde n'a aucune étape", MondeException.TypeErreur.MONDE_VIDE);
+        }
+
+        for (EtapeIG e : this.mondeIG) {
+            if (e.getType().equals("Guichet")) {
+                verifierGuichet(e);
             }
-            aEntree = aEntree(e);
-            aSortie = aSortie(e);
+            if (e.estEntree()) {
+                aEntree = true;
+            }
+            if (e.estSortie()) {
+                aSortie = true;
+            }
         }
-        if(!aEntree) {
-            System.out.println("Erreur, le monde n'a aucune entrée");   // Remplacer par exception
+
+        if (!aEntree) {
+            throw new MondeException("Aucune entrée n'a été définie dans le monde", MondeException.TypeErreur.AUCUNE_ENTREE);
         }
-        if(!aSortie) {
-            System.out.println("Erreur, le monde n'a aucune sortie");   // Remplacer par exception
+        if (!aSortie) {
+            throw new MondeException("Aucune sortie n'a été définie dans le monde", MondeException.TypeErreur.AUCUNE_SORTIE);
         }
-        mondeVide();
+    }
+
+    /**
+     * Méthode qui vérifie la validité d'un guichet
+     * @param e Le guichet à vérifier
+     * @throws MondeException Si le guichet n'est pas valide
+     */
+    private void verifierGuichet(EtapeIG e) throws MondeException {
+        // Vérification du nombre de successeurs
+        if (e.getSuccesseurs().size() != 1) {
+            throw new MondeException("Le guichet " + e.getNom() + " doit avoir exactement un successeur",
+                    MondeException.TypeErreur.NOMBRE_SUCCESSEURS_GUICHET);
+        }
+
+        // Vérification du type du successeur
+        EtapeIG succ = e.premierSuccesseur(e);
+        if (!succ.getType().equals("Activite")) {
+            throw new MondeException("Le successeur du guichet " + e.getNom() + " doit être une activité",
+                    MondeException.TypeErreur.SUCCESSEUR_GUICHET_INVALIDE);
+        }
+
+        // Identification de l'activité restreinte
+        identifierActiviteRestreinte(e);
     }
 
     /**
      * Méthode qui crée un Monde selon les étapes d'un MondeIG
-     * @return
+     * @return Le monde créé
      */
     private Monde creerMonde() {
         this.correspondance = new CorrespondancesEtapes();
         Monde monde = new Monde();
 
-        // On crée les étapes
-        for(EtapeIG e : this.mondeIG) {
+        for (EtapeIG e : this.mondeIG) {
             creationEtape(e, monde);
-            lierSuccesseurs();
+        }
+        lierSuccesseurs();
+
+        for (EtapeIG e : this.mondeIG) {
             ajouterEntreeSortie(e, monde);
         }
 
-        // Pour le débogage
-        //System.out.println(this.correspondance.toString());;
-
         return monde;
-    }
-
-    /**
-     * Méthode qui vérifie une part de la validité du monde : renvoie une erreur si le successeur du guichet n'est pas une activité
-     * @param e Le guichet dont on examine le type du successeur
-     */
-    private void succGuichetValide(EtapeIG e) {
-        EtapeIG succ = e.premierSuccesseur(e);
-        if(!succ.getType().equals("Activite")) {
-            System.out.println("Erreur, le successeur du guichet " + e.getNom() + " doit forcément être une activité"); // Remplacer par exception
-        }
     }
 
     /**
@@ -95,52 +118,13 @@ public class SimulationIG {
      * @param e L'étape (guichet) dont le successeur doit être identifié comme activité restreinte
      */
     private void identifierActiviteRestreinte(EtapeIG e) {
-        EtapeIG succ = e.premierSuccesseur(e);   // On récupère le successeur du guichet (une activité)
-        if(succ.getType().equals("Activite")) {
+        EtapeIG succ = e.premierSuccesseur(e);
+        if (succ.getType().equals("Activite")) {
             ActiviteIG act = (ActiviteIG) succ;
-            if(!act.estActiviteRestreinte()) {  // Si l'activité n'est pas déjà une activité restreinte, on la définie comme telle
+            if (!act.estActiviteRestreinte()) {
                 act.switchActiviteRestreinte();
             }
         }
-    }
-
-    /**
-     * Méthode qui vérifie une part de la validité du monde :  si un guichet a exactement un seul et unique successeur
-     * @param e Le guichet à vérifier
-     */
-    private boolean guichetUnSuccesseur(EtapeIG e){
-        if(e.getSuccesseurs().size()!=1){
-            System.out.println("Erreur, le guichet " + e.getNom() + " a un nombre de successeurs incorrect, il doit avoir un seul successeur"); // Remplacer par exception
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Méthode qui vérifie une part de la validité du monde : si le MondeIG est vide
-     */
-    private void mondeVide() {
-        if(this.mondeIG.getEtapes().isEmpty()) {    // Remplacer par exception
-            System.out.println("Erreur, le monde n'a aucune étape");
-        }
-    }
-
-    /**
-     * Méthode qui vérifie si l'étape est une entrée du MondeIG
-     * @param e L'étape à vérifier
-     * @return Vrai si l'étape est une entrée du MondeIG, Faux sinon
-     */
-    private boolean aEntree(EtapeIG e) {
-        return e.estEntree();
-    }
-
-    /**
-     * Méthode qui vérifie si l'étape est une sortie du MondeIG
-     * @param e L'étape à vérifier
-     * @return Vrai si l'étape est une sortie du MondeIG, Faux sinon
-     */
-    private boolean aSortie(EtapeIG e) {
-        return e.estSortie();
     }
 
     /**
@@ -149,15 +133,13 @@ public class SimulationIG {
      * @param monde Le Monde dans lequel créer la nouvelle étape
      */
     private void creationEtape(EtapeIG e, Monde monde) {
-        if(e.getType().equals("Activite")) {
-            if(e.estActiviteRestreinte()) {
+        if (e.getType().equals("Activite")) {
+            if (e.estActiviteRestreinte()) {
                 creationActiviteRestreinte(e, monde);
-            }
-            else {
+            } else {
                 creationActivite(e, monde);
             }
-        }
-        else {
+        } else {
             creationGuichet(e, monde);
         }
     }
@@ -197,19 +179,20 @@ public class SimulationIG {
 
     /**
      * Méthode qui fait le lien entre les successeurs du MondeIG et du Monde
+     * @throws MondeException Si un successeur n'est pas trouvé
      */
     private void lierSuccesseurs() {
-        for(EtapeIG e : this.mondeIG) {
+        for (EtapeIG e : this.mondeIG) {
             for (EtapeIG succ : e.getSuccesseurs()) {
                 Etape etape = this.correspondance.get(e);
                 Etape etapeSucc = this.correspondance.get(succ);
 
-                if(etape != null && etapeSucc != null) {    // Remplacer par exception
-                    etape.ajouterSuccesseur(etapeSucc);
+                if (etape == null || etapeSucc == null) {
+                    throw new MondeException("Un successeur n'a pas été trouvé pour l'étape " + e.getNom(),
+                            MondeException.TypeErreur.SUCCESSEUR_NON_TROUVE);
                 }
-                else {
-                    System.out.println("Erreur, successeur non trouvé");
-                }
+
+                etape.ajouterSuccesseur(etapeSucc);
             }
         }
     }
@@ -221,10 +204,10 @@ public class SimulationIG {
      */
     private void ajouterEntreeSortie(EtapeIG e, Monde monde) {
         // Gestion des entrées / sorties
-        if(e.estEntree()) {
+        if (e.estEntree()) {
             monde.aCommeEntree(this.correspondance.get(e));
         }
-        if(e.estSortie()) {
+        if (e.estSortie()) {
             monde.aCommeSortie(this.correspondance.get(e));
         }
     }
