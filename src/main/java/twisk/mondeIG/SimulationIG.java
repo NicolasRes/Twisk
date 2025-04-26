@@ -114,13 +114,6 @@ public class SimulationIG {
                 //this.correspondance.afficherHashmap(correspondance);
             }
 
-
-            // On ajoute les succ
-            for (EtapeIG succ : e.getSuccesseurs()) {
-                Etape etapeSucc = this.correspondance.get(succ);
-                this.correspondance.getHashmap().get(etapeSucc.getNumero()).ajouterSuccesseur(etapeSucc);
-            }
-
             // Gestion des entrées / sorties
             if(e.estEntree()) {
                 monde.aCommeEntree(this.correspondance.get(e));
@@ -129,9 +122,24 @@ public class SimulationIG {
                 monde.aCommeSortie(this.correspondance.get(e));
             }
         }
+
+        // On ajoute les succ
+        for(EtapeIG e : mondeIG) {
+            for (EtapeIG succ : e.getSuccesseurs()) {
+                Etape etape = this.correspondance.get(e);
+                Etape etapeSucc = this.correspondance.get(succ);
+
+                if(etape != null && etapeSucc != null) {
+                    etape.ajouterSuccesseur(etapeSucc);
+                }
+                else {
+                    System.out.println("Erreur, successeur non trouvé");
+                }
+            }
+        }
+
         this.correspondance.afficherHashmap(this.correspondance);
 
-        //monde.toC();
         return monde;
     }
 }
