@@ -54,7 +54,6 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         this.pdc.add(new PointDeControleIG(0, haut/2, this));   // Gauche
         this.pdc.add(new PointDeControleIG(larg + TailleComposants.PADDING_SPACING, haut/2, this));   // Droite
         this.pdc.add(new PointDeControleIG((larg + TailleComposants.PADDING_X)/2, haut - TailleComposants.PADDING_Y, this));   // Bas
-        System.out.println("noIdentifiantEtape " + this.identifiant);
     }
 
     /**
