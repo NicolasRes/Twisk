@@ -116,35 +116,14 @@ public class Simulation {
      * @param nb_etape Le nombre d'étapes de la simulation
      */
     public void simule_clients(int nb_client, int nb_etape, Monde monde) {
-        String[] nomEtapes = new String[nb_etape];
-
-        for (Etape etape : monde) {
-            nomEtapes[etape.getNumero()] = etape.getNom();
-        }
-
+        String[] nomEtapes = initialiserNomEtapes(monde, nb_etape);
         int[] position = ou_sont_les_clients(nb_etape, nb_client);
 
         while (position[(nb_client + 1)] < nb_client) {
             position = ou_sont_les_clients(nb_etape, nb_client);
 
-            for (int i = 0; i < nb_etape; i++) {
-                int nb_clients = position[i * (nb_client + 1)];
-                System.out.print(nomEtapes[i] + ": ");
-
-                for (int j = 0; j < nb_clients; j++) {
-                    System.out.print(position[i * (nb_client + 1) + 1 + j] + " ");
-                    this.gestionnaireClients.allerA(position[i * (nb_client + 1) + 1 + j], monde.getEtape(i), 0);
-                }
-                System.out.println();
-
-            }
-
-            System.out.println("\nGestionnaire Clients :");
-            for (Client c : gestionnaireClients) {
-                if (c.getEtape() != null) {
-                    System.out.println("Client " + c.getNumeroClient() + " est à l'étape " + c.getEtape().getNom());
-                }
-            }
+            afficherClients(position, nomEtapes, monde, nb_client);
+            afficherEtatGestionnaire();
 
             try {
                 Thread.sleep(TMP_ATTENTE * 1000);
@@ -178,5 +157,53 @@ public class Simulation {
         afficher_pid_client(tabPid, nbClients);
         simule_clients(nbClients, nbEtapes , this.monde);
         nettoyage();
+    }
+
+    /**
+     * Méthode qui initialise le nom des étapes
+     * @param monde Le Monde dans lequel initialisation les étapess
+     * @param nb_etape Le nombre d'étapes
+     * @return Le nom des étapes
+     */
+    private String[] initialiserNomEtapes(Monde monde, int nb_etape) {
+        String[] nomEtapes = new String[nb_etape];
+        for (Etape etape : monde) {
+            nomEtapes[etape.getNumero()] = etape.getNom();
+        }
+        return nomEtapes;
+    }
+
+    /**
+     * Méthode qui affiche les clients
+     * @param position La position des clients
+     * @param nomEtapes Le nom des étapes
+     * @param monde Le monde dans lequel se trouvent les clients
+     * @param nb_client Le nombre de clients
+     */
+    private void afficherClients(int[] position, String[] nomEtapes, Monde monde, int nb_client) {
+        int nb_etape = nomEtapes.length;
+
+        for (int i = 0; i < nb_etape; i++) {
+            int nb_clients = position[i * (nb_client + 1)];
+            System.out.print(nomEtapes[i] + ": ");
+
+            for (int j = 0; j < nb_clients; j++) {
+                System.out.print(position[i * (nb_client + 1) + 1 + j] + " ");
+                this.gestionnaireClients.allerA(position[i * (nb_client + 1) + 1 + j], monde.getEtape(i), 0);
+            }
+            System.out.println();
+        }
+    }
+
+    /**
+     * Méthode qui affiche l'état du gestionnaire
+     */
+    private void afficherEtatGestionnaire() {
+        System.out.println("\nGestionnaire Clients :");
+        for (Client c : this.gestionnaireClients) {
+            if (c.getEtape() != null) {
+                System.out.println("Client " + c.getNumeroClient() + " est à l'étape " + c.getEtape().getNom());
+            }
+        }
     }
 }
