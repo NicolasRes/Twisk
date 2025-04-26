@@ -139,10 +139,7 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
 
         ArcIG arc = new ArcIG(pt1, pt2);
         pt1.getEtape().ajouterSuccesseur(pt2.getEtape());
-        System.out.println("ajout successeur");
         pt2.getEtape().ajouterPredecesseur(pt1.getEtape());
-        System.out.println("ajout predecesseur");
-        System.out.println(arc);
 
         this.arcs.add(arc);
         notifierObservateurs();
@@ -209,12 +206,8 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         while(iArc.hasNext()) {
             ArcIG arc = iArc.next();
             if(arc.getSource().getEtape().equals(etape) || arc.getDestination().getEtape().equals(etape)) {
-
                 arc.getSource().getEtape().getSuccesseurs().remove(arc.getDestination().getEtape());
-                System.out.println("dest suppr");
                 arc.getDestination().getEtape().getPredecesseurs().remove(arc.getSource().getEtape());
-                System.out.println("source suppr");
-
                 iArc.remove();
             }
         }
@@ -229,12 +222,8 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
             this.etapes.remove(etape.getIdentifiant());
         }
         for(ArcIG arc : this.arcsSelectionnes) {
-
             arc.getSource().getEtape().getSuccesseurs().remove(arc.getDestination().getEtape());
-            System.out.println("dest suppr");
             arc.getDestination().getEtape().getPredecesseurs().remove(arc.getSource().getEtape());
-            System.out.println("source suppr");
-
             this.arcs.remove(arc);
         }
 
