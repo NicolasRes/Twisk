@@ -142,7 +142,7 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         if(!pt1.getEtape().getSuccesseurs().contains(pt2.getEtape())) {
             pt1.getEtape().ajouterSuccesseur(pt2.getEtape());
             pt2.getEtape().ajouterPredecesseur(pt1.getEtape());
-            System.out.println(arc.toString());
+            //System.out.println(arc.toString());
         }
         //System.out.println("liste des successeurs de " + pt1.getEtape().getNom() +": " +pt1.getEtape().getSuccesseurs());
 
