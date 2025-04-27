@@ -123,7 +123,7 @@ public class Simulation {
             position = ou_sont_les_clients(nb_etape, nb_client);
 
             afficherClients(position, nomEtapes, monde, nb_client);
-            afficherEtatGestionnaire();
+            //afficherEtatGestionnaire();
 
             try {
                 Thread.sleep(TMP_ATTENTE * 1000);

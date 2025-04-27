@@ -4,6 +4,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
+import twisk.exceptions.MondeException;
 import twisk.mondeIG.MondeIG;
 
 import javafx.scene.control.Button;
@@ -36,8 +37,13 @@ public class VueOutils extends TilePane implements Observateur {
 
         this.ajouterActivite.setOnAction(actionEvent -> {this.monde.ajouter("Activité");});
         this.ajouterGuichet.setOnAction(e -> this.monde.ajouter("Guichet"));
-        this.simuler.setOnAction(e -> this.simulation.simuler());
-
+        this.simuler.setOnAction(e -> {
+            try {
+                this.simulation.simuler();
+            } catch (MondeException ex) {
+                DialogueErreur.afficherErreur(ex);
+            }
+        });
         this.getChildren().addAll(this.ajouterActivite, this.ajouterGuichet, this.simuler);
 
         // Ajout style CSS
