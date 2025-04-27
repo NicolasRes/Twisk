@@ -111,12 +111,210 @@ package "Twisk" {
             + boolean estUneSortie()
             + String toString()
         }
-        }
 
         skinparam class {
             BackgroundColor aliceblue
             BorderColor black
+        }
     }
+
+    package "mondeIG" #D3B4FF {
+            class ActiviteIG {
+                - int delai
+                - int ecart
+                - boolean activiteRestreinte
+                - String identifiant
+                + ActiviteIG(String nom, int larg, int haut)
+                + void setDelai(int delai)
+                + void setEcart(int ecart) throws TwiskMenuException
+                + int getDelai()
+                + int getEcart()
+                + int getNbJetons()
+                + String getAttributs()
+                + void setNom(String nom)
+                + void switchActiviteRestreinte()
+                + boolean estActiviteRestreinte()
+                + String getIdentifiant()
+                + String getType()
+                + String toString()
+            }
+
+            class ArcIG {
+                - boolean selection
+                + ArcIG(PointDeControleIG source, PointDeControleIG dest)
+                + double getDebutX()
+                + double getDebutY()
+                + double getFinX()
+                + double getFinY()
+                + PointDeControleIG getSource()
+                + PointDeControleIG getDestination()
+                + boolean estSelection()
+                + void switchSelection()
+                + String toString()
+            }
+
+            abstract class EtapeIG {
+                - {abstract} String nom
+                - int identifiant
+                - double posX
+                - double posY
+                - int largeur
+                - int hauteur
+                - boolean selection
+                - boolean estEntree
+                - boolean estSortie
+                - ArrayList<EtapeIG> successeurs
+                - ArrayList<EtapeIG> predecesseurs
+                + EtapeIG(String nom, int larg, int haut)
+                + int getIdentifiantEtape()
+                + String getNom()
+                + double getPosX()
+                + double getPosY()
+                + void setPosX(double x)
+                + void setPosY(double y)
+                + Iterator<PointDeControleIG> iterator()
+                + boolean estSelection()
+                + void switchSelection()
+                + boolean estEntree()
+                + void switchEntree()
+                + boolean estSortie()
+                + void switchSortie()
+                + void ajouterSuccesseur(EtapeIG e)
+                + void ajouterPredecesseur(EtapeIG e)
+                + ArrayList<EtapeIG> getSuccesseurs()
+                + ArrayList<EtapeIG> getPredecesseurs()
+                + EtapeIG premierSuccesseur(EtapeIG e)
+                + String toString()
+                + {abstract} boolean estActiviteRestreinte()
+                + {abstract} int getDelai()
+                + {abstract} int getEcart()
+                + {abstract} int getNbJetons()
+                + {abstract} String getAttributs()
+                + {abstract} String getIdentifiant()
+                + {abstract} void setNom(String nom)
+                + {abstract} String getType()
+            }
+            class CorrespondancesEtapes {
+                + CorrespondancesEtapes()
+                + void ajouter(EtapeIG etapeIG, Etape etape)
+                + Etape get(EtapeIG etapeIG)
+                + HashMap<Integer, EtapeIG> getHashmapIG()
+                + HashMap<Integer, Etape> getHashmap()
+                + String toString()
+            }
+            class GuichetIG {
+                - int nbJetons
+                - String identifiant
+                + GuichetIG(String nom, int larg, int haut)
+                + void setNbJetons(int nbJetons)
+                + int getNbJetons()
+                + void setNom(String nom)
+                + String getIdentifiant()
+                + boolean estActiviteRestreinte()
+                + int getDelai()
+                + int getEcart()
+                + String getAttributs()
+                + String getType()
+                + String toString()
+            }
+            class MondeIG {
+                    + MondeIG()
+                    + void ajouter(String type)
+                    + Iterator<EtapeIG> iterator()
+                    + Iterator<ArcIG> iteratorArc()
+                    + Iterable<ArcIG> getArcsIterable()
+                    + HashMap<String, EtapeIG> getEtapes()
+                    + boolean pointsMemeEtape(PointDeControleIG pt1, PointDeControleIG pt2)
+                    + boolean arcExistant(PointDeControleIG pt1, PointDeControleIG pt2)
+                    + void arcValide(PointDeControleIG pt1, PointDeControleIG pt2) throws TwiskArcException
+                    + void ajouter(PointDeControleIG pt1, PointDeControleIG pt2) throws TwiskArcException
+                    + boolean estSelectionne(PointDeControleIG pt1)
+                    + void pointsSelectionne(PointDeControleIG pt1) throws TwiskArcException
+                    + void etapesSelection(EtapeIG etape)
+                    + void arcsSelection(ArcIG arc)
+                    + void supprimerArcsAssocies(EtapeIG etape)
+                    + void supprimerEtapesArcs()
+                    + void renommerEtape(String nom) throws TwiskMenuException
+                    + void deplacerEtape(String idEtape, double x, double y)
+                    + void deselectionnerEtapes()
+                    + void deselectionnerArcs()
+                    + void deselectionnerTout()
+                    + void choisirEntrees()
+                    + void choisirSorties()
+                    + boolean uneEtapeSelectionnee()
+                    + void definirDelai(int delai) throws TwiskMenuException
+                    + void definirEcart(int ecart) throws TwiskMenuException
+                    + void definirJetons(int jetons) throws TwiskJetonsException
+                    + String toString()
+            }
+
+            class ArcIG {
+                + ArcIG(PointDeControleIG source, PointDeControleIG dest)
+                + double getDebutX()
+                + double getDebutY()
+                + double getFinX()
+                + double getFinY()
+                + PointDeControleIG getSource()
+                + PointDeControleIG getDestination()
+                + boolean estSelection()
+                + void switchSelection()
+                + String toString()
+            }
+
+            class PointDeControleIG {
+                + PointDeControleIG(double x, double y, EtapeIG etape)
+                + double getX()
+                + double getY()
+                + EtapeIG getEtape()
+                + void deplacer(double deplacementX, double deplacementY)
+                + String toString()
+            }
+            class SimulationIG {
+                + SimulationIG(MondeIG monde)
+                + void simuler()
+                - void verifierMondeIG()
+                - Monde creerMonde()
+                - void succGuichetValide(EtapeIG e)
+                - void identifierActiviteRestreinte(EtapeIG e)
+                - boolean guichetUnSuccesseur(EtapeIG e)
+                - void mondeVide()
+                - boolean aEntree(EtapeIG e)
+                - boolean aSortie(EtapeIG e)
+                - void creationEtape(EtapeIG e, Monde monde)
+                - void creationActiviteRestreinte(EtapeIG e, Monde monde)
+                - void creationActivite(EtapeIG e, Monde monde)
+                - void creationGuichet(EtapeIG e, Monde monde)
+                - void lierSuccesseurs()
+                - void ajouterEntreeSortie(EtapeIG e, Monde monde)
+            }
+            class SujetObserve {
+                + ajouterObservateur(v: Observateur): void
+                + notifierObservateurs(): void
+            }
+
+            '''Liens dans le package MondeIG'''
+            'Liens class ArcIG
+            ArcIG --"*" PointDeControleIG
+
+            'Liens class MondeIG
+            MondeIG --"*" EtapeIG
+            MondeIG --"*" ArcIG
+            MondeIG --"*" PointDeControleIG
+
+            EtapeIG <|-- ActiviteIG
+            EtapeIG <|-- GuichetIG
+
+            'Liens class PointDeControleIG
+            PointDeControleIG --> EtapeIG
+
+            'Liens class SimulationIG
+            SimulationIG -- "1" MondeIG
+            SimulationIG -- "1" CorrespondancesEtapes
+            SimulationIG -- "1" Simulation
+
+            'Liens class SujetObserve
+            SujetObserve -- "1" Observateur
+        }
 
     package "simulation" #EDB458 {
 
