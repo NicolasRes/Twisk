@@ -309,7 +309,7 @@ public class VueMenu extends MenuBar implements Observateur {
     /**
      * Méthode qui offre l'accès aux menu items delai et ecart si une seule étape est sélectionnée
      */
-    public void updateMenuItems() {
+    private void updateMenuItems() {
         if (!this.monde.uneEtapeSelectionnee()) {
             this.delai.setDisable(true);
             this.ecart.setDisable(true);
@@ -341,7 +341,7 @@ public class VueMenu extends MenuBar implements Observateur {
         updateMenuItems();
     }
 
-    public void supprimerFichierTemp() throws IOException {
+    private void supprimerFichierTemp() throws IOException {
         try {
             File index = new File("/tmp/twisk/");
             String[] entries = index.list();

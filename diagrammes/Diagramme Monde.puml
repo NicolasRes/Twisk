@@ -293,6 +293,7 @@ package "twisk" #FFFBF0 {
             - void creationGuichet(EtapeIG e, Monde monde)
             - void lierSuccesseurs()
             - void ajouterEntreeSortie(EtapeIG e, Monde monde)
+            + void introspectionSimu(Monde monde)
         }
 
         class SujetObserve {
@@ -324,7 +325,7 @@ package "twisk" #FFFBF0 {
         SujetObserve -- "1" Observateur
     }
 
-    package "outil" #F8FFE5 {
+    package outils #F8FFE5 {
         class ClassLoaderPerso {
             + ClassLoaderPerso(ClassLoader parent)
             + Class loadClass(String name) throws ClassNotFoundException
@@ -332,10 +333,24 @@ package "twisk" #FFFBF0 {
             - byte[] loadClassData(String name) throws IOException
         }
 
+        class FabriqueIdentifiant {
+            + FabriqueIdentifiant()
+            + {static} FabriqueIdentifiant getInstance()
+            + int getIdentifiantEtape()
+            + String getIdentifiantActivite()
+            + String getIdentifiantPDC()
+            + String getIdentifiantGuichet()
+            + void reset()
+        }
+
         class FabriqueMonde {
-                +{static} Monde fabriqueMondeBasique()
-                +{static} Monde fabriqueMondeBifurc()
-                +{static} Monde mondeBifurc()
+                + {static} Monde fabriqueMondeBasique()
+                + {static} Monde fabriqueMondeBifurc()
+                + {static} Monde mondeBifurc()
+        }
+
+        class FabriqueMondeIG {
+            + {static} MondeIG FabriqueMondeBase()
         }
 
         class FabriqueNumero {
@@ -355,22 +370,6 @@ package "twisk" #FFFBF0 {
             + void creerFichier(String codeC)
             + void compiler()
             + void construireLabBibliotheque(String nomBibliotheque)
-        }
-    }
-
-    package outils #F8FFE5 {
-        class FabriqueIdentifiant {
-            + FabriqueIdentifiant()
-            + {static} FabriqueIdentifiant getInstance()
-            + int getIdentifiantEtape()
-            + String getIdentifiantActivite()
-            + String getIdentifiantPDC()
-            + String getIdentifiantGuichet()
-            + void reset()
-        }
-
-        class FabriqueMonde {
-            + {static} MondeIG FabriqueMondeBase()
         }
 
         class TailleComposants {
@@ -423,23 +422,57 @@ package "twisk" #FFFBF0 {
         class Pane<<java>>
         class Label<<java>>
 
-        abstract VueEtapeIG extends VBox {
-            + VueEtapeIG(MondeIG monde, EtapeIG etape)
-        }
-
         class VueActiviteIG extends VueEtapeIG {
             + VueActiviteIG(MondeIG monde, EtapeIG etape)
         }
 
+         class VueArcIG {
+            + void VueArcIG(ArcIG arc, MondeIG monde)
+            - void creerTeteFleche(double debutX, double debutY, double finX, double finY)
+            - void updateCouleurSelection()
+         }
+
+        abstract class VueEtapeIG extends VBox {
+            + VueEtapeIG(MondeIG monde, EtapeIG etape)
+        }
+
+        class VueGuichetIG {
+            + VueGuichetIG(MondeIG monde, EtapeIG etape)
+        }
+
+        class VueMenu {
+            + void VueMenu(MondeIG monde, Stage stage) throws IOException
+            + void reagir()
+            - void initialiserImages(MenuItem quitter, MenuItem supprimer, MenuItem renommer, MenuItem desactiverSelection, MenuItem entree, MenuItem sortie, MenuItem delai, MenuItem ecart, MenuItem jetons, MenuItem pastel, MenuItem vanille)
+            - void initialiserEvenements(MenuItem quitter, MenuItem supprimer, MenuItem renommer, MenuItem desactiverSelection, MenuItem entree, MenuItem sortie, MenuItem delai, MenuItem ecart, MenuItem jetons, MenuItem pastel, MenuItem vanille)
+            - String dialogueRenommerActivite()
+            - int dialogueDelaiEcart() throws TwiskMenuException
+            - void afficherErreur(String message)
+            - int dialogueJetons()
+            - void updateMenuItems()
+            - void appliquerStyle(Scene scene, String cheminCSS)
+            - void supprimerFichierTemp() throws IOException
+        }
+
         class VueMondeIG implements Observateur {
-            + VueMondeIG(MondeIG monde)
+            + void VueMondeIG(MondeIG monde)
+            + void afficherPointDeControle(EtapeIG etape)
+            + void afficherArcs()
+            + void afficherEtapes()
             + void reagir()
         }
 
         class VueOutils implements Observateur {
-            + VueOutils(MondeIG monde)
-            + void createButtonAjouterActivite()
+            + void VueOutils(MondeIG monde, SimulationIG simulation)
             + void reagir()
+            - void createButtonAjouterActivite()
+            - void createButtonAjouterGuichet()
+            - void createButtonSimulation()
+        }
+
+        class VuePointDeControleIG {
+            + void VuePointDeControleIG(PointDeControleIG pointDeControle, MondeIG monde)
+            - void afficherErreur(String message)
         }
     }
 

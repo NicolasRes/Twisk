@@ -67,7 +67,6 @@ public class SimulationIG {
             verifEntreePrede(e);
             verifSortieSucc(e);
             verifSortiePasSucc(e);
-            // entrée préde??
         }
 
         if (!aEntree) {
@@ -238,8 +237,12 @@ public class SimulationIG {
         }
     }
 
+    /**
+     * Méthode qui lance la simulation du monde par introspection
+     * @param monde Le monde sur lequel lancer la simulation
+     */
     public void instrospectionSimu(Monde monde){
-        nbClients = 6;
+        this.nbClients = 6;
         try {
             clp = new ClassLoaderPerso(ClientTwisk.class.getClassLoader());
 

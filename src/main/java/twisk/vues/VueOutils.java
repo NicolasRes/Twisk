@@ -53,7 +53,7 @@ public class VueOutils extends TilePane implements Observateur {
     /**
      * Méthode qui crée un bouton pour ajouter une activité
      */
-    public void createButtonAjouterActivite() {
+    private void createButtonAjouterActivite() {
         this.ajouterActivite = new Button("");
         this.ajouterActivite.setTooltip(new Tooltip("Ajoute une activité"));
         Image imAjouterActivite = new Image(getClass().getResourceAsStream("/images/add.png"), 50, 50, true, true);
@@ -64,7 +64,7 @@ public class VueOutils extends TilePane implements Observateur {
     /**
      * Méthode qui crée un bouton pour ajouter une activité
      */
-    public void createButtonAjouterGuichet() {
+    private void createButtonAjouterGuichet() {
         this.ajouterGuichet = new Button("");
         this.ajouterGuichet.setTooltip(new Tooltip("Ajoute un guichet"));
         Image imAjouterGuichet = new Image(getClass().getResourceAsStream("/images/addGui.png"), 50, 50, true, true);
@@ -73,7 +73,7 @@ public class VueOutils extends TilePane implements Observateur {
         this.ajouterGuichet.getStyleClass().add("buttonGuichet");   // Style différent pour le bouton du guichet
     }
 
-    public void createButtonSimulation() {
+    private void createButtonSimulation() {
         this.simuler = new Button("");
         this.simuler.setTooltip(new Tooltip("Simu"));
         Image imAjouterGuichet = new Image(getClass().getResourceAsStream("/images/simu.png"), 50, 50, true, true);

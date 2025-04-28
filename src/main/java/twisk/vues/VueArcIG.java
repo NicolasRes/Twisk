@@ -56,7 +56,7 @@ public class VueArcIG extends Pane {
      * @param finX Coordonnée X du point d'arrivée de l'arc
      * @param finY Coordonnée Y du point d'arrivée de l'arc
      */
-    public void creerTeteFleche(double debutX, double debutY, double finX, double finY) {
+    private void creerTeteFleche(double debutX, double debutY, double finX, double finY) {
         // Coordonnées du triangle
         double angle = Math.atan2(finY - debutY, finX - debutX);
         double longFleche = TailleComposants.LONG_FLECHE;
