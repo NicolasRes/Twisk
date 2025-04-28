@@ -1,7 +1,7 @@
 package Java;
 
 import org.junit.jupiter.api.Test;
-import twisk.outil.KitC;
+import twisk.outils.KitC;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

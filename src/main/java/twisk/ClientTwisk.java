@@ -1,8 +1,8 @@
 package twisk;
 
 import twisk.monde.*;
-import twisk.outil.ClassLoaderPerso;
-import twisk.outil.FabriqueMonde;
+import twisk.outils.ClassLoaderPerso;
+import twisk.outils.FabriqueMonde;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

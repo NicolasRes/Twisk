@@ -11,6 +11,8 @@ import twisk.vues.VueMenu;
 import twisk.vues.VueMondeIG;
 import twisk.vues.VueOutils;
 
+import java.io.IOException;
+
 /**
  * Classe principale de l'application Twisk
  */
@@ -20,7 +22,7 @@ public class MainTwisk extends Application {
      * Méthode qui initialise l'interface graphique
      * @param primaryStage La fenêtre principale de l'application
      */
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("TwiskIG");
         MondeIG monde = new MondeIG();
         BorderPane root = new BorderPane();
@@ -28,6 +30,7 @@ public class MainTwisk extends Application {
 
         VueOutils vueOutils = new VueOutils(monde, new SimulationIG(monde));
         VueMondeIG vueMonde = new VueMondeIG(monde);
+
         VueMenu menuJeu = new VueMenu(monde, primaryStage);
 
         root.setBottom(vueOutils);

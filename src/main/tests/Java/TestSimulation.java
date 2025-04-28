@@ -2,7 +2,7 @@ package Java;
 
 import org.junit.Test;
 import twisk.monde.Monde;
-import twisk.outil.FabriqueMonde;
+import twisk.outils.FabriqueMonde;
 import twisk.simulation.Simulation;
 
 import java.nio.file.Files;

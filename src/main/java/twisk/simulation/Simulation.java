@@ -2,10 +2,8 @@ package twisk.simulation;
 
 import twisk.monde.Etape;
 import twisk.monde.Monde;
-import twisk.outil.FabriqueNumero;
-import twisk.outil.KitC;
-
-import java.util.Iterator;
+import twisk.outils.FabriqueNumero;
+import twisk.outils.KitC;
 
 /**
  * Classe Simulation qui simule le monde

@@ -1,4 +1,4 @@
-package twisk.outil;
+package twisk.outils;
 
 import java.io.DataInputStream;
 import java.io.File;

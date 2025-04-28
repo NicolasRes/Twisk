@@ -11,10 +11,13 @@ import twisk.exceptions.TwiskJetonsException;
 import twisk.exceptions.TwiskMenuException;
 import twisk.mondeIG.MondeIG;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 import static javafx.scene.control.Alert.AlertType.ERROR;
 import static javafx.util.Duration.seconds;
+
 
 /**
  * Classe VueMenu qui gère un menu bar dans la fenêtre de l'application
@@ -31,10 +34,11 @@ public class VueMenu extends MenuBar implements Observateur {
 
     /**
      * Constructeur de la classe VueMenu
+     *
      * @param monde Le monde dans lequel se trouve le menu
      * @param stage Fenêtre du jeu
      */
-    public VueMenu(MondeIG monde, Stage stage) {
+    public VueMenu(MondeIG monde, Stage stage) throws IOException {
         this.monde = monde;
         this.stage = stage;
         this.monde.ajouterObservateur(this);
@@ -65,21 +69,23 @@ public class VueMenu extends MenuBar implements Observateur {
                 pastel, vanille);
 
         updateMenuItems();
+        supprimerFichierTemp();
     }
 
     /**
      * Méthode qui initialise les images relatives items du menu fichier
-     * @param quitter   Le MenuItem qui permet de quitter le jeu
-     * @param supprimer Le MenuItem qui permet de recommencer la partie
-     * @param renommer Le MenuItem qui permet de renommer une activité
+     *
+     * @param quitter             Le MenuItem qui permet de quitter le jeu
+     * @param supprimer           Le MenuItem qui permet de recommencer la partie
+     * @param renommer            Le MenuItem qui permet de renommer une activité
      * @param desactiverSelection Le MenuItem qui permet de désactiver la sélection
-     * @param entree Le MenuItem qui permet de désigner les activités sélectionnées comme entrées du monde
-     * @param sortie Le MenuItem qui permet de désigner les activités sélectionnées comme sorties du monde
-     * @param delai Le MenuItem qui permet d'assigner un délai à une activité
-     * @param ecart Le MenuItem qui permet d'assigner un écart de temps à une activité
-     * @param jetons Le MenuItem qui permet de modifier le nombre de jetons d'un guichet
-     * @param pastel Le MenuItem qui permet de choisir le style pastel
-     * @param vanille Le MenuItem qui permet de choisir le style vanille
+     * @param entree              Le MenuItem qui permet de désigner les activités sélectionnées comme entrées du monde
+     * @param sortie              Le MenuItem qui permet de désigner les activités sélectionnées comme sorties du monde
+     * @param delai               Le MenuItem qui permet d'assigner un délai à une activité
+     * @param ecart               Le MenuItem qui permet d'assigner un écart de temps à une activité
+     * @param jetons              Le MenuItem qui permet de modifier le nombre de jetons d'un guichet
+     * @param pastel              Le MenuItem qui permet de choisir le style pastel
+     * @param vanille             Le MenuItem qui permet de choisir le style vanille
      */
     private void initialiserImages(MenuItem quitter, MenuItem supprimer, MenuItem renommer,
                                    MenuItem desactiverSelection, MenuItem entree, MenuItem sortie, MenuItem delai,
@@ -130,19 +136,20 @@ public class VueMenu extends MenuBar implements Observateur {
 
     /**
      * Méthode qui initialise les évènements liés aux items du menu fichier
-     * @param quitter Le MenuItem qui permet de quitter le jeu
-     * @param supprimer Le MenuItem qui permet de recommencer la partie
-     * @param renommer Le MenuItem qui permet de renommer une activité
+     *
+     * @param quitter             Le MenuItem qui permet de quitter le jeu
+     * @param supprimer           Le MenuItem qui permet de recommencer la partie
+     * @param renommer            Le MenuItem qui permet de renommer une activité
      * @param desactiverSelection Le MenuItem qui permet de désactiver la sélection
-     * @param entree Le MenuItem qui permet de désigner les activités sélectionnées comme entrées du monde
-     * @param sortie Le MenuItem qui permet de désigner les activités sélectionnées comme sorties du monde
-     * @param delai Le MenuItem qui permet d'assigner un délai à une activité
-     * @param ecart Le MenuItem qui permet d'assigner un écart de temps à une activité
-     * @param jetons Le MenuItem qui permet de modifier le nombre de jetons d'un guichet
+     * @param entree              Le MenuItem qui permet de désigner les activités sélectionnées comme entrées du monde
+     * @param sortie              Le MenuItem qui permet de désigner les activités sélectionnées comme sorties du monde
+     * @param delai               Le MenuItem qui permet d'assigner un délai à une activité
+     * @param ecart               Le MenuItem qui permet d'assigner un écart de temps à une activité
+     * @param jetons              Le MenuItem qui permet de modifier le nombre de jetons d'un guichet
      */
     private void initialiserEvenements(MenuItem quitter, MenuItem supprimer, MenuItem renommer,
                                        MenuItem desactiverSelection, MenuItem entree, MenuItem sortie, MenuItem delai,
-                                       MenuItem ecart, MenuItem jetons, MenuItem pastel, MenuItem vanille)   {
+                                       MenuItem ecart, MenuItem jetons, MenuItem pastel, MenuItem vanille) {
         supprimer.setOnAction(e -> {
             this.monde.supprimerEtapesArcs();
         });
@@ -152,15 +159,15 @@ public class VueMenu extends MenuBar implements Observateur {
         });
 
         renommer.setOnAction(e -> {
-                String nouveauNom = dialogueRenommerActivite();
-                if(nouveauNom == null || nouveauNom.isEmpty()) {
-                    return;
-                }
-                this.monde.renommerEtape(nouveauNom);
+            String nouveauNom = dialogueRenommerActivite();
+            if (nouveauNom == null || nouveauNom.isEmpty()) {
+                return;
+            }
+            this.monde.renommerEtape(nouveauNom);
         });
 
         desactiverSelection.setOnAction(e -> {
-           this.monde.deselectionnerTout();
+            this.monde.deselectionnerTout();
         });
 
         entree.setOnAction(e -> {
@@ -174,8 +181,7 @@ public class VueMenu extends MenuBar implements Observateur {
         delai.setOnAction(e -> {
             try {
                 this.monde.definirDelai(dialogueDelaiEcart());
-            }
-            catch (TwiskMenuException exception) {
+            } catch (TwiskMenuException exception) {
                 afficherErreur(exception.getMessage());
             }
         });
@@ -183,8 +189,7 @@ public class VueMenu extends MenuBar implements Observateur {
         ecart.setOnAction(e -> {
             try {
                 this.monde.definirEcart(dialogueDelaiEcart());
-            }
-            catch (TwiskMenuException exception) {
+            } catch (TwiskMenuException exception) {
                 afficherErreur(exception.getMessage());
             }
         });
@@ -192,8 +197,7 @@ public class VueMenu extends MenuBar implements Observateur {
         jetons.setOnAction(e -> {
             try {
                 this.monde.definirJetons(dialogueJetons());
-            }
-            catch (TwiskJetonsException exception) {
+            } catch (TwiskJetonsException exception) {
                 afficherErreur(exception.getMessage());
             }
         });
@@ -209,6 +213,7 @@ public class VueMenu extends MenuBar implements Observateur {
 
     /**
      * Méthode menu dialogue qui attend un nouveau nom pour une activité de la part de l'utilisateur
+     *
      * @return Le nouveau nom de l'activité
      */
     private String dialogueRenommerActivite() {
@@ -221,6 +226,7 @@ public class VueMenu extends MenuBar implements Observateur {
 
     /**
      * Méthode menu dialogue que attend une valeur pour une activité
+     *
      * @return La valeur en entier entrée par l'utilisateur
      */
     private int dialogueDelaiEcart() throws TwiskMenuException {
@@ -229,9 +235,9 @@ public class VueMenu extends MenuBar implements Observateur {
         dialog.setHeaderText("Choix de la valeur");
         dialog.setContentText("Entrez la valeur voulue :");
 
-        Optional <String> choix = dialog.showAndWait(); // Optional : la variable contient la valeur entrée ou un objet vide si dialogue fermé / annulé
+        Optional<String> choix = dialog.showAndWait(); // Optional : la variable contient la valeur entrée ou un objet vide si dialogue fermé / annulé
 
-        if(choix.isPresent()) {
+        if (choix.isPresent()) {
             String choixSansEspace = choix.get().trim();    // On enlève les espaces vides s'il y en a
 
             if (choixSansEspace.isEmpty()) {
@@ -244,12 +250,10 @@ public class VueMenu extends MenuBar implements Observateur {
                     throw new TwiskMenuException("La valeur doit être un entier positif");
                 }
                 return val; // Cas fonctionnel
-            }
-            catch (NumberFormatException exception) {
+            } catch (NumberFormatException exception) {
                 throw new TwiskMenuException("La saisie ne peut pas être autre chose qu'un entier");
             }
-        }
-        else {
+        } else {
             throw new TwiskMenuException("Aucune saisie");
         }
     }
@@ -270,6 +274,7 @@ public class VueMenu extends MenuBar implements Observateur {
 
     /**
      * Méthode menu dialogue qui attend un nouveau nombre de jetons pour un guichet
+     *
      * @return Le nouveau nombre de jetons du guichet
      */
     private int dialogueJetons() {
@@ -278,9 +283,9 @@ public class VueMenu extends MenuBar implements Observateur {
         dialog.setHeaderText("Définir un nombre de jetons");
         dialog.setContentText("Entrez le nouveau nombre de jetons du guichet :");
 
-        Optional <String> choix = dialog.showAndWait();
+        Optional<String> choix = dialog.showAndWait();
 
-        if(choix.isPresent()) {
+        if (choix.isPresent()) {
             String choixSansEspace = choix.get().trim();
 
             if (choixSansEspace.isEmpty()) {
@@ -293,12 +298,10 @@ public class VueMenu extends MenuBar implements Observateur {
                     throw new TwiskJetonsException("La valeur doit être un entier positif");
                 }
                 return val;
-            }
-            catch (NumberFormatException exception) {
+            } catch (NumberFormatException exception) {
                 throw new TwiskJetonsException("La saisie ne peut pas être autre chose qu'un entier");
             }
-        }
-        else {
+        } else {
             throw new TwiskJetonsException("Aucune saisie");
         }
     }
@@ -307,13 +310,12 @@ public class VueMenu extends MenuBar implements Observateur {
      * Méthode qui offre l'accès aux menu items delai et ecart si une seule étape est sélectionnée
      */
     public void updateMenuItems() {
-        if(!this.monde.uneEtapeSelectionnee()) {
+        if (!this.monde.uneEtapeSelectionnee()) {
             this.delai.setDisable(true);
             this.ecart.setDisable(true);
             this.renommer.setDisable(true);
             this.jetons.setDisable(true);
-        }
-        else {
+        } else {
             this.delai.setDisable(false);
             this.ecart.setDisable(false);
             this.renommer.setDisable(false);
@@ -323,7 +325,8 @@ public class VueMenu extends MenuBar implements Observateur {
 
     /**
      * Méthode qui permet d'appliquer un style css à une scène
-     * @param scene La scène sur laquelle appliquer le style
+     *
+     * @param scene     La scène sur laquelle appliquer le style
      * @param cheminCSS Le chemin d'accès à la feuille de style css
      */
     private void appliquerStyle(Scene scene, String cheminCSS) {
@@ -336,5 +339,18 @@ public class VueMenu extends MenuBar implements Observateur {
      */
     public void reagir() {
         updateMenuItems();
+    }
+
+    public void supprimerFichierTemp() throws IOException {
+        try {
+            File index = new File("/tmp/twisk/");
+            String[] entries = index.list();
+            for (String s : entries) {
+                File currentFile = new File(index.getPath(), s);
+                currentFile.delete();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

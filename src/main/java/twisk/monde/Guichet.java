@@ -1,6 +1,6 @@
 package twisk.monde;
 
-import twisk.outil.FabriqueNumero;
+import twisk.outils.FabriqueNumero;
 
 /**
  * Sous-classe d'Etape de type Guichet

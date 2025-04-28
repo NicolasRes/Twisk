@@ -1,9 +1,14 @@
 package twisk.mondeIG;
 
+import twisk.ClientTwisk;
 import twisk.exceptions.MondeException;
 import twisk.monde.*;
-import twisk.simulation.Simulation;
-import twisk.vues.DialogueErreur;
+import twisk.outils.ClassLoaderPerso;
+import twisk.outils.FabriqueNumero;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Classe qui gère la simulation de l'interface graphique
@@ -11,7 +16,12 @@ import twisk.vues.DialogueErreur;
 public class SimulationIG {
     private final MondeIG mondeIG;
     private CorrespondancesEtapes correspondance;
-    private final Simulation simulation;
+    private int nbClients;
+
+    private static Object instance;
+    private static ClassLoaderPerso clp;
+    private static Method setNbClient;
+    private static Method simuler;
 
     /**
      * Constructeur de la classe SimulationIG
@@ -19,23 +29,17 @@ public class SimulationIG {
      */
     public SimulationIG(MondeIG monde) {
         assert(monde != null);
-
         this.mondeIG = monde;
-        this.simulation = new Simulation();
     }
 
     /**
      * Méthode qui lance une simulation à partir d'un Monde créé selon un MondeIG valide
      */
     public void simuler() {
-        try {
-            verifierMondeIG();
-            Monde monde = creerMonde();
-            this.simulation.setNbClients(6);  // Pour rendre la simulation fonctionnelle
-            this.simulation.simuler(monde);
-        } catch (MondeException e) {
-            DialogueErreur.afficherErreur(e);
-        }
+        verifierMondeIG();
+        Monde monde = creerMonde();
+        instrospectionSimu(monde);
+        System.gc();
     }
 
     /**
@@ -231,6 +235,36 @@ public class SimulationIG {
         }
         if (e.estSortie()) {
             monde.aCommeSortie(this.correspondance.get(e));
+        }
+    }
+
+    public void instrospectionSimu(Monde monde){
+        nbClients = 6;
+        try {
+            clp = new ClassLoaderPerso(ClientTwisk.class.getClassLoader());
+
+            Class<?> simulationClass = clp.loadClass("twisk.simulation.Simulation");
+
+            Constructor<?> constructeur = simulationClass.getConstructor();
+            instance = constructeur.newInstance();
+
+            setNbClient = simulationClass.getMethod("setNbClients", int.class);
+            setNbClient.invoke(instance, nbClients);
+
+            Method setNomBibliotheque = simulationClass.getMethod("setNomBibliotheque", String.class);
+            setNomBibliotheque.invoke(instance, "libTwisk");
+
+            simuler = simulationClass.getMethod("simuler", Monde.class);
+            simuler.invoke(instance, monde);
+        } catch (ClassNotFoundException e) {
+            System.err.println("La classe Simulation n'a pas été trouvée");
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            System.err.println("La méthode demandée n'existe pas");
+            e.printStackTrace();
+        } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
+            System.err.println("Erreur lors de l'appel de la méthode");
+            e.printStackTrace();
         }
     }
 }

@@ -1,4 +1,4 @@
-package twisk.outil;
+package twisk.outils;
 
 /**
  * Classe FabriqueNumero qui gère la numérotation des étapes
@@ -62,6 +62,6 @@ public class FabriqueNumero {
     public void reset() {
         this.cptEtape = 0;
         this.cptSemaphore = 1;
-        this.cptSimulation = 0;
+        //this.cptSimulation = 0;
     }
 }
