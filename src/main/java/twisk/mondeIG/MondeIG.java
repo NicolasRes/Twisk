@@ -14,10 +14,10 @@ import java.util.Iterator;
  */
 public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
     private HashMap<String, EtapeIG> etapes;
-    private ArrayList<ArcIG> arcs;
-    private ArrayList<PointDeControleIG> pointsSelectionnes;
     private ArrayList<EtapeIG> etapesSelectionnees;
+    private ArrayList<ArcIG> arcs;
     private ArrayList<ArcIG> arcsSelectionnes;
+    private ArrayList<PointDeControleIG> pointsSelectionnes;
 
     /**
      * Constructeur de la classe MondeIG

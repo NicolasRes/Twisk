@@ -158,7 +158,7 @@ package "twisk" #FFFBF0 {
 
         abstract class EtapeIG {
             - {abstract} String nom
-            - int identifiant
+            # int identifiant
             - double posX
             - double posY
             - int largeur
@@ -166,8 +166,6 @@ package "twisk" #FFFBF0 {
             - boolean selection
             - boolean estEntree
             - boolean estSortie
-            - ArrayList<EtapeIG> successeurs
-            - ArrayList<EtapeIG> predecesseurs
             + EtapeIG(String nom, int larg, int haut)
             + int getIdentifiantEtape()
             + String getNom()
@@ -301,28 +299,62 @@ package "twisk" #FFFBF0 {
             + notifierObservateurs(): void
         }
 
-        '''Liens dans le package MondeIG'''
+        '''Liens dans le package mondeIG'''
         'Liens class ArcIG
         ArcIG --"*" PointDeControleIG
 
-        'Liens class MondeIG
-        MondeIG --"*" EtapeIG
-        MondeIG --"*" ArcIG
-        MondeIG --"*" PointDeControleIG
+        'Liens class CorrespondancesEtapes
+        CorrespondancesEtapes --"*" EtapeIG
+        CorrespondancesEtapes --"*" Etape
 
-        EtapeIG <|-- ActiviteIG
-        EtapeIG <|-- GuichetIG
+        'Liens class EtapeIG
+        EtapeIG <|-down- ActiviteIG
+        EtapeIG --"*" PointDeControleIG : pdc
+        EtapeIG --"*" EtapeIG : successeurs
+        EtapeIG --"*" EtapeIG : predecesseurs
+        EtapeIG --> PointDeControleIG
+
+        'Liens class GuichetIG
+        GuichetIG --|> EtapeIG
+
+        'Liens class MondeIG
+        MondeIG --"*" EtapeIG : etapes
+        MondeIG --"*" EtapeIG : etapesSelectionnes
+        MondeIG --"*" ArcIG : arcs
+        MondeIG --"*" ArcIG : arcsSelectionnes
+        MondeIG --"*" PointDeControleIG : pointsSelectionnes
 
         'Liens class PointDeControleIG
-        PointDeControleIG --> EtapeIG
+        PointDeControleIG -- EtapeIG
 
         'Liens class SimulationIG
         SimulationIG -- "1" MondeIG
         SimulationIG -- "1" CorrespondancesEtapes
-        SimulationIG -- "1" Simulation
+        SimulationIG --"1" Object : instance
+        SimulationIG --"1" ClassLoaderPerso : clp
+        SimulationIG --"1" Method : setNbClient
+        SimulationIG --"1" Method : simuler
 
         'Liens class SujetObserve
         SujetObserve -- "1" Observateur
+
+        '''Liens du diagramme IG'''
+        VueEtapeIG --"1" Label
+        VueActiviteIG --"1" HBox
+        VueMondeIG --|> Pane
+        VueOutils --|> TilePane
+        VueOutils -- "*" Button
+
+        Button -down- "*" EventHandler : "       "
+
+        EcouteurBouton ..|> EventHandler
+        EcouteurBouton --"1" MondeIG
+
+        VueEtapeIG - "1" EtapeIG
+
+        SujetObserve "1"-right "*" Observateur
+
+        '''Fin des liens diagramme IG'''
     }
 
     package outils #F8FFE5 {
@@ -478,29 +510,6 @@ package "twisk" #FFFBF0 {
 
     class ClientTwisk
     class MainTwisk
-
-    '''Liens du diagramme IG'''
-    VueEtapeIG --"1" Label
-    VueActiviteIG --"1" HBox
-    VueMondeIG --|> Pane
-    VueOutils --|> TilePane
-    VueOutils -- "*" Button
-
-    Button -down- "*" EventHandler : "       "
-
-    EcouteurBouton ..|> EventHandler
-    EcouteurBouton --"1" MondeIG
-
-    VueEtapeIG - "1" EtapeIG
-
-    SujetObserve "1"-right "*" Observateur
-
-    MondeIG --"*" EtapeIG
-    MondeIG --"*" ArcIG
-    EtapeIG <|-down- ActiviteIG
-    EtapeIG --"*" PointDeControleIG
-    ArcIG --"*" PointDeControleIG
-    '''Fin des liens diagramme IG'''
 }
 
 skinparam {

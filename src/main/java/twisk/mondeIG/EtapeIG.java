@@ -17,10 +17,10 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
     private double posY;
     private int largeur;
     private int hauteur;
-    protected ArrayList<PointDeControleIG> pdc;
     private boolean selection;
     private boolean estEntree;
     private boolean estSortie;
+    protected ArrayList<PointDeControleIG> pdc;
     private ArrayList<EtapeIG> successeurs;
     private ArrayList<EtapeIG> predecesseurs;
 
