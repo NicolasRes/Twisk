@@ -2,13 +2,14 @@ package twisk.simulation;
 
 import twisk.monde.Etape;
 import twisk.monde.Monde;
+import twisk.mondeIG.SujetObserve;
 import twisk.outils.FabriqueNumero;
 import twisk.outils.KitC;
 
 /**
  * Classe Simulation qui simule le monde
  */
-public class Simulation {
+public class Simulation extends SujetObserve {
     private Monde monde;
     private KitC kitC;
     public native int[]start_simulation(int nbEtapes, int nbGuichets, int nbClients, int []tabJetonsGuichets);
@@ -25,7 +26,7 @@ public class Simulation {
     public Simulation() {
         this.kitC = new KitC();
         this.kitC.creerEnvironnement();
-        this.nbCLients =0;
+        this.nbCLients = 0;
         this.gestionnaireClients = new GestionnaireClients();
     }
 
@@ -35,7 +36,7 @@ public class Simulation {
      */
     public void simuler(Monde monde) {
         this.monde = monde;
-        this.monde.setNbClients(nbCLients);
+        this.monde.setNbClients(this.nbCLients);
         String mondeC = monde.toC();
 
         int numSimulation = FabriqueNumero.getInstance().getNumeroSimulation();
@@ -43,13 +44,9 @@ public class Simulation {
         this.setNomBibliotheque("libTwisk" + numSimulation);
         this.kitC.creerFichier(mondeC);
         this.kitC.compiler();
-        this.kitC.construireLabBibliotheque(nomBibliotheque);
+        this.kitC.construireLabBibliotheque(this.nomBibliotheque);
 
-        if(System.getProperty("os.name").contains("Linux")) {
-            System.load("/tmp/twisk/" + nomBibliotheque + ".so");
-        } else if(System.getProperty("os.name").contains("Mac")) {
-            System.load("/tmp/twisk/" + nomBibliotheque + ".dylib");
-        }
+        checkOSBibliotheque();
 
         System.out.println("==========Lancement de la simulation==========\n");
         lancerSimulation(this.monde);
@@ -121,6 +118,7 @@ public class Simulation {
             position = ou_sont_les_clients(nb_etape, nb_client);
 
             afficherClients(position, nomEtapes, monde, nb_client);
+            notifierObservateurs();
             //afficherEtatGestionnaire();
 
             try {
@@ -155,6 +153,17 @@ public class Simulation {
         afficher_pid_client(tabPid, nbClients);
         simule_clients(nbClients, nbEtapes , this.monde);
         nettoyage();
+    }
+
+    /**
+     * Méthode qui vérifie quel OS est utilisé pour la création du dossier tmp de la bibliothèque Twisk
+     */
+    private void checkOSBibliotheque() {
+        if(System.getProperty("os.name").contains("Linux")) {
+            System.load("/tmp/twisk/" + this.nomBibliotheque + ".so");
+        } else if(System.getProperty("os.name").contains("Mac")) {
+            System.load("/tmp/twisk/" + this.nomBibliotheque + ".dylib");
+        }
     }
 
     /**

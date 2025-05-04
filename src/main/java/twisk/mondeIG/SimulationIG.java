@@ -4,7 +4,7 @@ import twisk.ClientTwisk;
 import twisk.exceptions.MondeException;
 import twisk.monde.*;
 import twisk.outils.ClassLoaderPerso;
-import twisk.outils.FabriqueNumero;
+import twisk.vues.Observateur;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
 /**
  * Classe qui gère la simulation de l'interface graphique
  */
-public class SimulationIG {
+public class SimulationIG implements Observateur {  // Observateur de Simulation, pas de MondeIG
     private final MondeIG mondeIG;
     private CorrespondancesEtapes correspondance;
     private int nbClients;
@@ -254,6 +254,9 @@ public class SimulationIG {
             setNbClient = simulationClass.getMethod("setNbClients", int.class);
             setNbClient.invoke(instance, nbClients);
 
+            Method ajouterObservateur = simulationClass.getMethod("ajouterObservateur", Observateur.class);
+            ajouterObservateur.invoke(instance, this);
+
             Method setNomBibliotheque = simulationClass.getMethod("setNomBibliotheque", String.class);
             setNomBibliotheque.invoke(instance, "libTwisk");
 
@@ -269,5 +272,12 @@ public class SimulationIG {
             System.err.println("Erreur lors de l'appel de la méthode");
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Méthode qui permet la mise à jour graphique de la simulation
+     */
+    public void reagir() {
+        System.out.println("Reagir simu appelé");
     }
 }
