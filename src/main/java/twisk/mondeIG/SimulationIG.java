@@ -57,6 +57,7 @@ public class SimulationIG implements Observateur {  // Observateur de Simulation
         for (EtapeIG e : this.mondeIG) {
             if (e.getType().equals("Guichet")) {
                 verifierGuichet(e);
+                verifActiviteRestreintePasEntree(e);
             }
             if (e.estEntree()) {
                 aEntree = true;
@@ -67,6 +68,7 @@ public class SimulationIG implements Observateur {  // Observateur de Simulation
             verifEntreePrede(e);
             verifSortieSucc(e);
             verifSortiePasSucc(e);
+
         }
 
         if (!aEntree) {
@@ -90,6 +92,12 @@ public class SimulationIG implements Observateur {  // Observateur de Simulation
     private void verifSortiePasSucc(EtapeIG e) throws MondeException{
         if(e.estSortie()&& !e.getSuccesseurs().isEmpty()){
             throw new MondeException("L'activité " + e.getNom()+ " est mise en sortie mais a un ou plusieurs successeurs !", MondeException.TypeErreur.ERREUR_SORTIE_NON_VIDE);
+        }
+    }
+
+    private void verifActiviteRestreintePasEntree(EtapeIG e) throws MondeException {
+        if(e.getSuccesseurs().getFirst().estActiviteRestreinte() && e.getSuccesseurs().getFirst().estEntree()) {
+            throw new MondeException("L'activité " + e.getNom() + " est une activité restreinte et ne doit donc pas être une entrée !", MondeException.TypeErreur.ERREUR_ACTIVITE_RESTREINTE_ENTREE);
         }
     }
 

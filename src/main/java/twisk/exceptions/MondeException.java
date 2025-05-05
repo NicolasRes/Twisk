@@ -39,7 +39,8 @@ public class MondeException extends RuntimeException {
         SUCCESSEUR_NON_TROUVE("Successeur non trouvé"),
         ERREUR_NON_ENTREE_NON_PRED("Une activité sans prédécesseur doit être déclarée comme entrée"),
         ERREUR_NON_SORTIE_NON_SUCC("Une activité sans successeur doit être déclarée comme sortie"),
-        ERREUR_SORTIE_NON_VIDE("Une sortie ne doit pas avoir de successeur");
+        ERREUR_SORTIE_NON_VIDE("Une sortie ne doit pas avoir de successeur"),
+        ERREUR_ACTIVITE_RESTREINTE_ENTREE("Une activité restreinte ne doit pas être une entrée");
 
         private final String message;
 
