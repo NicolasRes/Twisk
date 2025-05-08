@@ -3,10 +3,8 @@ package twisk.vues;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
-import twisk.mondeIG.ArcIG;
-import twisk.mondeIG.EtapeIG;
-import twisk.mondeIG.MondeIG;
-import twisk.mondeIG.PointDeControleIG;
+import javafx.scene.shape.Circle;
+import twisk.mondeIG.*;
 
 /**
  * Classe qui affiche toutes les activités répertoriées dans MondeIG
@@ -62,7 +60,7 @@ public class VueMondeIG extends Pane implements Observateur {
      * Méthode qui affiche les points de contrôle d'une étape
      * @param etape L'étape dont on doit afficher les points de contrôle
      */
-    public void afficherPointDeControle(EtapeIG etape) {
+    private void afficherPointDeControle(EtapeIG etape) {
         for (PointDeControleIG p : etape) {
             VuePointDeControleIG vPointControle = new VuePointDeControleIG(p, this.monde);
             this.getChildren().add(vPointControle);
@@ -73,7 +71,7 @@ public class VueMondeIG extends Pane implements Observateur {
     /**
      * Méthode qui affiche les arcs du monde
      */
-    public void afficherArcs() {
+    private void afficherArcs() {
         for (ArcIG arc : this.monde.getArcsIterable()) {
             VueArcIG vueArc = new VueArcIG(arc, this.monde);
             this.getChildren().add(vueArc);
@@ -83,7 +81,7 @@ public class VueMondeIG extends Pane implements Observateur {
     /**
      * Méthode qui affiche les étapes du monde (avec ses points de contrôle)
      */
-    public void afficherEtapes() {
+    private void afficherEtapes() {
         for(EtapeIG e : this.monde) {
             if(e.getType() == "Activite") {
                 VueEtapeIG act = new VueActiviteIG(this.monde, e);
@@ -101,6 +99,21 @@ public class VueMondeIG extends Pane implements Observateur {
     }
 
     /**
+     * Méthode qui affiche les clients dans les étapes du monde
+     */
+    private void afficherClients() {
+        for(ClientIG c : this.monde.getClientsIG()) {
+            System.out.println("  → Client " + c.getNumero() + " en (" + c.getX() + ", " + c.getY() + ")");
+
+            Circle cercle = new Circle(8);
+            cercle.setStyle("-fx-fill: red;");
+            cercle.setCenterX(c.getX());
+            cercle.setCenterY(c.getY());
+            this.getChildren().add(cercle);
+        }
+    }
+
+    /**
      * Méthode qui met à jour le dessin des activités dans le monde
      */
     @Override
@@ -109,5 +122,6 @@ public class VueMondeIG extends Pane implements Observateur {
 
         afficherArcs();
         afficherEtapes();
+        afficherClients();
     }
 }
