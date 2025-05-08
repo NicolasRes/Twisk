@@ -40,6 +40,20 @@ public class CorrespondancesEtapes {
     }
 
     /**
+     * Méthode qui récupère une étape du MondeIG à partir de l'identifiant de son étape associée dans le Monde
+     * @param etape L'étape du Monde dont on veut récupérer le correspondant
+     * @return L'EtapeIG correspondante à l'étape du Monde passée en paramètre
+     */
+    public EtapeIG get(Etape etape) {
+        for(Integer id : this.etapes.keySet()) {
+            if(this.etapes.get(id).equals(etape)) {
+                return this.etapesIG.get(id);
+            }
+        }
+        return null;
+    }
+
+    /**
      * Méthode qui renvoie la HashMap des étapes du MondeIG
      * @return La liste des étapes du MondeIG
      */
@@ -80,5 +94,4 @@ public class CorrespondancesEtapes {
 
         return sb.toString();
     }
-
 }
