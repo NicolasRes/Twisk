@@ -46,7 +46,6 @@ public class Client {
         return this.rang;
     }
 
-
     /**
      * Méthode qui renvoie l'étape du client
      * @return L'étape du client
