@@ -18,6 +18,7 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
     private ArrayList<ArcIG> arcs;
     private ArrayList<ArcIG> arcsSelectionnes;
     private ArrayList<PointDeControleIG> pointsSelectionnes;
+    private ArrayList<ClientIG> clientsIG;
 
     /**
      * Constructeur de la classe MondeIG
@@ -30,6 +31,7 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         this.pointsSelectionnes = new ArrayList<>();
         this.etapesSelectionnees = new ArrayList<>();
         this.arcsSelectionnes = new ArrayList<>();
+        this.clientsIG = new ArrayList<>();
     }
 
     /**
@@ -404,6 +406,23 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         else {
             throw new TwiskJetonsException("Erreur, l'étape sélectionnée n'est pas un guichet");
         }
+    }
+
+    /**
+     * Méthode qui set les clients dans une ArrayList et notifie les observateurs
+     * @param clientsIG La liste des clients à set dans l'ArrayList du MondeIG
+     */
+    public void setClientIG(ArrayList<ClientIG> clientsIG) {
+        this.clientsIG = clientsIG;
+        notifierObservateurs();
+    }
+
+    /**
+     * Méthode qui renvoie la liste des clientsIG
+     * @return La liste des clientsIG
+     */
+    public ArrayList<ClientIG> getClientsIG() {
+        return this.clientsIG;
     }
 
     /**
