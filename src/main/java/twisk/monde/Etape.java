@@ -83,8 +83,6 @@ public abstract class Etape implements Iterable<Etape> {
         return 0;
     }
 
-
-
     /**
      * Méthode qui permet d'itérer sur la classe Etape
      * @return Un itérateur sur les étapes
