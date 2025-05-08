@@ -9,6 +9,8 @@ import twisk.vues.Observateur;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Classe qui gère la simulation de l'interface graphique
@@ -79,22 +81,42 @@ public class SimulationIG implements Observateur {
         }
     }
 
+    /**
+     * Méthode qui vérifie si une étape est bien mise en entrée si elle n'a aucun prédécesseur
+     * @param e L'étape à vérifier
+     * @throws MondeException Déclenche une exception si l'étape n'est pas mise en entrée
+     */
     private void verifEntreePrede(EtapeIG e) throws MondeException{
         if(!e.estEntree() && e.getPredecesseurs().isEmpty())
                 throw new MondeException("L'activité " + e.getNom()+ " n'a pas de predecesseurs donc doit être mise en Entrée", MondeException.TypeErreur.ERREUR_NON_ENTREE_NON_PRED);
     }
 
+    /**
+     * Méthode qui vérifie si une étape est bien mise en sortie si elle n'a aucun successeur
+     * @param e L'étape à vérifier
+     * @throws MondeException Déclenche une exception si l'étape n'est pas mise en sortie
+     */
     private void verifSortieSucc(EtapeIG e) throws MondeException{
         if(!e.estSortie() && e.getSuccesseurs().isEmpty())
             throw new MondeException("L'activité " + e.getNom()+ " n'a pas de successeurs donc doit être mise en Sortie", MondeException.TypeErreur.ERREUR_NON_SORTIE_NON_SUCC);
     }
 
+    /**
+     * Méthode qui vérifie si une sortie n'a bien aucun successeur
+     * @param e L'étape à vérifier
+     * @throws MondeException Déclenche une exception si la sortie a un successeur
+     */
     private void verifSortiePasSucc(EtapeIG e) throws MondeException{
         if(e.estSortie()&& !e.getSuccesseurs().isEmpty()){
             throw new MondeException("L'activité " + e.getNom()+ " est mise en sortie mais a un ou plusieurs successeurs !", MondeException.TypeErreur.ERREUR_SORTIE_NON_VIDE);
         }
     }
 
+    /**
+     * Méthode qui vérifie si une activité restreinte a été notée comme une entrée
+     * @param e L'étape à vérifier
+     * @throws MondeException Déclenche une exception si une activité restreinte est mise en entrée
+     */
     private void verifActiviteRestreintePasEntree(EtapeIG e) throws MondeException {
         if(e.getSuccesseurs().getFirst().estActiviteRestreinte() && e.getSuccesseurs().getFirst().estEntree()) {
             throw new MondeException("L'activité " + e.getNom() + " est une activité restreinte et ne doit donc pas être une entrée !", MondeException.TypeErreur.ERREUR_ACTIVITE_RESTREINTE_ENTREE);
@@ -228,20 +250,19 @@ public class SimulationIG implements Observateur {
         }
     }
 
-
-
     /**
      * Méthode qui ajoute les entrées et sorties au Monde
      * @param e L'étape dont on vérifie la qualité d'entrée ou de sortie
      * @param monde Le Monde dans lequel on ajoute les entrées / sorties
      */
     private void ajouterEntreeSortie(EtapeIG e, Monde monde) {
-        // Gestion des entrées / sorties
         if (e.estEntree()) {
             monde.aCommeEntree(this.correspondance.get(e));
+            this.correspondance.ajouter(e, monde.getSasEntree());
         }
         if (e.estSortie()) {
             monde.aCommeSortie(this.correspondance.get(e));
+            this.correspondance.ajouter(e, monde.getSasSortie());
         }
     }
 
@@ -285,7 +306,127 @@ public class SimulationIG implements Observateur {
     /**
      * Méthode qui permet la mise à jour graphique de la simulation
      */
+    @Override
     public void reagir() {
-        System.out.println("Reagir simu appelé");
+        try {
+            Object gestionnaire = getGestionnaire();
+            ArrayList<ClientIG> clientsIG = creerClientsIG(gestionnaire);
+            this.mondeIG.setClientIG(clientsIG);
+        }
+        catch(NoSuchMethodException | SecurityException e) {   // getMethod
+            System.err.println("Erreur lors du getMethod");
+            e.printStackTrace();
+        }
+        catch(IllegalAccessException | InvocationTargetException e) {
+            System.err.println("Erreur lors du invoke");
+        }
+    }
+
+    /**
+     * Méthode qui récupère le gestionnaire de clients de Simulation par introspection
+     * @return Le gestionnaire de clients de Simulation
+     * @throws NoSuchMethodException Exception si la méthode getGestionnaireClients n'existe pas
+     * @throws InvocationTargetException Exception relative à l'utilisation d'invoke lors du getGestionnaire
+     * @throws IllegalAccessException Exception relative à une tentative d'accès à getGestionnaire
+     */
+    private Object getGestionnaire() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method getGestionnaireClients = instance.getClass().getMethod("getGestionnaireClients");
+        return getGestionnaireClients.invoke(instance);
+    }
+
+    /**
+     *
+     * @param gestionnaire Méthode qui crée une liste de clientsIG
+     * @return Une ArrayList de clientsIG
+     * @throws NoSuchMethodException Exception si la méthode getClients, getNumero ou getEtape n'existe pas
+     * @throws InvocationTargetException Exception relative à l'utilisation d'invoke
+     * @throws IllegalAccessException Exception relative à une tentative d'accès à une méthode
+     */
+    private ArrayList<ClientIG> creerClientsIG(Object gestionnaire) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        ArrayList<ClientIG> clientsIG = new ArrayList<>();
+
+        Method getClients = gestionnaire.getClass().getMethod("iterator");  // On récupère l'itérator pour l'appliquer sur le gestionnaire
+        Iterator<?> it = (Iterator<?>) getClients.invoke(gestionnaire);
+
+        while (it.hasNext()) {  // On itère à travers tous les clients
+            Object client = it.next();
+
+            // Numéro du client
+            Method getNumero = client.getClass().getMethod("getNumeroClient");
+            int numero = (int) getNumero.invoke(client);
+
+            // Etape du client
+            Method getEtape = client.getClass().getMethod("getEtape");
+            Etape etape = (Etape) getEtape.invoke(client);
+
+            // EtapeIG correspondante
+            Method getNom = etape.getClass().getMethod("getNom");
+            String nom = (String) getNom.invoke(etape);
+
+            // On cherche une correspondance pour les SasEntree et SasSortie
+            EtapeIG etapeIG = correspondanceSas(nom);
+
+            // Activités, guichets et autres
+            if(etapeIG == null) {
+                etapeIG = trouverEtapeIG(nom);
+            }
+
+            // Erreur à modifier ?
+            if (etapeIG == null) {
+                System.err.println("⚠ Pas de correspondance pour " + etape.getNom());
+                System.err.println("→ Classe exacte de l'étape : " + etape.getClass());
+                continue;
+            }
+
+            // Coordonnées
+            double[] coords = calculCoordonnees(numero, etapeIG);
+            clientsIG.add(new ClientIG(numero, coords[0], coords[1]));
+            System.out.println(" → Client " + numero + " dans " + etape.getNom());
+        }
+
+        return clientsIG;
+    }
+
+    /**
+     * Méthode qui cherche l'EtapeIG correspondant à un SasEntree ou un SasSortie
+     * @param nom Le nom de l'Etape (Entree ou Sortie)
+     * @return L'EtapeIG correspondante, sinon null
+     */
+    private EtapeIG correspondanceSas(String nom) {
+        if (nom.equals("Entree") || nom.equals("Sortie")) {
+            for (Integer id : this.correspondance.getHashmap().keySet()) {
+                if (this.correspondance.getHashmap().get(id).getNom().equals(nom)) {
+                    return this.correspondance.getHashmapIG().get(id);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Méthode qui cherche l'EtapeIG correspondant à un nom parmi les étapes du MondeIG (Activités, Guichets, etc..)
+     * @param nom Le nom de l'étape logique à rechercher
+     * @return L'EtapeIG correspondante si trouvée, sinon null
+     */
+    private EtapeIG trouverEtapeIG(String nom) {
+        for (EtapeIG e : mondeIG) {
+            if (e.getNom().equals(nom)) {
+                return e;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Méthode qui calcule les coordonnées d'un client dans une EtapeIG
+     * @param numero Le numéro du client
+     * @param etapeIG L'étape dans laquelle se trouve le client
+     * @return Les coordonnées du client
+     */
+    private double[] calculCoordonnees(int numero, EtapeIG etapeIG) {
+        double[] coordonnees = new double[2];
+        coordonnees[0] = etapeIG.getPosX() + 15 + numero * 20;
+        coordonnees[1] = etapeIG.getPosY() + 35;  // On décale le client vers le centre de l'étape pour qu'il n'apparaisse pas en haut
+        return coordonnees;
     }
 }
