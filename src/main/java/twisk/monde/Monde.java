@@ -209,10 +209,31 @@ public class Monde implements Iterable<Etape> {
         return chaine;
     }
 
+    /**
+     * Méthode qui récupère une étape à un certain indice
+     * @param i L'indice de l'étape à récupérer
+     * @return Une étape à un indice choisi
+     */
     public Etape getEtape(int i) {
         if(i < this.lesEtapes.nbEtapes()) {
             return this.lesEtapes.getEtape(i);
         }
         return null;
+    }
+
+    /**
+     * Méthode qui récupère le sas entrée
+     * @return Le SasEntree
+     */
+    public SasEntree getSasEntree() {
+        return this.entree;
+    }
+
+    /**
+     * Méthode qui récupère le sas de sortie
+     * @return Le SasSortie
+     */
+    public SasSortie getSasSortie() {
+        return this.sortie;
     }
 }
