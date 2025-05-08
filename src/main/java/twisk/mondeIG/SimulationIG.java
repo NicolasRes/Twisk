@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
 /**
  * Classe qui gère la simulation de l'interface graphique
  */
-public class SimulationIG implements Observateur {  // Observateur de Simulation, pas de MondeIG
+public class SimulationIG implements Observateur {
     private final MondeIG mondeIG;
     private CorrespondancesEtapes correspondance;
     private int nbClients;
