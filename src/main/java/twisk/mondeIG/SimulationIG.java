@@ -1,9 +1,13 @@
 package twisk.mondeIG;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import twisk.ClientTwisk;
 import twisk.exceptions.MondeException;
 import twisk.monde.*;
 import twisk.outils.ClassLoaderPerso;
+import twisk.outils.TailleComposants;
+import twisk.outils.ThreadsManager;
 import twisk.vues.Observateur;
 
 import java.lang.reflect.Constructor;
@@ -308,18 +312,25 @@ public class SimulationIG implements Observateur {
      */
     @Override
     public void reagir() {
-        try {
-            Object gestionnaire = getGestionnaire();
-            ArrayList<ClientIG> clientsIG = creerClientsIG(gestionnaire);
-            this.mondeIG.setClientIG(clientsIG);
-        }
-        catch(NoSuchMethodException | SecurityException e) {   // getMethod
-            System.err.println("Erreur lors du getMethod");
-            e.printStackTrace();
-        }
-        catch(IllegalAccessException | InvocationTargetException e) {
-            System.err.println("Erreur lors du invoke");
-        }
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    Object gestionnaire = getGestionnaire();
+                    ArrayList<ClientIG> clientsIG = creerClientsIG(gestionnaire);
+                    Platform.runLater(() -> SimulationIG.this.mondeIG.setClientIG(clientsIG));  // On exécute le code dans le thread dès que possible
+                }
+                catch(NoSuchMethodException | SecurityException e) {   // getMethod
+                    System.err.println("Erreur lors du getMethod");
+                    e.printStackTrace();
+                }
+                catch(IllegalAccessException | InvocationTargetException e) {
+                    System.err.println("Erreur lors du invoke");
+                }
+                return null;
+            }
+        };
+        ThreadsManager.getInstance().lancer(task);  // On lance la tâche et on la met dans la liste des tâches en cours
     }
 
     /**
@@ -348,6 +359,7 @@ public class SimulationIG implements Observateur {
         Method getClients = gestionnaire.getClass().getMethod("iterator");  // On récupère l'itérator pour l'appliquer sur le gestionnaire
         Iterator<?> it = (Iterator<?>) getClients.invoke(gestionnaire);
 
+        int i = 0;  // Cpt pour décaler les clients lors de leur affichage
         while (it.hasNext()) {  // On itère à travers tous les clients
             Object client = it.next();
 
@@ -379,8 +391,9 @@ public class SimulationIG implements Observateur {
             }
 
             // Coordonnées
-            double[] coords = calculCoordonnees(numero, etapeIG);
+            double[] coords = calculCoordonnees(i, etapeIG);
             clientsIG.add(new ClientIG(numero, coords[0], coords[1]));
+            i++;
             System.out.println(" → Client " + numero + " dans " + etape.getNom());
         }
 
@@ -419,14 +432,26 @@ public class SimulationIG implements Observateur {
 
     /**
      * Méthode qui calcule les coordonnées d'un client dans une EtapeIG
-     * @param numero Le numéro du client
+     * @param position Compteur lié au client pour créer un décalage
      * @param etapeIG L'étape dans laquelle se trouve le client
      * @return Les coordonnées du client
      */
-    private double[] calculCoordonnees(int numero, EtapeIG etapeIG) {
+    private double[] calculCoordonnees(int position, EtapeIG etapeIG) {
         double[] coordonnees = new double[2];
-        coordonnees[0] = etapeIG.getPosX() + 15 + numero * 20;
-        coordonnees[1] = etapeIG.getPosY() + 35;  // On décale le client vers le centre de l'étape pour qu'il n'apparaisse pas en haut
+
+        // La largeur et la hauteur diffèrent selon le type d'étape
+        int largeur = TailleComposants.LARGEUR_ETAPE;
+        int hauteur = TailleComposants.HAUTEUR_ETAPE;
+
+        if(etapeIG.getType().equals("Guichet")) {
+            largeur = TailleComposants.LARGEUR_GUICHET;
+            hauteur = TailleComposants.HAUTEUR_GUICHET;
+        }
+
+        // On décale les clients pour les positionner les uns à côté des autres
+        coordonnees[0] = etapeIG.getPosX() + largeur / 2.0 + -30 + position * 15;
+        coordonnees[1] = etapeIG.getPosY() + hauteur - 30;
+
         return coordonnees;
     }
 }
