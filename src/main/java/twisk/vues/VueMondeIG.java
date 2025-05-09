@@ -3,6 +3,7 @@ package twisk.vues;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import twisk.mondeIG.*;
 
@@ -103,12 +104,13 @@ public class VueMondeIG extends Pane implements Observateur {
      */
     private void afficherClients() {
         for(ClientIG c : this.monde.getClientsIG()) {
-            System.out.println("  → Client " + c.getNumero() + " en (" + c.getX() + ", " + c.getY() + ")");
-
-            Circle cercle = new Circle(8);
-            cercle.setStyle("-fx-fill: red;");
+            System.out.println("→ Affichage des cercles...");
+            System.out.println("    Ajout du client " + c.getNumero() + " aux coordonnées : " + c.getX() + "," + c.getY());
+            Circle cercle = new Circle(5);
+            cercle.getStyleClass().add("client");
             cercle.setCenterX(c.getX());
             cercle.setCenterY(c.getY());
+            cercle.setId("client" + c.getNumero());  // pour debugger si besoin
             this.getChildren().add(cercle);
         }
     }
@@ -122,6 +124,7 @@ public class VueMondeIG extends Pane implements Observateur {
 
         afficherArcs();
         afficherEtapes();
+        System.out.println("Nb de clientsIG dans monde : " + monde.getClientsIG().size());
         afficherClients();
     }
 }
