@@ -218,7 +218,7 @@ public class Simulation extends SujetObserve {
      * Méthode qui renvoie le gestionnaire de clients
      * @return Le gestionnaire de clients
      */
-    public GestionnaireClients getGestionnaireClients() {
+    public GestionnaireClients getGestionnaireClients() {   // Ne pas supprimer, utilisée par introspection
         return this.gestionnaireClients;
     }
 
