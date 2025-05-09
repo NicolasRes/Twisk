@@ -335,22 +335,29 @@ public class VueMenu extends MenuBar implements Observateur {
     }
 
     /**
+     * Méthode qui permet de supprimer les fichiers temporaires dans le dossier tmp
+     * @throws IOException
+     */
+    private void supprimerFichierTemp() throws IOException {
+        try {
+            File index = new File("/tmp/twisk/");
+                String[] entries = index.list();
+                if(entries != null) {
+                    for (String s : entries) {
+                        File currentFile = new File(index.getPath(), s);
+                        currentFile.delete();
+                    }
+                }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Méthode qui met à jour l'affichage du menu dans le monde
      */
     public void reagir() {
         updateMenuItems();
-    }
-
-    private void supprimerFichierTemp() throws IOException {
-        try {
-            File index = new File("/tmp/twisk/");
-            String[] entries = index.list();
-            for (String s : entries) {
-                File currentFile = new File(index.getPath(), s);
-                currentFile.delete();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
