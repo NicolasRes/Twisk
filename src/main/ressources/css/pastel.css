@@ -108,3 +108,8 @@ Feuille de style pastel CSS liée au projet twiskIG
 .polylineSelection {
     -fx-fill: red;
 }
+
+.client {
+    -fx-fill: red;
+    -fx-stroke: black;
+}
