@@ -295,6 +295,32 @@ public class SimulationIG implements Observateur {
 
             simuler = simulationClass.getMethod("simuler", Monde.class);
             simuler.invoke(instance, monde);
+
+            /*
+            Task<Void> task = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    try {
+                        // simuler
+                        Platform.runLater(() -> {
+                            try {
+                                // simuler
+                            } catch (IllegalAccessException | InvocationTargetException e) {
+                                System.err.println("Erreur simulation");
+                                e.printStackTrace();
+                            }
+                        });
+                    } catch (NoSuchMethodException e) {
+                        System.err.println("Méthode simuler non trouvée");
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+            };
+
+            ThreadsManager.getInstance().lancer(task);
+
+             */
         } catch (ClassNotFoundException e) {
             System.err.println("La classe Simulation n'a pas été trouvée");
             e.printStackTrace();
@@ -346,8 +372,8 @@ public class SimulationIG implements Observateur {
     }
 
     /**
-     *
-     * @param gestionnaire Méthode qui crée une liste de clientsIG
+     * Méthode qui crée une liste de clientsIG
+     * @param gestionnaire Le gestionnaire de clients
      * @return Une ArrayList de clientsIG
      * @throws NoSuchMethodException Exception si la méthode getClients, getNumero ou getEtape n'existe pas
      * @throws InvocationTargetException Exception relative à l'utilisation d'invoke
