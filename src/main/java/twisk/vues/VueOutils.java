@@ -9,6 +9,7 @@ import twisk.mondeIG.MondeIG;
 
 import javafx.scene.control.Button;
 import twisk.mondeIG.SimulationIG;
+import twisk.outils.ThreadsManager;
 
 /**
  * Classe qui gère le bouton pour ajouter une activité
@@ -17,14 +18,14 @@ public class VueOutils extends TilePane implements Observateur {
     private MondeIG monde;
     private SimulationIG simulation;
     private Button ajouterActivite, ajouterGuichet, simuler;
-
+    private boolean simuEnCours;
     /**
      * Constructeur de la classe VueOutils
      * @param monde Le monde dans lequel on crée les outils
      */
     public VueOutils(MondeIG monde, SimulationIG simulation) {
         assert(monde != null);
-
+        simuEnCours=false;
         this.monde = monde;
         this.monde.ajouterObservateur(this);
 
@@ -39,7 +40,13 @@ public class VueOutils extends TilePane implements Observateur {
         this.ajouterGuichet.setOnAction(e -> this.monde.ajouter("Guichet"));
         this.simuler.setOnAction(e -> {
             try {
-                this.simulation.simuler();
+                if(!simuEnCours) {
+                    this.simulation.simuler();
+                }else{
+                    ThreadsManager.getInstance().detruireTout();
+                }
+                this.switchImage(simuEnCours);
+
             } catch (MondeException ex) {
                 DialogueErreur.afficherErreur(ex);
             }
@@ -48,6 +55,20 @@ public class VueOutils extends TilePane implements Observateur {
 
         // Ajout style CSS
         this.getStyleClass().add("TilePane");
+    }
+
+    private void switchImage(boolean simuEnCours) {
+        this.simuEnCours=!simuEnCours;
+
+        if(simuEnCours){
+            Image imSimu = new Image(getClass().getResourceAsStream("/images/simu.png"), 50, 50, true, true);
+            ImageView iconSimuAc = new ImageView(imSimu);
+            simuler.setGraphic(iconSimuAc);
+        }else{
+            Image imAjouterActivite = new Image(getClass().getResourceAsStream("/images/stop.png"), 50, 50, true, true);
+            ImageView iconAjouterActivite = new ImageView(imAjouterActivite);
+            simuler.setGraphic(iconAjouterActivite);
+        }
     }
 
     /**

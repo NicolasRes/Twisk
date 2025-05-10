@@ -264,17 +264,17 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         assert(y >= 0);
 
         EtapeIG etape = this.etapes.get(idEtape);   // On récupère l'étape qu'on déplace
-            double deplacementX = x - etape.getPosX();
-            double deplacementY = y - etape.getPosY();
+        double deplacementX = x - etape.getPosX();
+        double deplacementY = y - etape.getPosY();
 
-            etape.setPosX(x); // On change les coordonnées de l'étape
-            etape.setPosY(y);
+        etape.setPosX(x); // On change les coordonnées de l'étape
+        etape.setPosY(y);
 
-            for(PointDeControleIG p : etape) {  // On change les coordonnéees des points associés
-                p.deplacer(deplacementX, deplacementY);
-            }
+        for(PointDeControleIG p : etape) {  // On change les coordonnéees des points associés
+            p.deplacer(deplacementX, deplacementY);
+        }
 
-            notifierObservateurs();
+        notifierObservateurs();
     }
 
     /**

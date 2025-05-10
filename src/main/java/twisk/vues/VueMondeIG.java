@@ -34,6 +34,7 @@ public class VueMondeIG extends Pane implements Observateur {
                 dragEvent.acceptTransferModes(TransferMode.MOVE);
             }
             dragEvent.consume();
+
         });
 
         this.setOnDragDropped(dragEvent -> {
@@ -46,6 +47,7 @@ public class VueMondeIG extends Pane implements Observateur {
 
                 this.monde.deplacerEtape(identifiant, x, y);
                 success = true;
+
             }
             catch(Exception e) {
                 e.printStackTrace();
@@ -53,8 +55,10 @@ public class VueMondeIG extends Pane implements Observateur {
             finally {
                 dragEvent.setDropCompleted(success);
                 dragEvent.consume();
+
             }
         });
+
     }
 
     /**
@@ -112,6 +116,7 @@ public class VueMondeIG extends Pane implements Observateur {
             cercle.setCenterY(c.getY());
             cercle.setId("client" + c.getNumero());  // pour debugger si besoin
             this.getChildren().add(cercle);
+            cercle.relocate(c.getX(), c.getY());
         }
     }
 
@@ -121,7 +126,6 @@ public class VueMondeIG extends Pane implements Observateur {
     @Override
     public void reagir() {
         this.getChildren().clear();
-
         afficherArcs();
         afficherEtapes();
         System.out.println("Nb de clientsIG dans monde : " + monde.getClientsIG().size());
