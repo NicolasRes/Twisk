@@ -44,7 +44,17 @@ public class SimulationIG implements Observateur {
     public void simuler() {
         verifierMondeIG();
         Monde monde = creerMonde();
-        instrospectionSimu(monde);
+
+        // On lance la simulation dans un nouveau thread
+        Task<Void> simulation = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                instrospectionSimu(monde);
+                return null;
+            }
+        };
+
+        ThreadsManager.getInstance().lancer(simulation);
         System.gc();
     }
 
@@ -296,31 +306,6 @@ public class SimulationIG implements Observateur {
             simuler = simulationClass.getMethod("simuler", Monde.class);
             simuler.invoke(instance, monde);
 
-            /*
-            Task<Void> task = new Task<Void>() {
-                @Override
-                protected Void call() throws Exception {
-                    try {
-                        // simuler
-                        Platform.runLater(() -> {
-                            try {
-                                // simuler
-                            } catch (IllegalAccessException | InvocationTargetException e) {
-                                System.err.println("Erreur simulation");
-                                e.printStackTrace();
-                            }
-                        });
-                    } catch (NoSuchMethodException e) {
-                        System.err.println("Méthode simuler non trouvée");
-                        e.printStackTrace();
-                    }
-                    return null;
-                }
-            };
-
-            ThreadsManager.getInstance().lancer(task);
-
-             */
         } catch (ClassNotFoundException e) {
             System.err.println("La classe Simulation n'a pas été trouvée");
             e.printStackTrace();
@@ -338,7 +323,7 @@ public class SimulationIG implements Observateur {
      */
     @Override
     public void reagir() {
-        Task<Void> task = new Task<Void>() {
+        Task<Void> task = new Task<>() {
             @Override
             protected Void call() throws Exception {
                 try {
