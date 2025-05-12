@@ -14,7 +14,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Random;
 
 /**
  * Classe qui gère la simulation de l'interface graphique
@@ -23,6 +25,7 @@ public class SimulationIG implements Observateur {
     private final MondeIG mondeIG;
     private CorrespondancesEtapes correspondance;
     private int nbClients;
+    private HashMap<Integer, Integer> couleursClients;
 
     private static Object instance;
     private static ClassLoaderPerso clp;
@@ -36,6 +39,7 @@ public class SimulationIG implements Observateur {
     public SimulationIG(MondeIG monde) {
         assert(monde != null);
         this.mondeIG = monde;
+        this.couleursClients = new HashMap<>();
     }
 
     /**
@@ -401,14 +405,27 @@ public class SimulationIG implements Observateur {
                 continue;
             }
 
-            // Coordonnées
+            // Coordonnées et couleur
             double[] coords = calculCoordonnees(i, etapeIG);
-            clientsIG.add(new ClientIG(numero, coords[0], coords[1]));
+            int couleur = creerCouleurClient(numero);
+            clientsIG.add(new ClientIG(numero, coords[0], coords[1], couleur));
             i++;
             System.out.println(" → Client " + numero + " dans " + etape.getNom());
         }
 
         return clientsIG;
+    }
+
+    /**
+     * Méthode qui crée et stock une couleur pour un client
+     * @param numero Le numéro du client
+     * @return La couleur du client
+     */
+    private int creerCouleurClient(int numero) {
+        if(!this.couleursClients.containsKey(numero)) {
+            this.couleursClients.put(numero, new Random().nextInt(5));
+        }
+        return this.couleursClients.get(numero);
     }
 
     /**
