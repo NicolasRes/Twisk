@@ -113,3 +113,10 @@ Feuille de style pastel CSS liée au projet twiskIG
     -fx-fill: red;
     -fx-stroke: black;
 }
+
+/*Les couleurs (aléatoirement) attribuées aux clients*/
+.client-couleur-0 { -fx-fill: red; }
+.client-couleur-1 { -fx-fill: blue; }
+.client-couleur-2 { -fx-fill: green; }
+.client-couleur-3 { -fx-fill: orange; }
+.client-couleur-4 { -fx-fill: purple; }
