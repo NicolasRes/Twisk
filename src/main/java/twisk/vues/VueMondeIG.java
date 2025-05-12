@@ -34,7 +34,6 @@ public class VueMondeIG extends Pane implements Observateur {
                 dragEvent.acceptTransferModes(TransferMode.MOVE);
             }
             dragEvent.consume();
-
         });
 
         this.setOnDragDropped(dragEvent -> {
@@ -47,7 +46,6 @@ public class VueMondeIG extends Pane implements Observateur {
 
                 this.monde.deplacerEtape(identifiant, x, y);
                 success = true;
-
             }
             catch(Exception e) {
                 e.printStackTrace();
@@ -55,10 +53,8 @@ public class VueMondeIG extends Pane implements Observateur {
             finally {
                 dragEvent.setDropCompleted(success);
                 dragEvent.consume();
-
             }
         });
-
     }
 
     /**
@@ -100,6 +96,7 @@ public class VueMondeIG extends Pane implements Observateur {
             }
 
             afficherPointDeControle(e);
+            afficherClients();
         }
     }
 
@@ -108,15 +105,8 @@ public class VueMondeIG extends Pane implements Observateur {
      */
     private void afficherClients() {
         for(ClientIG c : this.monde.getClientsIG()) {
-            System.out.println("→ Affichage des cercles...");
-            System.out.println("    Ajout du client " + c.getNumero() + " aux coordonnées : " + c.getX() + "," + c.getY());
-            Circle cercle = new Circle(5);
-            cercle.getStyleClass().add("client");
-            cercle.setCenterX(c.getX());
-            cercle.setCenterY(c.getY());
-            cercle.setId("client" + c.getNumero());  // pour debugger si besoin
-            this.getChildren().add(cercle);
-            cercle.relocate(c.getX(), c.getY());
+            VueClientIG cli = new VueClientIG(c);
+            this.getChildren().add(cli);
         }
     }
 
@@ -128,7 +118,5 @@ public class VueMondeIG extends Pane implements Observateur {
         this.getChildren().clear();
         afficherArcs();
         afficherEtapes();
-        System.out.println("Nb de clientsIG dans monde : " + monde.getClientsIG().size());
-        afficherClients();
     }
 }
