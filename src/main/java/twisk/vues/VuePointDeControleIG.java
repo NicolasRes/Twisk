@@ -36,6 +36,7 @@ public class VuePointDeControleIG extends Circle {
 
         // Ajout du style CSS
         this.getStyleClass().add("circle");
+        this.updateStyle();
     }
 
     /**
@@ -50,5 +51,19 @@ public class VuePointDeControleIG extends Circle {
         pause.setOnFinished(event -> alert.close());
         pause.play();
         alert.showAndWait();
+    }
+
+    /**
+     * Méthode qui met à jour le visuel d'un point de contrôle lorsqu'il est sélectionné
+     */
+    public void updateStyle() {
+        if(this.monde.estSelectionne(this.pointDeControle)) {
+            if(!this.getStyleClass().contains("selected")) {
+                this.getStyleClass().add("selected");
+            }
+        }
+        else {
+            this.getStyleClass().remove("selected");
+        }
     }
 }

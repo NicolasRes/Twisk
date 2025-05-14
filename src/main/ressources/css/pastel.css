@@ -92,6 +92,10 @@ Feuille de style pastel CSS liée au projet twiskIG
     -fx-fill: #9C66A1;
 }
 
+.circle.selected {
+    -fx-fill: #C27BCB;
+}
+
 .line {
     -fx-stroke: black;
     -fx-stroke-width: 5;
