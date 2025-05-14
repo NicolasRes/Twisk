@@ -50,10 +50,7 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         this.posY = rand.nextDouble(0, TailleComposants.HAUTEUR_FENETRE - this.hauteur - TailleComposants.MARGE_BAS -TailleComposants.HAUTEUR_MENU);
 
         this.pdc = new ArrayList<>();
-        this.pdc.add(new PointDeControleIG((larg + TailleComposants.PADDING_X)/2, -TailleComposants.PADDING_Y/2, this));   // Haut
-        this.pdc.add(new PointDeControleIG(0, haut/2, this));   // Gauche
-        this.pdc.add(new PointDeControleIG(larg + TailleComposants.PADDING_SPACING, haut/2, this));   // Droite
-        this.pdc.add(new PointDeControleIG((larg + TailleComposants.PADDING_X)/2, haut - TailleComposants.PADDING_Y, this));   // Bas
+        this.ajouterPointsDeControle(larg, haut);
     }
 
     /**
@@ -214,6 +211,22 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         sb.append("posX = ").append(this.posX).append(", ");
         sb.append("posY = ").append(this.posY);
         return sb.toString();
+    }
+
+    /**
+     * Méthode qui ajoute les points de contrôles aux étapes
+     * @param larg La largeur de l'étape
+     * @param haut La hauteur de l'étape
+     */
+    private void ajouterPointsDeControle(int larg, int haut) {
+        // Points communs à tous les types d'étapes
+        this.pdc.add(new PointDeControleIG(0, haut/2, this));   // Gauche
+        this.pdc.add(new PointDeControleIG(larg + TailleComposants.PADDING_SPACING, haut/2, this));   // Droite
+        // Points uniquement destinés aux activités et non aux guichets
+        if(!this.getType().equals("Guichet")) {
+            this.pdc.add(new PointDeControleIG((larg + TailleComposants.PADDING_X)/2, -TailleComposants.PADDING_Y/2, this));   // Haut
+            this.pdc.add(new PointDeControleIG((larg + TailleComposants.PADDING_X)/2, haut - TailleComposants.PADDING_Y, this));   // Bas
+        }
     }
 
     /// Méthodes abstraites ///
