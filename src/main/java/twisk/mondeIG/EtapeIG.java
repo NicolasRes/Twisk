@@ -200,6 +200,22 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
     }
 
     /**
+     * Méthode qui renvoie le point de contrôle gauche de l'étape
+     * @return Le PDC gauche
+     */
+    public PointDeControleIG getPointGauche() {
+        return this.pdc.get(0);
+    }
+
+    /**
+     * Méthode qui renvoie le point de contrôle droit de l'étape
+     * @return Le PDC droit
+     */
+    public PointDeControleIG getPointDroit() {
+        return this.pdc.get(1);
+    }
+
+    /**
      * Méthode qui renvoie une version String d'une étape
      * @return Les informations d'une étape sous forme de String
      */
