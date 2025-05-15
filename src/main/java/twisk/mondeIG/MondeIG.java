@@ -141,16 +141,93 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
 
         ArcIG arc = new ArcIG(pt1, pt2);
 
+        // Gestion successeur / prédécesseur en cas d'ajout d'un arc
         if(!pt1.getEtape().getSuccesseurs().contains(pt2.getEtape())) {
             pt1.getEtape().ajouterSuccesseur(pt2.getEtape());
             pt2.getEtape().ajouterPredecesseur(pt1.getEtape());
-            //System.out.println(arc.toString());
         }
-        //System.out.println("liste des successeurs de " + pt1.getEtape().getNom() +": " +pt1.getEtape().getSuccesseurs());
+
+        definirSensGuichet(arc, arc.getSource(), arc.getDestination());
 
         this.arcs.add(arc);
         notifierObservateurs();
+    }
 
+    /**
+     * Méthode qui définit ou vérifie le sens de circulation d’un guichet lorsqu’un arc est ajouté
+     * @param arc L'arc qu'on lie au guichet
+     * @param src Le point de contrôle source de l'arc
+     * @param dst Le point de contrôle destination de l'arc
+     * @throws TwiskArcException si l'arc n'est pas cohérent avec le sens déjà fixé du guichet
+     */
+    private void definirSensGuichet(ArcIG arc, PointDeControleIG src, PointDeControleIG dst) throws TwiskArcException {
+        EtapeIG eSrc = src.getEtape();
+        EtapeIG eDst = dst.getEtape();
+
+        // Si aucune étape liée à l'arc n'est un guichet, on ne fait rien
+        if(!eSrc.getType().equals("Guichet") && !eDst.getType().equals("Guichet")) return;
+
+        // On récupère le guichet et ses points de contrôle
+        GuichetIG guichet = eSrc.getType().equals("Guichet") ? (GuichetIG) eSrc : (GuichetIG) eDst;
+        PointDeControleIG pdcG = guichet.getPointGauche();
+        PointDeControleIG pdcD = guichet.getPointDroit();
+        GuichetIG.Sens sensDeduit = deduireSens(arc, pdcG, pdcD);
+
+        if (guichet.getSens() == GuichetIG.Sens.AUCUN) {
+            guichet.setSensGuichet(sensDeduit);
+            System.out.println("⚙️ Sens fixé à " + sensDeduit + " pour " + guichet.getNom());
+        }
+        if (sensInterdit(arc, guichet, pdcG, pdcD)) {
+            this.pointsSelectionnes.clear();
+            notifierObservateurs();
+            throw new TwiskArcException("Erreur : l’arc est incohérent avec le sens du guichet " + guichet.getNom());
+        }
+    }
+
+    /**
+     * Méthode qui déduit le sens de circulation à partir de la direction de l’arc et de la position du point
+     * @param arc L'arc qu'on lie au guichet
+     * @param pdcG Le PDC gauche du guichet
+     * @param pdcD Le PDC droit du guichet
+     * @return Le sens déduit
+     */
+    private GuichetIG.Sens deduireSens(ArcIG arc, PointDeControleIG pdcG, PointDeControleIG pdcD) {
+        if (arc.estEntrantDans(pdcG)) {
+            return GuichetIG.Sens.GAUCHE_DROITE;
+        }
+        else if (arc.estEntrantDans(pdcD)) {
+            return GuichetIG.Sens.DROITE_GAUCHE;
+        }
+        else if (arc.estSortantDe(pdcG)) {
+            return GuichetIG.Sens.DROITE_GAUCHE;
+        }
+        else if (arc.estSortantDe(pdcD)) {
+            return GuichetIG.Sens.GAUCHE_DROITE;
+        }
+        else {
+            throw new IllegalArgumentException("Arc non relié au guichet");
+        }
+    }
+
+    /**
+     * Méthode qui renvoie si le sens de création d'un arc est interdit ou non
+     * @param arc L'arc qu'on vérifie
+     * @param guichet Le guichet
+     * @param pdcG Le PDC gauche du guichet
+     * @param pdcD Le PDC droit du guichet
+     * @return Vrai si sens interdit, faux si autorisé
+     */
+    private boolean sensInterdit(ArcIG arc, GuichetIG guichet, PointDeControleIG pdcG, PointDeControleIG pdcD) {
+        switch (guichet.getSens()) {
+            case GAUCHE_DROITE:
+                return arc.estSortantDe(pdcG) || arc.estEntrantDans(pdcD);
+
+            case DROITE_GAUCHE:
+                return arc.estSortantDe(pdcD) || arc.estEntrantDans(pdcG);
+
+            default:
+                return false; // AUCUN : on autorise tout
+        }
     }
 
     /**
@@ -225,14 +302,28 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
      * Méthode qui supprime les étapes et les arcs associés
      */
     public void supprimerEtapesArcs() {
+        // Suppression étapes sélectionnées
         for(EtapeIG etape : this.etapesSelectionnees) {
             supprimerArcsAssocies(etape);
             this.etapes.remove(etape.getIdentifiant());
         }
-        for(ArcIG arc : this.arcsSelectionnes) {
-            arc.getSource().getEtape().getSuccesseurs().remove(arc.getDestination().getEtape());
-            arc.getDestination().getEtape().getPredecesseurs().remove(arc.getSource().getEtape());
+
+        // Suppression arcs sélectionnés
+        for (ArcIG arc : this.arcsSelectionnes) {
+            EtapeIG src = arc.getSource().getEtape();
+            EtapeIG dst = arc.getDestination().getEtape();
+
+            src.getSuccesseurs().remove(dst);
+            dst.getPredecesseurs().remove(src);
             this.arcs.remove(arc);
+
+            // Vérifie pour les deux extrémités si ce sont des guichets
+            if (src.getType().equals("Guichet")) {
+                reinitialiserSensSiPlusDArcs((GuichetIG) src);
+            }
+            if (dst.getType().equals("Guichet")) {
+                reinitialiserSensSiPlusDArcs((GuichetIG) dst);
+            }
         }
 
         this.pointsSelectionnes.clear();
@@ -240,6 +331,20 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         this.arcsSelectionnes.clear();
 
         notifierObservateurs();
+    }
+
+    /**
+     * Méthode qui permet de réinitialiser le sens d'un guichet s'il n'a pas d'arc associé à ses deux PDC
+     * @param guichet Le guichet dont on réinitialise le sens
+     */
+    private void reinitialiserSensSiPlusDArcs(GuichetIG guichet) {
+        for (ArcIG arc : arcs) {
+            if (arc.getSource().getEtape() == guichet || arc.getDestination().getEtape() == guichet) {
+                return; // au moins un arc encore lié : on ne fait rien
+            }
+        }
+        guichet.setSensGuichet(GuichetIG.Sens.AUCUN);
+        System.out.println("Réinit sens " + guichet.getNom());
     }
 
     /**
