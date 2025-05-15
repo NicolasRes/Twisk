@@ -86,6 +86,24 @@ public class ArcIG {
     }
 
     /**
+     * Méthode qui vérifie si un arc est entrant par rapport à un point
+     * @param pdc Le PDC référence
+     * @return Vrai si un arc entre sur ce point, faux sinon
+     */
+    public boolean estEntrantDans(PointDeControleIG pdc) {
+        return this.dest.equals(pdc);
+    }
+
+    /**
+     * Méthode qui vérifie si un arc est sortant par rapport à un point
+     * @param pdc Le PDC référence
+     * @return Vrai si un arc sort sur ce point, faux sinon
+     */
+    public boolean estSortantDe(PointDeControleIG pdc) {
+        return this.source.equals(pdc);
+    }
+
+    /**
      * Méthode qui renvoie une version String d'un arc
      * @return Les informations d'un arc sous forme de String
      */
