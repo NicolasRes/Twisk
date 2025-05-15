@@ -8,6 +8,26 @@ import twisk.outils.FabriqueIdentifiant;
 public class GuichetIG extends EtapeIG {
     private int nbJetons;
     private String identifiant;
+    private Sens sens;
+
+    /**
+     * Énumération des sens de circulations possibles pour un guichet
+     */
+    public enum Sens {
+        AUCUN("aucun"),
+        GAUCHE_DROITE("gauche_droite"),
+        DROITE_GAUCHE("droite_gauche");
+
+        private final String sens;
+
+        /**
+         * Constructeur de sens de circulation
+         * @param sens Le sens de circulation à attribuer
+         */
+        Sens(String sens) {
+            this.sens = sens;
+        }
+    }
 
     /**
      * Constructeur de la classe GuichetIG
@@ -22,6 +42,7 @@ public class GuichetIG extends EtapeIG {
         this.identifiant = id.getIdentifiantGuichet();
         this.nbJetons = 1;
         this.setNom(nom);
+        this.sens = Sens.AUCUN;
     }
 
     /**
@@ -41,8 +62,8 @@ public class GuichetIG extends EtapeIG {
     }
 
     /**
-     * Méthode qui initialise le nom du guichet
-     * @param nom Le nom choisi pour le guichet par l'utilisateur
+     * Méthode qui initialise le sens du guichet
+     * @param nom Le sens choisi pour le guichet par l'utilisateur
      */
     @Override
     public void setNom(String nom) {
@@ -95,6 +116,22 @@ public class GuichetIG extends EtapeIG {
      */
     public String getType() {
         return "Guichet";
+    }
+
+    /**
+     * Méthode qui renvoie le sens du sens de circulation du guichet
+     * @return Le sens de circulation du guichet
+     */
+    public Sens getSens() {
+        return this.sens;
+    }
+
+    /**
+     * Méthode qui permet d'attribuer un sens de circulation à un guichet
+     * @param sens Le sens de circulation à attribuer au guichet
+     */
+    public void setSensGuichet(Sens sens) {
+        this.sens = sens;
     }
 
     /**
