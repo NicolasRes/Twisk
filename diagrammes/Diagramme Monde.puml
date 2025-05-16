@@ -1,6 +1,8 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+skinparam linetype ortho
+
 interface Iterable {
     Iterator<Etape> iterator()
 }
@@ -47,7 +49,8 @@ package "twisk" #FFFBF0 {
             + String toString()
             + String toC()
             + int getTemps()
-            + int getEcartTemp()
+            + int getEcartTemps()
+            + int getNbJetons()
         }
 
         class ActiviteRestreinte {
@@ -59,27 +62,29 @@ package "twisk" #FFFBF0 {
             - String nom
             - int idEtape
             + Etape(String nom)
-            + int getNumero
+            + int getNumero()
             + void ajouterSuccesseur(Etape... e)
             + int nbSuccesseur()
             + Etape getSuccesseur(int index)
             + boolean estUneActivite()
             + boolean estUnGuichet()
+            + int getNumeroSemaphore()
             + Iterator<Etape> iterator()
             + String getNom()
             + GestionnaireEtapes getEtapes()
+            + String replaceCarac(String chaine)
             + {abstract} String toString()
             + {abstract} String toC()
             + {abstract} int getTemps()
             + {abstract} int getEcartTemps()
+            + {abstract} int getNbJetons()
         }
 
         class GestionnaireEtapes {
-            - ArrayList<Etape> etapes
             + GestionnaireEtapes()
             + void ajouter(Etape... etapes)
             + int nbEtapes()
-            + Etape getEtapes(int index)
+            + Etape getEtape(int index)
             + Iterator<Etape> iterator()
         }
 
@@ -89,35 +94,54 @@ package "twisk" #FFFBF0 {
             + Guichet(String nom)
             + Guichet(String nom, int nbJetons)
             + boolean estUnGuichet()
-            + boolean getNumeroSemaphore()
+            + int getNumeroSemaphore()
             + String toString()
             + String toC()
             + int getTemps()
             + int getEcartTemps()
+            + int getNbJetons()
         }
 
         class Monde {
+            - int nbClients
+            - int[] tabJetonsGuichets
             + Monde()
             + void aCommeEntree(Etape... etape)
             + void aCommeSortie(Etape... etape)
             + void ajouter(Etape... etape)
             + int nbEtapes()
             + int nbGuichets()
+            + int[] getTabJetonsGuichets()
+            + Etape getEntree(int i)
             + Iterator<Etape> iterator()
             + String toString()
             + String toC()
+            + int nbClients()
+            + void setNbClients(int nbClients)
+            + String replaceCarac(String chaine)
+            + Etape getEtape(int i)
+            + SasEntree getSasEntree()
+            + SasSortie getSasSortie()
         }
 
         class SasEntree {
-            + asEntree()
+            + SasEntree()
             + boolean estUneEntree()
             + String toString()
+            + String toC()
+            + int getTemps()
+            + int getEcartTemps()
+            + int getNbJetons()
         }
 
         class SasSortie {
             + SasSortie()
             + boolean estUneSortie()
             + String toString()
+            + String toC()
+            + int getTemps()
+            + int getEcartTemps()
+            + int getNbJetons()
         }
     }
 
@@ -153,12 +177,14 @@ package "twisk" #FFFBF0 {
             + PointDeControleIG getDestination()
             + boolean estSelection()
             + void switchSelection()
+            + boolean estEntrantDans(PointDeControleIG pdc)
+            + boolean estSortantDe(PointDeControleIG pdc)
             + String toString()
         }
 
         abstract class EtapeIG {
-            - {abstract} String nom
-            # int identifiant
+            # String nom
+            - int identifiant
             - double posX
             - double posY
             - int largeur
@@ -200,6 +226,7 @@ package "twisk" #FFFBF0 {
             + CorrespondancesEtapes()
             + void ajouter(EtapeIG etapeIG, Etape etape)
             + Etape get(EtapeIG etapeIG)
+            + EtapeIG get(Etape etape)
             + HashMap<Integer, EtapeIG> getHashmapIG()
             + HashMap<Integer, Etape> getHashmap()
             + String toString()
@@ -208,6 +235,7 @@ package "twisk" #FFFBF0 {
         class GuichetIG {
             - int nbJetons
             - String identifiant
+            - Sens sens
             + GuichetIG(String nom, int larg, int haut)
             + void setNbJetons(int nbJetons)
             + int getNbJetons()
@@ -219,6 +247,8 @@ package "twisk" #FFFBF0 {
             + String getAttributs()
             + String getType()
             + String toString()
+            + Sens getSens()
+            + void setSensGuichet(Sens sens)
         }
 
         class MondeIG {
@@ -249,7 +279,21 @@ package "twisk" #FFFBF0 {
             + void definirDelai(int delai) throws TwiskMenuException
             + void definirEcart(int ecart) throws TwiskMenuException
             + void definirJetons(int jetons) throws TwiskJetonsException
+            + void setClientIG(ArrayList<ClientIG> clientsIG)
+            + ArrayList<ClientIG> getClientsIG()
             + String toString()
+        }
+
+        class ClientIG {
+            - int numero
+            - double x
+            - double y
+            - int couleur
+            + ClientIG(int numero, double x, double y, int couleur)
+            + int getNumero()
+            + double getX()
+            + double getY()
+            + int getCouleurClient()
         }
 
         class ArcIG {
@@ -277,7 +321,15 @@ package "twisk" #FFFBF0 {
         class SimulationIG {
             + SimulationIG(MondeIG monde)
             + void simuler()
+            + void reagir()
+            + Object getGestionnaire()
+            + void introspectionSimu(Monde monde)
             - void verifierMondeIG()
+            - void verifEntreePrede(EtapeIG e)
+            - void verifSortieSucc(EtapeIG e)
+            - void verifSortiePasSucc(EtapeIG e)
+            - void verifActiviteRestreintePasEntree(EtapeIG e)
+            - void verifierGuichet(EtapeIG e)
             - Monde creerMonde()
             - void succGuichetValide(EtapeIG e)
             - void identifierActiviteRestreinte(EtapeIG e)
@@ -291,12 +343,16 @@ package "twisk" #FFFBF0 {
             - void creationGuichet(EtapeIG e, Monde monde)
             - void lierSuccesseurs()
             - void ajouterEntreeSortie(EtapeIG e, Monde monde)
-            + void introspectionSimu(Monde monde)
+            - ArrayList<ClientIG> creerClientsIG(Object gestionnaire)
+            - int creerCouleurClient(int numero)
+            - EtapeIG correspondanceSas(String nom)
+            - EtapeIG trouverEtapeIG(String nom)
+            - double[] calculCoordonnees(int position, EtapeIG etapeIG)
         }
 
         class SujetObserve {
-            + ajouterObservateur(v: Observateur): void
-            + notifierObservateurs(): void
+            + void ajouterObservateur(Observateur v)
+            + void notifierObservateurs()
         }
 
         '''Liens dans le package mondeIG'''
@@ -335,8 +391,6 @@ package "twisk" #FFFBF0 {
         SimulationIG --"1" Method : setNbClient
         SimulationIG --"1" Method : simuler
 
-        'Liens class SujetObserve
-        SujetObserve -- "1" Observateur
 
         '''Liens du diagramme IG'''
         VueEtapeIG --"1" Label
@@ -366,6 +420,11 @@ package "twisk" #FFFBF0 {
         }
 
         class FabriqueIdentifiant {
+            - {static} FabriqueIdentifiant instance
+            - int noEtape
+            - int noActivite
+            - int noIdentifiantPDC
+            - int noIdentifiantGuichet
             + FabriqueIdentifiant()
             + {static} FabriqueIdentifiant getInstance()
             + int getIdentifiantEtape()
@@ -376,23 +435,25 @@ package "twisk" #FFFBF0 {
         }
 
         class FabriqueMonde {
-                + {static} Monde fabriqueMondeBasique()
-                + {static} Monde fabriqueMondeBifurc()
-                + {static} Monde mondeBifurc()
+            + {static} Monde fabriqueMondeBasique()
+            + {static} Monde fabriqueMondeBifurc()
+            + {static} Monde mondeBifurc()
         }
 
         class FabriqueMondeIG {
-            + {static} MondeIG FabriqueMondeBase()
+            + {static} MondeIG fabriqueMondeBase()
         }
 
         class FabriqueNumero {
             - {static} FabriqueNumero instance
             - int cptEtape
             - int cptSemaphore
+            - int cptSimulation
             - FabriqueNumero()
             + {static} FabriqueNumero getInstance()
             + int getNumeroEtape()
             + int getNumeroSemaphore()
+            + int getNumeroSimulation()
             + void reset()
         }
 
@@ -425,6 +486,15 @@ package "twisk" #FFFBF0 {
             + {static} final int HAUTEUR_MENU
         }
 
+        class ThreadsManager {
+            - static ThreadsManager instance
+            - ArrayList<Thread> lesThreads
+            + ThreadsManager()
+            + static ThreadsManager getInstance()
+            + void lancer(Task task)
+            + void detruireTout()
+        }
+
         FabriqueIdentifiant -- "1" FabriqueIdentifiant
     }
 
@@ -432,10 +502,43 @@ package "twisk" #FFFBF0 {
         class "Monde" as sMonde {}
         Simulation --"1" sMonde
 
+        class Client {
+            - int numeroClient
+            - int rang
+            + Client(int numero)
+            + int getNumeroClient()
+            + int getRang()
+            + Etape getEtape()
+        }
+        Client -- Etape
+
+        class GestionnaireClients {
+            + GestionnaireClients()
+            + void setClients(int... tabClients)
+            + void allerA(int numeroClient, Etape etape, int rang)
+            + void nettoyer()
+            + Iterator<Client> iterator()
+        }
+        GestionnaireClients -- "*" Client
+
         class Simulation {
-            - KitC kitC
+            - int TMP_ATTENTE
+            - int nbCLients
+            - String nomBibliotheque
             + Simulation()
             + void simuler(Monde monde)
+            + void setNbClients(int nbClients)
+            + void setNomBibliotheque(String nom)
+            + void afficher_info_simu(int nb_client, int nb_guichet, int nb_etape , int[] tabJetonsGuichets)
+            + void afficher_pid_client(int[] tabPid, int nb_client)
+            + void simule_clients(int nb_client, int nb_etape, Monde monde)
+            + void lancerSimulation(Monde monde)
+            + GestionnaireClients getGestionnaireClients()
+            - void checkOSBibliotheque()
+            - String[] initialiserNomEtapes(Monde monde, int nb_etape)
+            - void afficherClients(int[] position, String[] nomEtapes, Monde monde, int nb_client)
+            - void afficherEtatGestionnaire()
+            - GestionnaireClients getGestionnaireClients()
         }
     }
 
@@ -464,16 +567,27 @@ package "twisk" #FFFBF0 {
             - void updateCouleurSelection()
          }
 
+         class VueClientIG extends Circle {
+            + VueClientIG(ClientIG client)
+         }
+
         abstract class VueEtapeIG extends VBox {
             + VueEtapeIG(MondeIG monde, EtapeIG etape)
+            - void updateCouleurSelection()
+            - void updateIcone()
         }
 
         class VueGuichetIG {
             + VueGuichetIG(MondeIG monde, EtapeIG etape)
+            + void ajouterClientCase(int position, VueClientIG client)
+            + void ajouterClientSelonSens(int position, VueClientIG client)
+            + void afficherClients(ArrayList<ClientIG> clients)
+            + void viderCases()
+            - void initialiserCases()
         }
 
         class VueMenu {
-            + void VueMenu(MondeIG monde, Stage stage) throws IOException
+            + VueMenu(MondeIG monde, Stage stage) throws IOException
             + void reagir()
             - void initialiserImages(MenuItem quitter, MenuItem supprimer, MenuItem renommer, MenuItem desactiverSelection, MenuItem entree, MenuItem sortie, MenuItem delai, MenuItem ecart, MenuItem jetons, MenuItem pastel, MenuItem vanille)
             - void initialiserEvenements(MenuItem quitter, MenuItem supprimer, MenuItem renommer, MenuItem desactiverSelection, MenuItem entree, MenuItem sortie, MenuItem delai, MenuItem ecart, MenuItem jetons, MenuItem pastel, MenuItem vanille)
@@ -487,15 +601,16 @@ package "twisk" #FFFBF0 {
         }
 
         class VueMondeIG implements Observateur {
-            + void VueMondeIG(MondeIG monde)
+            + VueMondeIG(MondeIG monde)
             + void afficherPointDeControle(EtapeIG etape)
             + void afficherArcs()
             + void afficherEtapes()
+            + void afficherClients()
             + void reagir()
         }
 
         class VueOutils implements Observateur {
-            + void VueOutils(MondeIG monde, SimulationIG simulation)
+            + VueOutils(MondeIG monde, SimulationIG simulation)
             + void reagir()
             - void createButtonAjouterActivite()
             - void createButtonAjouterGuichet()
@@ -505,6 +620,7 @@ package "twisk" #FFFBF0 {
         class VuePointDeControleIG {
             + void VuePointDeControleIG(PointDeControleIG pointDeControle, MondeIG monde)
             - void afficherErreur(String message)
+            - void updateStyle()
         }
     }
 
