@@ -327,6 +327,8 @@ public class SimulationIG implements Observateur {
      */
     @Override
     public void reagir() {
+        nettoyerClientsGuichets();  // Obligé pour les guichets car ils sont dans les stackpane de VueGuichetIG
+
         Task<Void> taskUpdateClient = new Task<>() {
             @Override
             protected Void call() throws Exception {
@@ -400,17 +402,26 @@ public class SimulationIG implements Observateur {
 
             // Erreur à modifier ?
             if (etapeIG == null) {
-                System.err.println("⚠ Pas de correspondance pour " + etape.getNom());
-                System.err.println("→ Classe exacte de l'étape : " + etape.getClass());
+                System.err.println("Pas de correspondance pour " + etape.getNom());
+                System.err.println("-> Classe exacte de l'étape : " + etape.getClass());
                 continue;
             }
 
             // Coordonnées et couleur
             double[] coords = calculCoordonnees(i, etapeIG);
             int couleur = creerCouleurClient(numero);
-            clientsIG.add(new ClientIG(numero, coords[0], coords[1], couleur));
+
+            // On ajoute le client à la liste des clients du guichet s'il est dans un guichet
+            ClientIG clientIG = new ClientIG(numero, coords[0], coords[1], couleur, etapeIG);
+
+            if(etapeIG.getType().equals("Guichet")) {
+                GuichetIG guichetIG = (GuichetIG) etapeIG;
+                guichetIG.ajouterClient(clientIG);
+            }
+            clientsIG.add(clientIG);
+
             i++;
-            System.out.println(" → Client " + numero + " dans " + etape.getNom());
+            System.out.println(" -> Client " + numero + " dans " + etape.getNom());
         }
 
         return clientsIG;
@@ -492,5 +503,17 @@ public class SimulationIG implements Observateur {
         System.out.printf("Client %d dans %s : (%.1f, %.1f)\n", position, etapeIG.getNom(), coordonnees[0], coordonnees[1]);
 
         return coordonnees;
+    }
+
+    /**
+     * Méthode qui rafraichit l'affichage des clients des guichets
+     */
+    private void nettoyerClientsGuichets() {
+        for (EtapeIG e : this.mondeIG) {
+            if (e.getType().equals("Guichet")) {
+                GuichetIG gui = (GuichetIG) e;
+                gui.viderClients();
+            }
+        }
     }
 }
