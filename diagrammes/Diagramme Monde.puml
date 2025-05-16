@@ -249,6 +249,9 @@ package "twisk" #FFFBF0 {
             + String toString()
             + Sens getSens()
             + void setSensGuichet(Sens sens)
+            + void ajouterClient(ClientIG client)
+            + void viderClients()
+            + ArrayList<ClientIG> getClients()
         }
 
         class MondeIG {
@@ -289,11 +292,12 @@ package "twisk" #FFFBF0 {
             - double x
             - double y
             - int couleur
-            + ClientIG(int numero, double x, double y, int couleur)
+            + ClientIG(int numero, double x, double y, int couleur, EtapeIG etape)
             + int getNumero()
             + double getX()
             + double getY()
             + int getCouleurClient()
+            + EtapeIG getEtape()
         }
 
         class ArcIG {
@@ -348,6 +352,7 @@ package "twisk" #FFFBF0 {
             - EtapeIG correspondanceSas(String nom)
             - EtapeIG trouverEtapeIG(String nom)
             - double[] calculCoordonnees(int position, EtapeIG etapeIG)
+            - void nettoyerClientsGuichets()
         }
 
         class SujetObserve {
@@ -579,10 +584,11 @@ package "twisk" #FFFBF0 {
 
         class VueGuichetIG {
             + VueGuichetIG(MondeIG monde, EtapeIG etape)
+            + GuichetIG getEtape()
             + void ajouterClientCase(int position, VueClientIG client)
-            + void ajouterClientSelonSens(int position, VueClientIG client)
-            + void afficherClients(ArrayList<ClientIG> clients)
-            + void viderCases()
+            - void ajouterClientSelonSens(int position, VueClientIG client)
+            - void afficherClients(ArrayList<ClientIG> clients)
+            - void viderCases()
             - void initialiserCases()
         }
 
@@ -602,10 +608,11 @@ package "twisk" #FFFBF0 {
 
         class VueMondeIG implements Observateur {
             + VueMondeIG(MondeIG monde)
-            + void afficherPointDeControle(EtapeIG etape)
-            + void afficherArcs()
-            + void afficherEtapes()
-            + void afficherClients()
+            - void afficherPointDeControle(EtapeIG etape)
+            - void afficherArcs()
+            - void afficherEtapes()
+            - void afficherClientsActivite()
+            - void afficherClientsGuichets()
             + void reagir()
         }
 
