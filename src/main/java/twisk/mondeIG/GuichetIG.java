@@ -2,6 +2,8 @@ package twisk.mondeIG;
 
 import twisk.outils.FabriqueIdentifiant;
 
+import java.util.ArrayList;
+
 /**
  * Classe du modèle qui décrit un guichet
  */
@@ -9,6 +11,7 @@ public class GuichetIG extends EtapeIG {
     private int nbJetons;
     private String identifiant;
     private Sens sens;
+    private ArrayList<ClientIG> clients;
 
     /**
      * Énumération des sens de circulations possibles pour un guichet
@@ -43,6 +46,7 @@ public class GuichetIG extends EtapeIG {
         this.nbJetons = 1;
         this.setNom(nom);
         this.sens = Sens.AUCUN;
+        this.clients = new ArrayList<>();
     }
 
     /**
@@ -132,6 +136,29 @@ public class GuichetIG extends EtapeIG {
      */
     public void setSensGuichet(Sens sens) {
         this.sens = sens;
+    }
+
+    /**
+     * Méthode pour ajouter un client dans la liste des clients du guichet
+     * @param client Le client à ajouter à la liste des clients du guichet
+     */
+    public void ajouterClient(ClientIG client) {
+        this.clients.add(client);
+    }
+
+    /**
+     * Méthode pour vider la liste des clients du guichet
+     */
+    public void viderClients() {
+        this.clients.clear();
+    }
+
+    /**
+     * Méthode pour récupérer la liste des clients du guichet
+     * @return Les cliens du guichet
+     */
+    public ArrayList<ClientIG> getClients() {
+        return this.clients;
     }
 
     /**
