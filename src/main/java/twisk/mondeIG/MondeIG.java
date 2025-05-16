@@ -173,9 +173,9 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         PointDeControleIG pdcD = guichet.getPointDroit();
         GuichetIG.Sens sensDeduit = deduireSens(arc, pdcG, pdcD);
 
+        // Si pas encore de sens de défini, on le change
         if (guichet.getSens() == GuichetIG.Sens.AUCUN) {
             guichet.setSensGuichet(sensDeduit);
-            System.out.println("⚙️ Sens fixé à " + sensDeduit + " pour " + guichet.getNom());
         }
         if (sensInterdit(arc, guichet, pdcG, pdcD)) {
             this.pointsSelectionnes.clear();
@@ -344,7 +344,6 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
             }
         }
         guichet.setSensGuichet(GuichetIG.Sens.AUCUN);
-        System.out.println("Réinit sens " + guichet.getNom());
     }
 
     /**

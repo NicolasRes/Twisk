@@ -55,7 +55,7 @@ public class VueGuichetIG extends VueEtapeIG {
     public void placerClientsGuichet(ArrayList<ClientIG> clients) {
         viderCases();   // Pour remplacer les clients à chaque MAJ / éviter la duplication
 
-        for (int i = 0; i < clients.size() && i < this.casesClients.size(); i++) {
+        for (int i = 0; i < clients.size() && i < this.casesClients.size(); i++) {  // On ne doit dépasser ni le nombre de clients à afficher, ni le nombre de cases dispo
             VueClientIG vueClient = new VueClientIG(clients.get(i));
             ajouterClientSelonSens(i, vueClient);
         }
@@ -88,9 +88,9 @@ public class VueGuichetIG extends VueEtapeIG {
      * @param client Le client à ajouter
      */
     private void ajouterClientSelonSens(int position, VueClientIG client) {
-        int index = position;
+        int index = position;   // De base 0 donc premier client à gauche
 
-        if(this.guichet.getSens() == GuichetIG.Sens.GAUCHE_DROITE) {
+        if(this.guichet.getSens() == GuichetIG.Sens.GAUCHE_DROITE) {    // Si sens gauche_droite -> position 0 = gauche du guichet et inversement si sens droite_gauche
             index = this.casesClients.size() - 1 - position;
         }
 
