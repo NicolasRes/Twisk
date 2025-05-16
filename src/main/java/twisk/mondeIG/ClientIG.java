@@ -7,6 +7,7 @@ public class ClientIG {
     private int numero;
     private double x, y;
     private int couleur;
+    private EtapeIG etape;
 
     /**
      * Constructeur de la classe ClientIG
@@ -14,11 +15,12 @@ public class ClientIG {
      * @param x La coordonnée x du client
      * @param y La coordonnée y du client
      */
-    public ClientIG(int numero, double x, double y, int couleur) {
+    public ClientIG(int numero, double x, double y, int couleur, EtapeIG etape) {
         this.numero = numero;
         this.x = x;
         this.y = y;
         this.couleur = couleur;
+        this.etape = etape;
     }
 
     /**
@@ -45,5 +47,13 @@ public class ClientIG {
      */
     public int getCouleurClient() {
         return this.couleur;
+    }
+
+    /**
+     * Méthode qui renvoie l'EtapeIG liée au ClientIG
+     * @return L'EtapeIG du ClientIG
+     */
+    public EtapeIG getEtape() {
+        return this.etape;
     }
 }
