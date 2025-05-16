@@ -327,7 +327,7 @@ public class SimulationIG implements Observateur {
      */
     @Override
     public void reagir() {
-        Task<Void> task = new Task<>() {
+        Task<Void> taskUpdateClient = new Task<>() {
             @Override
             protected Void call() throws Exception {
                 try {
@@ -345,7 +345,7 @@ public class SimulationIG implements Observateur {
                 return null;
             }
         };
-        ThreadsManager.getInstance().lancer(task);  // On lance la tâche et on la met dans la liste des tâches en cours
+        ThreadsManager.getInstance().lancer(taskUpdateClient);  // On lance la tâche et on la met dans la liste des tâches en cours
     }
 
     /**
@@ -476,9 +476,20 @@ public class SimulationIG implements Observateur {
             hauteur = TailleComposants.HAUTEUR_GUICHET;
         }
 
-        // On décale les clients pour les positionner les uns à côté des autres
-        coordonnees[0] = etapeIG.getPosX() + largeur / 2.0 + -30 + position * 15;
-        coordonnees[1] = etapeIG.getPosY() + hauteur - 30;
+        int decalage = 15;
+        int base = -30;
+
+        if (etapeIG.getType().equals("Guichet")) {
+            GuichetIG g = (GuichetIG) etapeIG;
+            if (g.getSens() == GuichetIG.Sens.DROITE_GAUCHE) {
+                decalage = -15;
+                base = 30;
+            }
+        }
+
+        coordonnees[0] = etapeIG.getPosX() + largeur / 2.0 + base + position * decalage;
+        coordonnees[1] = etapeIG.getPosY() + hauteur - 35;
+        System.out.printf("Client %d dans %s : (%.1f, %.1f)\n", position, etapeIG.getNom(), coordonnees[0], coordonnees[1]);
 
         return coordonnees;
     }
