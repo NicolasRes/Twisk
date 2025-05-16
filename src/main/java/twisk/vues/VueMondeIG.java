@@ -3,15 +3,17 @@ package twisk.vues;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import twisk.mondeIG.*;
+
+import java.util.HashMap;
 
 /**
  * Classe qui affiche toutes les activités répertoriées dans MondeIG
  */
 public class VueMondeIG extends Pane implements Observateur {
     private MondeIG monde;
+    private HashMap<EtapeIG, VueEtapeIG> vuesEtapes;
+
 
     /**
      * Constructeur de la classe VueMondeIG
@@ -22,6 +24,7 @@ public class VueMondeIG extends Pane implements Observateur {
 
         this.monde = monde;
         this.monde.ajouterObservateur(this);
+        this.vuesEtapes = new HashMap<>();
 
         this.getStyleClass().add("Pane");
 
@@ -85,29 +88,54 @@ public class VueMondeIG extends Pane implements Observateur {
     private void afficherEtapes() {
         for(EtapeIG e : this.monde) {
             if(e.getType().equals("Activite")) {
-                VueEtapeIG act = new VueActiviteIG(this.monde, e);
-                this.getChildren().add(act);
-                act.relocate(e.getPosX(), e.getPosY());
+                VueEtapeIG vueAct = new VueActiviteIG(this.monde, e);
+                this.getChildren().add(vueAct);
+                vueAct.relocate(e.getPosX(), e.getPosY());
+                this.vuesEtapes.put(e, vueAct); // On associe activités et vues
             }
             else if (e.getType().equals("Guichet")) {
-                VueEtapeIG gui = new VueGuichetIG(this.monde, e);
-                this.getChildren().add(gui);
-                gui.relocate(e.getPosX(), e.getPosY());
+                VueEtapeIG vueGui = new VueGuichetIG(this.monde, e);
+                this.getChildren().add(vueGui);
+                vueGui.relocate(e.getPosX(), e.getPosY());
+                this.vuesEtapes.put(e, vueGui); // On associe guichets et vues
             }
 
             afficherPointDeControle(e);
-            afficherClients();
         }
     }
 
     /**
-     * Méthode qui affiche les clients dans les étapes du monde
+     * Méthode qui affiche les clients dans les activités du monde
+     */
+    private void afficherClientsActivite() {
+        for(ClientIG c : this.monde.getClientsIG()) {
+            EtapeIG etapeIG = c.getEtape();
+            if(etapeIG.getType().equals("Activite")) {  // On récupère les vues activités
+                VueClientIG cli = new VueClientIG(c);
+                this.getChildren().add(cli);
+            }
+        }
+    }
+
+    /**
+     * Méthode qui affiche les clients dans les guichets du monde
+     */
+    private void afficherClientsGuichets() {
+        for (EtapeIG e : this.monde) {
+            if (e.getType().equals("Guichet")) {    // On récupère les vues guichets
+                VueGuichetIG vueGuichetIG = (VueGuichetIG) this.vuesEtapes.get(e);  // On récupère les vues qu'on a associé aux guichets dans afficherEtapes
+                GuichetIG guichetIG = (GuichetIG) e;
+                vueGuichetIG.placerClientsGuichet(guichetIG.getClients());  // On positionne les clients dans les cases des guichets
+            }
+        }
+    }
+
+    /**
+     * Méthode qui affiche les clients dans tous les types d'étapes
      */
     private void afficherClients() {
-        for(ClientIG c : this.monde.getClientsIG()) {
-            VueClientIG cli = new VueClientIG(c);
-            this.getChildren().add(cli);
-        }
+        afficherClientsActivite();
+        afficherClientsGuichets();
     }
 
     /**
@@ -118,5 +146,6 @@ public class VueMondeIG extends Pane implements Observateur {
         this.getChildren().clear();
         afficherArcs();
         afficherEtapes();
+        afficherClients();
     }
 }
