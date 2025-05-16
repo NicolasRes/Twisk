@@ -14,12 +14,6 @@ Feuille de style pastel CSS liée au projet twiskIG
     -fx-background-color: #A1D69B;
 }
 
-/*
-.buttonGuichet {
-    -fx-border-color: #A3CFA3;
-    -fx-background-color: #B8E6B4;
-}
-*/
 .buttonGuichet:hover {
     -fx-background-color: #A1D69B;
 }
@@ -44,6 +38,27 @@ Feuille de style pastel CSS liée au projet twiskIG
     -fx-background-insets: 0, 0, -1, 0, 0, 1, 2;
     -fx-background-radius: 15px;
     -fx-border-radius: 15px;
+}
+
+.caseClient {
+    -fx-border-color: #7EA88D;
+    -fx-background-color: #DCEEDE;
+    -fx-border-width: 3px;
+}
+
+.caseClient-gauche {
+    -fx-border-radius: 10 0 0 10;
+    -fx-background-radius: 10 0 0 10;
+}
+
+.caseClient-milieu {
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+}
+
+.caseClient-droite {
+    -fx-border-radius: 0 10 10 0;
+    -fx-background-radius: 0 10 10 0;
 }
 
 .Pane {
