@@ -40,11 +40,42 @@ public class VueGuichetIG extends VueEtapeIG {
     }
 
     /**
+     * Méthode qui permet de récupérer l'EtapeIG associée au guichet
+     * @return L'EtapeIG du guichet
+     */
+    public GuichetIG getEtape() {
+        return this.guichet;
+    }
+
+    /**
+     * Méthode qui affiche tous les clients dans les cases du guichet,
+     * en fonction de leur position et du sens de circulation.
+     * @param clients La liste des clients à afficher dans ce guichet
+     */
+    public void placerClientsGuichet(ArrayList<ClientIG> clients) {
+        viderCases();   // Pour remplacer les clients à chaque MAJ / éviter la duplication
+
+        for (int i = 0; i < clients.size() && i < this.casesClients.size(); i++) {
+            VueClientIG vueClient = new VueClientIG(clients.get(i));
+            ajouterClientSelonSens(i, vueClient);
+        }
+    }
+
+    /**
+     * Vide toutes les cases du guichet
+     */
+    private void viderCases() {
+        for (StackPane casePane : this.casesClients) {
+            casePane.getChildren().clear();
+        }
+    }
+
+    /**
      * Méthode qui ajoute un client dans une case du guichet
      * @param position La position du client
      * @param client Le client à ajouter
      */
-    public void ajouterClientCase(int position, VueClientIG client) {
+    private void ajouterClientCase(int position, VueClientIG client) {
         assert(position >= 0 && position < this.casesClients.size());
         StackPane casePane = this.casesClients.get(position);
         casePane.getChildren().clear(); // Au cas où un client est toujours dans la case
@@ -56,10 +87,10 @@ public class VueGuichetIG extends VueEtapeIG {
      * @param position La position du client
      * @param client Le client à ajouter
      */
-    public void ajouterClientSelonSens(int position, VueClientIG client) {
+    private void ajouterClientSelonSens(int position, VueClientIG client) {
         int index = position;
 
-        if(this.guichet.getSens() == GuichetIG.Sens.DROITE_GAUCHE) {
+        if(this.guichet.getSens() == GuichetIG.Sens.GAUCHE_DROITE) {
             index = this.casesClients.size() - 1 - position;
         }
 
@@ -67,34 +98,11 @@ public class VueGuichetIG extends VueEtapeIG {
     }
 
     /**
-     * Méthode qui affiche tous les clients dans les cases du guichet,
-     * en fonction de leur position et du sens de circulation.
-     * @param clients La liste des clients à afficher dans ce guichet
-     */
-    public void afficherClients(ArrayList<ClientIG> clients) {
-        viderCases();
-
-        for (int i = 0; i < clients.size() && i < this.casesClients.size(); i++) {
-            VueClientIG vueClient = new VueClientIG(clients.get(i));
-            ajouterClientSelonSens(i, vueClient);
-        }
-    }
-
-    /**
-     * Vide toutes les cases du guichet
-     */
-    public void viderCases() {
-        for (StackPane casePane : this.casesClients) {
-            casePane.getChildren().clear();
-        }
-    }
-
-    /**
      * Méthode qui initialise les cases régulières à l'intérieur de la HBox du guichet
      */
     private void initialiserCases() {
         this.hboxClients.setSpacing(5);
-        int nbCases = 6;
+        int nbCases = 6;    // Arbitraire
 
         for (int i = 0; i < nbCases; i++) {
             StackPane casePane = new StackPane();
