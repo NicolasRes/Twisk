@@ -196,7 +196,7 @@ public class Simulation extends SujetObserve {
 
             for (int j = 0; j < nb_clients; j++) {
                 System.out.print(position[i * (nb_client + 1) + 1 + j] + " ");
-                this.gestionnaireClients.allerA(position[i * (nb_client + 1) + 1 + j], monde.getEtape(i), 0);
+                this.gestionnaireClients.allerA(position[i * (nb_client + 1) + 1 + j], monde.getEtape(i), j);
             }
             System.out.println();
         }
