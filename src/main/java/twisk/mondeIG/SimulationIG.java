@@ -70,6 +70,8 @@ public class SimulationIG implements Observateur {
         boolean aEntree = false;
         boolean aSortie = false;
 
+        // Ajouter vérif sortie peut avoir successeur + cycle + bouton fin simu + lois exponentielles + bitcoin à envoyer à Nico
+
         if (this.mondeIG.getEtapes().isEmpty()) {
             throw new MondeException("Le monde n'a aucune étape", MondeException.TypeErreur.MONDE_VIDE);
         }
@@ -289,7 +291,7 @@ public class SimulationIG implements Observateur {
      * @param monde Le monde sur lequel lancer la simulation
      */
     public void instrospectionSimu(Monde monde){
-        this.nbClients = 6;
+        this.nbClients = 10;
         try {
             clp = new ClassLoaderPerso(ClientTwisk.class.getClassLoader());
 
