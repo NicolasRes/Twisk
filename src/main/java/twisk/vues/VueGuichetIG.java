@@ -55,7 +55,9 @@ public class VueGuichetIG extends VueEtapeIG {
     public void placerClientsGuichet(ArrayList<ClientIG> clients) {
         viderCases();   // Pour remplacer les clients à chaque MAJ / éviter la duplication
 
-        for (int i = 0; i < clients.size() && i < this.casesClients.size(); i++) {  // On ne doit dépasser ni le nombre de clients à afficher, ni le nombre de cases dispo
+        int nbCases = this.casesClients.size();
+
+        for (int i = 0; i < clients.size() && i < nbCases; i++) {  // On ne doit dépasser ni le nombre de jetons du guichet, ni le nombre de cases dispo
             VueClientIG vueClient = new VueClientIG(clients.get(i));
             ajouterClientSelonSens(i, vueClient);
         }
@@ -104,7 +106,7 @@ public class VueGuichetIG extends VueEtapeIG {
         this.hboxClients.setSpacing(5);
         int nbCases = 6;    // Arbitraire
 
-        for (int i = 0; i < nbCases; i++) {
+        for(int i = 0; i < nbCases; i++) {
             StackPane casePane = new StackPane();
             casePane.getStyleClass().add("caseClient");
 
