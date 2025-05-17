@@ -148,11 +148,15 @@ public class Monde implements Iterable<Etape> {
         sb.append("#include \"def.h\"\n");
         sb.append("#include \"client.h\"\n");
         sb.append("#include \"stdlib.h\"\n");
-        sb.append("#include \"time.h\"\n\n");
-        sb.append("#include <sys/types.h>\n\n");
-        sb.append("#include <stdio.h>\n\n");
-        sb.append("#include <math.h>\n\n");
-        sb.append("#include <unistd.h>\n\n");
+        sb.append("#include \"time.h\"\n");
+        sb.append("#include <sys/types.h>\n");
+        sb.append("#include <stdio.h>\n");
+        sb.append("#include <math.h>\n");
+        sb.append("#include <unistd.h>\n");
+
+        sb.append("#ifndef M_PI\n" +
+                "#define M_PI 3.14159265358979323846\n" +
+                "#endif\n");
 
 
         for(Etape e : this.lesEtapes){
@@ -256,6 +260,7 @@ public class Monde implements Iterable<Etape> {
         sb.append("    usleep(delai * 1e6);\n");
         sb.append("}\n");
     }
+
     private void ajouterFonctionGauss(StringBuilder sb) {
         sb.append("\n// Fonction de délai gaussien\n");
         sb.append("void lois_gauss(double moyenne, double ecartype) {\n");
@@ -276,7 +281,5 @@ public class Monde implements Iterable<Etape> {
         sb.append("    usleep((int)(delai * 1e6));\n");
         sb.append("}\n");
     }
-
-
 
 }

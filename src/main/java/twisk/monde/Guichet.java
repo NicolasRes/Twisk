@@ -85,7 +85,17 @@ public class Guichet extends Etape {
 
         sb.append(" transfert(").append(nom).append(", ").append(nomSuccesseur).append("); \n");
 
-        sb.append(" delai(").append(this.getSuccesseur(0).getTemps()).append(", ").append(this.getSuccesseur(0).getEcartTemps()).append("); \n");
+        int tempsSuccesseur = this.getSuccesseur(0).getTemps();
+        int ecartTemp = this.getSuccesseur(0).getTemps();
+
+        Etape etapeSucc = this.getSuccesseur(0);
+        String lois = etapeSucc.getLoi();
+
+        if(lois.equals("uniforme")){
+            sb.append(" lois_unif(").append(tempsSuccesseur).append(", ").append(ecartTemp).append("); \n");
+        }else if(lois.equals("gaussienne")){
+            sb.append(" lois_gauss(").append(tempsSuccesseur).append(", ").append(ecartTemp).append("); \n");
+        }
 
         sb.append(" V(ids,").append("SEM_").append(nom).append("); \n");
 

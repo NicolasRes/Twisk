@@ -6,7 +6,7 @@ package twisk.monde;
 public class Activite extends Etape {
     private int temps;
     private int ecartTemps;
-    private String loi = "uniforme"; //def , gaussienne ou exponentielle
+
 
     /**
      * Constructeur de la classe Activite avec nom pour seul paramètre
@@ -18,13 +18,7 @@ public class Activite extends Etape {
         this.ecartTemps = 1;
     }
 
-    public void setLoi(String loi) {
-        this.loi = loi;
-    }
 
-    public String getLoi() {
-        return this.loi;
-    }
 
     /**
      * Constructeur de la classe Activite avec multiples paramètres
@@ -47,22 +41,6 @@ public class Activite extends Etape {
     }
 
     /**
-     * Méthode qui vérifie si une activité est une entrée
-     * @return Faux de base, vrai si l'activité est une entrée
-     */
-    public boolean estUneEntree() {
-        return false;
-    }
-
-    /**
-     * Méthode qui vérifie si une activité est une sortie
-     * @return Faux de base, vrai si l'activité est une sortie
-     */
-    public boolean estUneSortie() {
-        return false;
-    }
-
-    /**
      * Méthode qui crée une version String d'une étape de type Activite
      * @return Une activité sous forme de String
      */
@@ -78,7 +56,6 @@ public class Activite extends Etape {
         if (this.nbSuccesseur() > 0) {
             sb.setLength(sb.length() - 2);
         }
-
         return sb.toString();
     }
 
@@ -101,7 +78,14 @@ public class Activite extends Etape {
 
         for (int i = 0; i < nbSuccesseur; i++) {
             sb.append(" case ").append(i).append(":{\n");
-            sb.append("    delai(").append(this.temps).append(", ").append(this.ecartTemps).append("); \n");
+
+            String type = this.getLoi(); //vérif ortho
+
+            if(type.equals("uniforme")) {
+                sb.append(" lois_unif(").append((this.temps)).append(", ").append(this.ecartTemps).append(");\n");
+            } else if (type.equals("gaussienne")) {
+                sb.append(" lois_gauss(").append((this.temps)).append(", ").append(this.ecartTemps).append(");\n");
+            }
 
             String nomSuccesseur = this.getSuccesseur(i).getNom();
             nomSuccesseur =this.replaceCarac(nomSuccesseur);

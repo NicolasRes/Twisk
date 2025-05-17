@@ -150,6 +150,10 @@ public class VueMenu extends MenuBar implements Observateur {
     private void initialiserEvenements(MenuItem quitter, MenuItem supprimer, MenuItem renommer,
                                        MenuItem desactiverSelection, MenuItem entree, MenuItem sortie, MenuItem delai,
                                        MenuItem ecart, MenuItem jetons, MenuItem pastel, MenuItem vanille) {
+
+        //rajouter les entrée peuvent être expo, griser si autre chose que entrée
+        //sinon loi uni ou gauss selon choix.
+
         supprimer.setOnAction(e -> {
             this.monde.supprimerEtapesArcs();
         });

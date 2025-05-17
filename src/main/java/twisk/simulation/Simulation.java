@@ -44,6 +44,8 @@ public class Simulation extends SujetObserve {
         this.estSimuFinie = false;
         String mondeC = monde.toC();
 
+        System.out.println(mondeC);
+
         int numSimulation = FabriqueNumero.getInstance().getNumeroSimulation();
 
         this.setNomBibliotheque("libTwisk" + numSimulation);
