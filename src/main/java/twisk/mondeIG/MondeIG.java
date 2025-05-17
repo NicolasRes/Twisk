@@ -5,9 +5,7 @@ import twisk.exceptions.TwiskJetonsException;
 import twisk.exceptions.TwiskMenuException;
 import twisk.outils.TailleComposants;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * Classe MondeIG qui gère une collection d'EtapeIG
@@ -139,6 +137,14 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         assert(pt2 != null);
         arcValide(pt1, pt2);
 
+        EtapeIG source = pt1.getEtape();
+        EtapeIG destination = pt2.getEtape();
+
+        if (creeraitCycle(source, destination)) {
+            throw new TwiskArcException("Ajout d’un arc créerait un cycle entre " + source.getNom() + " et " + destination.getNom());
+        }
+
+
         ArcIG arc = new ArcIG(pt1, pt2);
 
         // Gestion successeur / prédécesseur en cas d'ajout d'un arc
@@ -152,6 +158,7 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         this.arcs.add(arc);
         notifierObservateurs();
     }
+
 
     /**
      * Méthode qui définit ou vérifie le sens de circulation d’un guichet lorsqu’un arc est ajouté
@@ -554,5 +561,50 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    /**
+     * Méthode qui détermine si l'ajout d'un arc de `source` vers `destination` créerait un cycle.
+     * Un cycle se forme s'il existe déjà un chemin de `destination` vers `source`, donc ajouter l'arc
+     * reviendrait à boucler sur soi-même.
+     *
+     * @param source L'étape source du nouvel arc.
+     * @param destination L'étape destination du nouvel arc.
+     * @return true si l'ajout de l'arc créerait un cycle, false sinon.
+     */
+    private boolean creeraitCycle(EtapeIG source, EtapeIG destination) {
+
+        return existeChemin(destination, source, new HashSet<>()); // existe déjà un chemin?
+    }
+
+    /**
+     * Méthode récursive qui vérifie s'il existe un chemin d'une étape `courant` jusqu'à l'étape `cible`.
+     * Utilise une recherche en profondeur (DFS) avec un ensemble d'étapes déjà visitées pour éviter les boucles infinies.
+     *
+     * @param courant L'étape courante depuis laquelle on cherche à atteindre la cible.
+     * @param cible L'étape qu'on cherche à atteindre.
+     * @param visites Ensemble des étapes déjà visitées pour ne pas repasser plusieurs fois au même endroit.
+     * @return true s'il existe un chemin de `courant` vers `cible`, false sinon.
+     */
+    private boolean existeChemin(EtapeIG courant, EtapeIG cible, Set<EtapeIG> visites) {
+
+        if (courant == cible) return true;
+        visites.add(courant);
+
+        for (EtapeIG successeur : courant.getSuccesseurs()) {
+            if (!visites.contains(successeur)) {
+                if (existeChemin(successeur, cible, visites)) {
+                    return true;
+                }
+            }
+        }
+        return false; // Aucun chemin trouvé, pas cycle
+    }
+
+    /**
+     * Méthode qui signale la fin de la simulation
+     */
+    public void simulationTerminee() {
+        notifierObservateurs();
     }
 }

@@ -1,5 +1,8 @@
 package twisk.outils;
 
+import twisk.simulation.Client;
+import twisk.simulation.GestionnaireClients;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -84,6 +87,14 @@ public class KitC {
                 pb.inheritIO().start().waitFor();
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    public void tuerProcessus(GestionnaireClients gestionnaireClients) throws IOException{
+        if(gestionnaireClients != null) {
+            for (Client c : gestionnaireClients) {
+                Runtime.getRuntime().exec("kill -9 " + c.getNumeroClient());
             }
         }
     }

@@ -6,6 +6,8 @@ import twisk.mondeIG.SujetObserve;
 import twisk.outils.FabriqueNumero;
 import twisk.outils.KitC;
 
+import java.io.IOException;
+
 /**
  * Classe Simulation qui simule le monde
  */
@@ -19,6 +21,7 @@ public class Simulation extends SujetObserve {
     private int nbCLients;
     private GestionnaireClients gestionnaireClients;
     private String nomBibliotheque = "libTwisk";
+    private boolean estSimuFinie;
 
     /**
      * Constructeur de la classe Simulation
@@ -28,15 +31,17 @@ public class Simulation extends SujetObserve {
         this.kitC.creerEnvironnement();
         this.nbCLients = 0;
         this.gestionnaireClients = new GestionnaireClients();
+        this.estSimuFinie = false;
     }
 
     /**
      * Méthode qui permet de lancer la simulation du monde
      * @param monde Le monde à simuler
      */
-    public void simuler(Monde monde) {
+    public void simuler(Monde monde) throws IOException {
         this.monde = monde;
         this.monde.setNbClients(this.nbCLients);
+        this.estSimuFinie = false;
         String mondeC = monde.toC();
 
         int numSimulation = FabriqueNumero.getInstance().getNumeroSimulation();
@@ -110,11 +115,11 @@ public class Simulation extends SujetObserve {
      * @param nb_client Le nombre de clients de la simulation
      * @param nb_etape Le nombre d'étapes de la simulation
      */
-    public void simule_clients(int nb_client, int nb_etape, Monde monde) {
+    public void simule_clients(int nb_client, int nb_etape, Monde monde) throws IOException {
         String[] nomEtapes = initialiserNomEtapes(monde, nb_etape);
         int[] position = ou_sont_les_clients(nb_etape, nb_client);
 
-        while (position[(nb_client + 1)] < nb_client) {
+        while (position[(nb_client + 1)] < nb_client && !estSimuFinie) {
             position = ou_sont_les_clients(nb_etape, nb_client);
 
             afficherClients(position, nomEtapes, monde, nb_client);
@@ -124,14 +129,24 @@ public class Simulation extends SujetObserve {
             try {
                 Thread.sleep(TMP_ATTENTE * 1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                kitC.tuerProcessus(gestionnaireClients);
+                estSimuFinie = true;
             }
 
             System.out.println();
         }
 
         System.out.println("==========Fin simulation==========\n");
+        this.estSimuFinie = true;
         this.gestionnaireClients.nettoyer();
+    }
+
+    /**
+     * Getter pour savoir si la simulation est terminée
+     * @return true si la simulation est terminée, false sinon
+     */
+    public boolean isEstSimuFinie() {
+        return estSimuFinie;
     }
 
 
@@ -139,7 +154,7 @@ public class Simulation extends SujetObserve {
      * Méthode qui lance la simulation du monde
      * @param monde Le monde à simuler
      */
-    public void lancerSimulation(Monde monde){
+    public void lancerSimulation(Monde monde) throws IOException {
         int nbEtapes = this.monde.nbEtapes();
         int nbGuichets = this.monde.nbGuichets();
         int nbClients = this.monde.nbClients();

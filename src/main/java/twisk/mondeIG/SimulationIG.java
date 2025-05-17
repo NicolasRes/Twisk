@@ -70,7 +70,7 @@ public class SimulationIG implements Observateur {
         boolean aEntree = false;
         boolean aSortie = false;
 
-        // Ajouter vérif sortie peut avoir successeur + cycle + bouton fin simu + lois exponentielles + bitcoin à envoyer à Nico
+        // Ajouter vérif  bouton fin simu + lois exponentielles + bitcoin à envoyer à Nico
 
         if (this.mondeIG.getEtapes().isEmpty()) {
             throw new MondeException("Le monde n'a aucune étape", MondeException.TypeErreur.MONDE_VIDE);
@@ -89,7 +89,6 @@ public class SimulationIG implements Observateur {
             }
             verifEntreePrede(e);
             verifSortieSucc(e);
-            verifSortiePasSucc(e);
 
         }
 
@@ -121,16 +120,6 @@ public class SimulationIG implements Observateur {
             throw new MondeException("L'activité " + e.getNom()+ " n'a pas de successeurs donc doit être mise en Sortie", MondeException.TypeErreur.ERREUR_NON_SORTIE_NON_SUCC);
     }
 
-    /**
-     * Méthode qui vérifie si une sortie n'a bien aucun successeur
-     * @param e L'étape à vérifier
-     * @throws MondeException Déclenche une exception si la sortie a un successeur
-     */
-    private void verifSortiePasSucc(EtapeIG e) throws MondeException{
-        if(e.estSortie()&& !e.getSuccesseurs().isEmpty()){
-            throw new MondeException("L'activité " + e.getNom()+ " est mise en sortie mais a un ou plusieurs successeurs !", MondeException.TypeErreur.ERREUR_SORTIE_NON_VIDE);
-        }
-    }
 
     /**
      * Méthode qui vérifie si une activité restreinte a été notée comme une entrée
@@ -518,4 +507,5 @@ public class SimulationIG implements Observateur {
             }
         }
     }
+
 }
