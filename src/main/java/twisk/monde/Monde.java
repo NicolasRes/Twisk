@@ -150,6 +150,10 @@ public class Monde implements Iterable<Etape> {
         sb.append("#include \"stdlib.h\"\n");
         sb.append("#include \"time.h\"\n\n");
         sb.append("#include <sys/types.h>\n\n");
+        sb.append("#include <stdio.h>\n\n");
+        sb.append("#include <math.h>\n\n");
+        sb.append("#include <unistd.h>\n\n");
+
 
         for(Etape e : this.lesEtapes){
             String nom = e.getNom();
@@ -163,6 +167,10 @@ public class Monde implements Iterable<Etape> {
         }
 
         sb.append("\n");
+
+        ajouterFonctionUnif(sb);
+        ajouterFonctionGauss(sb);
+        ajouterFonctionExpo(sb);
 
         sb.append("void simulation(int ids) {\n");
         sb.append(" entrer(Entree);\n");
@@ -236,4 +244,39 @@ public class Monde implements Iterable<Etape> {
     public SasSortie getSasSortie() {
         return this.sortie;
     }
+
+    private void ajouterFonctionUnif(StringBuilder sb) {
+        sb.append("\n// Fonction de délai uniforme\n");
+        sb.append("void lois_unif(int moyenne, int delta) {\n");
+        sb.append("    int bi = moyenne - delta;\n");
+        sb.append("    if (bi < 0) bi = 0;\n");
+        sb.append("    int bs = moyenne + delta;\n");
+        sb.append("    int n = bs - bi + 1;\n");
+        sb.append("    int delai = (int)(rand() / (RAND_MAX + 1.0) * n) + bi;\n");
+        sb.append("    usleep(delai * 1e6);\n");
+        sb.append("}\n");
+    }
+    private void ajouterFonctionGauss(StringBuilder sb) {
+        sb.append("\n// Fonction de délai gaussien\n");
+        sb.append("void lois_gauss(double moyenne, double ecartype) {\n");
+        sb.append("    double u1 = rand() / (RAND_MAX + 1.0);\n");
+        sb.append("    double u2 = rand() / (RAND_MAX + 1.0);\n");
+        sb.append("    double x = sqrt(-2.0 * log(u1)) * cos(2.0 * M_PI * u2);\n");
+        sb.append("    double delai = x * ecartype + moyenne;\n");
+        sb.append("    if (delai < 0) delai = 0;\n");
+        sb.append("    usleep((int)(delai * 1e6));\n");
+        sb.append("}\n");
+    }
+
+    private void ajouterFonctionExpo(StringBuilder sb) {
+        sb.append("\n// Fonction de délai exponentiel\n");
+        sb.append("void lois_expo(double lambda) {\n");
+        sb.append("    double u = rand() / (RAND_MAX + 1.0);\n");
+        sb.append("    double delai = -log(u) / lambda;\n");
+        sb.append("    usleep((int)(delai * 1e6));\n");
+        sb.append("}\n");
+    }
+
+
+
 }

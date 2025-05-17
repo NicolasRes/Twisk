@@ -6,6 +6,7 @@ package twisk.monde;
 public class Activite extends Etape {
     private int temps;
     private int ecartTemps;
+    private String loi = "uniforme"; //def , gaussienne ou exponentielle
 
     /**
      * Constructeur de la classe Activite avec nom pour seul paramètre
@@ -15,6 +16,14 @@ public class Activite extends Etape {
         super(nom);
         this.temps = 3;
         this.ecartTemps = 1;
+    }
+
+    public void setLoi(String loi) {
+        this.loi = loi;
+    }
+
+    public String getLoi() {
+        return this.loi;
     }
 
     /**
