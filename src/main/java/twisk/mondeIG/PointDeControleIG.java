@@ -60,6 +60,15 @@ public class PointDeControleIG {
     }
 
     /**
+     * Méthode qui renvoie l'identifiant du PDC
+     * @return L'ientifiant du PDC
+     */
+    public String getIdentifiant() {
+        return this.identifiant;
+    }
+
+
+    /**
      * Méthode qui renvoie une version String d'un point de contrôle
      * @return Les informations d'un point de contrôle sous forme de String
      */
