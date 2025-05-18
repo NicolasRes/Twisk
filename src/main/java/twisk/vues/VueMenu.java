@@ -30,7 +30,7 @@ public class VueMenu extends MenuBar implements Observateur {
     private Menu menuMonde;
     private Menu parametres;
     private Menu style;
-    private MenuItem delai, ecart, renommer, jetons;
+    private MenuItem delai, ecart, renommer, jetons, sauvegarder, charger;
 
     /**
      * Constructeur de la classe VueMenu
@@ -51,6 +51,8 @@ public class VueMenu extends MenuBar implements Observateur {
 
         this.getMenus().addAll(this.fichier, this.edition, this.menuMonde, this.parametres, this.style);
 
+        MenuItem sauvegarder = new MenuItem("Sauvegarder");
+        MenuItem charger = new MenuItem("Charger");
         MenuItem quitter = new MenuItem("Quitter");
         MenuItem supprimer = new MenuItem("Supprimer");
         this.renommer = new MenuItem("Renommer");
@@ -63,9 +65,9 @@ public class VueMenu extends MenuBar implements Observateur {
         MenuItem pastel = new MenuItem("Pastel");
         MenuItem vanille = new MenuItem("Vanille");
 
-        initialiserImages(quitter, supprimer, this.renommer, desactiverSelection, entree, sortie, this.delai, this.ecart, this.jetons,
+        initialiserImages(sauvegarder, charger, quitter, supprimer, this.renommer, desactiverSelection, entree, sortie, this.delai, this.ecart, this.jetons,
                 pastel, vanille);
-        initialiserEvenements(quitter, supprimer, this.renommer, desactiverSelection, entree, sortie, this.delai, this.ecart, this.jetons,
+        initialiserEvenements(sauvegarder, charger, quitter, supprimer, this.renommer, desactiverSelection, entree, sortie, this.delai, this.ecart, this.jetons,
                 pastel, vanille);
 
         updateMenuItems();
@@ -75,8 +77,10 @@ public class VueMenu extends MenuBar implements Observateur {
     /**
      * Méthode qui initialise les images relatives items du menu fichier
      *
-     * @param quitter             Le MenuItem qui permet de quitter le jeu
-     * @param supprimer           Le MenuItem qui permet de recommencer la partie
+     * @param sauvegarder         Le MenuItem qui permet de sauvegarder une configuration du monde
+     * @param charger             Le MenuItem qui permet de charger une configuration du monde
+     * @param quitter             Le MenuItem qui permet de quitter l'application
+     * @param supprimer           Le MenuItem qui permet de supprimer la sélection
      * @param renommer            Le MenuItem qui permet de renommer une activité
      * @param desactiverSelection Le MenuItem qui permet de désactiver la sélection
      * @param entree              Le MenuItem qui permet de désigner les activités sélectionnées comme entrées du monde
@@ -87,9 +91,18 @@ public class VueMenu extends MenuBar implements Observateur {
      * @param pastel              Le MenuItem qui permet de choisir le style pastel
      * @param vanille             Le MenuItem qui permet de choisir le style vanille
      */
-    private void initialiserImages(MenuItem quitter, MenuItem supprimer, MenuItem renommer,
+    private void initialiserImages(MenuItem sauvegarder, MenuItem charger, MenuItem quitter, MenuItem supprimer, MenuItem renommer,
                                    MenuItem desactiverSelection, MenuItem entree, MenuItem sortie, MenuItem delai,
                                    MenuItem ecart, MenuItem jetons, MenuItem pastel, MenuItem vanille) {
+
+        // Sauvegarder
+        Image imSauvegarder = new Image(getClass().getResourceAsStream("/images/save.png"), 30, 30, true, true);
+        sauvegarder.setGraphic(new ImageView(imSauvegarder));
+
+        // Charger
+        Image imCharger = new Image(getClass().getResourceAsStream("/images/load.png"), 30, 30, true, true);
+        charger.setGraphic(new ImageView(imCharger));
+
         // Quitter
         Image imQuitter = new Image(getClass().getResourceAsStream("/images/leave.png"), 30, 30, true, true);
         quitter.setGraphic(new ImageView(imQuitter));
@@ -127,7 +140,7 @@ public class VueMenu extends MenuBar implements Observateur {
         jetons.setGraphic(new ImageView(imJetons));
 
         // On ajoute les items aux menus
-        this.fichier.getItems().add(quitter);
+        this.fichier.getItems().addAll(sauvegarder, charger, quitter);
         this.edition.getItems().addAll(supprimer, renommer, desactiverSelection);
         this.menuMonde.getItems().addAll(entree, sortie);
         this.parametres.getItems().addAll(delai, ecart, jetons);
@@ -137,6 +150,8 @@ public class VueMenu extends MenuBar implements Observateur {
     /**
      * Méthode qui initialise les évènements liés aux items du menu fichier
      *
+     * @param sauvegarder         Le MenuItem qui permet de sauvegarder une configuration du monde
+     * @param charger             Le MenuItem qui permet de charger une configuration du monde
      * @param quitter             Le MenuItem qui permet de quitter le jeu
      * @param supprimer           Le MenuItem qui permet de recommencer la partie
      * @param renommer            Le MenuItem qui permet de renommer une activité
@@ -147,12 +162,20 @@ public class VueMenu extends MenuBar implements Observateur {
      * @param ecart               Le MenuItem qui permet d'assigner un écart de temps à une activité
      * @param jetons              Le MenuItem qui permet de modifier le nombre de jetons d'un guichet
      */
-    private void initialiserEvenements(MenuItem quitter, MenuItem supprimer, MenuItem renommer,
+    private void initialiserEvenements(MenuItem sauvegarder, MenuItem charger, MenuItem quitter, MenuItem supprimer, MenuItem renommer,
                                        MenuItem desactiverSelection, MenuItem entree, MenuItem sortie, MenuItem delai,
                                        MenuItem ecart, MenuItem jetons, MenuItem pastel, MenuItem vanille) {
 
         //rajouter les entrée peuvent être expo, griser si autre chose que entrée
         //sinon loi uni ou gauss selon choix.
+
+        sauvegarder.setOnAction(e -> {
+
+        });
+
+        charger.setOnAction(e -> {
+
+        });
 
         supprimer.setOnAction(e -> {
             this.monde.supprimerEtapesArcs();
