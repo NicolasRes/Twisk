@@ -2,7 +2,6 @@ package twisk.sauvegarde;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import javafx.scene.control.Alert;
 import twisk.mondeIG.*;
 
 import java.io.FileWriter;
