@@ -85,15 +85,4 @@ public class GestionnaireSauvegarde {
 
         return new MondeIGDTO(etapes, arcs, entrees, sorties);
     }
-    /**
-     * Méthode pour confirmer à l'utilisateur qu'il a bien sauvegardé
-     */
-    private void afficherConfirmationSauvegarde() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Sauvegarde");
-        alert.setHeaderText(null);
-        alert.setContentText("Sauvegarde du monde réussie !");
-        alert.showAndWait();
-    }
-
 }
