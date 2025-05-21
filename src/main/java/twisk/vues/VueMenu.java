@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import twisk.exceptions.TwiskJetonsException;
 import twisk.exceptions.TwiskMenuException;
 import twisk.mondeIG.MondeIG;
+import twisk.sauvegarde.GestionnaireSauvegarde;
 
 import java.io.File;
 import java.io.IOException;
@@ -86,7 +87,7 @@ public class VueMenu extends MenuBar implements Observateur {
      * @param entree              Le MenuItem qui permet de désigner les activités sélectionnées comme entrées du monde
      * @param sortie              Le MenuItem qui permet de désigner les activités sélectionnées comme sorties du monde
      * @param delai               Le MenuItem qui permet d'assigner un délai à une activité
-     * @param ecart               Le MenuItem qui permet d'assigner un écart de temps à une activité
+     * @param ecart               Le MenuItem qui permet d'assigner un écart de delai à une activité
      * @param jetons              Le MenuItem qui permet de modifier le nombre de jetons d'un guichet
      * @param pastel              Le MenuItem qui permet de choisir le style pastel
      * @param vanille             Le MenuItem qui permet de choisir le style vanille
@@ -159,7 +160,7 @@ public class VueMenu extends MenuBar implements Observateur {
      * @param entree              Le MenuItem qui permet de désigner les activités sélectionnées comme entrées du monde
      * @param sortie              Le MenuItem qui permet de désigner les activités sélectionnées comme sorties du monde
      * @param delai               Le MenuItem qui permet d'assigner un délai à une activité
-     * @param ecart               Le MenuItem qui permet d'assigner un écart de temps à une activité
+     * @param ecart               Le MenuItem qui permet d'assigner un écart de delai à une activité
      * @param jetons              Le MenuItem qui permet de modifier le nombre de jetons d'un guichet
      */
     private void initialiserEvenements(MenuItem sauvegarder, MenuItem charger, MenuItem quitter, MenuItem supprimer, MenuItem renommer,
@@ -170,7 +171,7 @@ public class VueMenu extends MenuBar implements Observateur {
         //sinon loi uni ou gauss selon choix.
 
         sauvegarder.setOnAction(e -> {
-
+            GestionnaireSauvegarde.sauvegarderMonde(this.monde, "sauvegardes/monde.json");
         });
 
         charger.setOnAction(e -> {
