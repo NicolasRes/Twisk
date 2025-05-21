@@ -70,6 +70,22 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
     }
 
     /**
+     * Méthode qui sert à récupérer la largeur de l'étape
+     * @return La largeur de l'étape
+     */
+    public int getLargeur() {
+        return this.largeur;
+    }
+
+    /**
+     * Méthode qui sert à récupérer la hauteur de l'étape
+     * @return La hauteur de l'étape
+     */
+    public int getHauteur() {
+        return this.hauteur;
+    }
+
+    /**
      * Méthode qui renvoie la position de l'étape sur l'axe des abscisses
      * @return L'axe x de l'étape
      */
