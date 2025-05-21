@@ -5,6 +5,7 @@ import twisk.exceptions.TwiskJetonsException;
 import twisk.exceptions.TwiskMenuException;
 import twisk.outils.TailleComposants;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -74,6 +75,12 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
     public Iterable<ArcIG> getArcsIterable() {
         return this.arcs;
     }
+
+    /**
+     * Méthode qui renvoie la liste des arcs du monde
+     * @return Mes arcs du monde
+     */
+    public ArrayList<ArcIG> getArcs() {return this.arcs;}
 
     /**
      * Méthode qui renvoie la HashMap contenant les étapes du monde
