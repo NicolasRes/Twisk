@@ -6,7 +6,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import twisk.exceptions.TwiskJetonsException;
 import twisk.exceptions.TwiskMenuException;
 import twisk.mondeIG.MondeIG;
@@ -171,7 +173,13 @@ public class VueMenu extends MenuBar implements Observateur {
         //sinon loi uni ou gauss selon choix.
 
         sauvegarder.setOnAction(e -> {
-            GestionnaireSauvegarde.sauvegarderMonde(this.monde, "sauvegardes/monde.json");
+            try {
+                GestionnaireSauvegarde.sauvegarderMonde(this.monde, "sauvegardes/monde.json");
+                afficherConfirmationSauvegarde();
+            }
+            catch(IOException exception) {
+                afficherErreurSauvegarde(exception.getMessage());
+            }
         });
 
         charger.setOnAction(e -> {
@@ -380,6 +388,32 @@ public class VueMenu extends MenuBar implements Observateur {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Méthode pour confirmer à l'utilisateur qu'il a bien sauvegardé
+     */
+    private void afficherConfirmationSauvegarde() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Sauvegarde");
+        alert.setHeaderText(null);
+        alert.setContentText("Sauvegarde du monde réussie !");
+        alert.showAndWait();
+    }
+
+    /**
+     * Méthode qui affiche une erreur en cas d'échec de la sauvegarde
+     * @param message Le message d'erreur
+     */
+    private void afficherErreurSauvegarde(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Echec sauvegarde");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        PauseTransition pause = new PauseTransition(seconds(3));
+        pause.setOnFinished(event -> alert.close());
+        pause.play();
+        alert.showAndWait();
     }
 
     /**
