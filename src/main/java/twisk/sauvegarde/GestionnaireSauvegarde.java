@@ -2,7 +2,6 @@ package twisk.sauvegarde;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import twisk.exceptions.TwiskMenuException;
 import twisk.mondeIG.*;
 
 import java.io.FileWriter;
@@ -118,7 +117,7 @@ public class GestionnaireSauvegarde {
         // Reconstruction des étapes
         for(EtapeIGDTO eDTO : dto.getEtapes()) {
             EtapeIG etape = construireEtapeIG(eDTO);
-            etape.positionnerLesPointsDeControle();
+            etape.positionnerPDC();
 
             if(eDTO.estEntree()) etape.switchEntree();
             if(eDTO.estSortie()) etape.switchSortie();
