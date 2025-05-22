@@ -8,20 +8,30 @@ import java.util.ArrayList;
 public class MondeIGDTO {
     public ArrayList<EtapeIGDTO> etapes;
     public ArrayList<ArcIGDTO> arcs;
-    public ArrayList<String> entrees;
-    public ArrayList<String> sorties;
 
     /**
      * Constructeur de la classe MondeIGDOT
      * @param etapes les étapes version dto
      * @param arcs les arcs version dto
-     * @param entrees les entrées version dto
-     * @param sorties les sorties version dto
      */
-    public MondeIGDTO(ArrayList<EtapeIGDTO> etapes, ArrayList<ArcIGDTO> arcs, ArrayList<String> entrees, ArrayList<String> sorties) {
+    public MondeIGDTO(ArrayList<EtapeIGDTO> etapes, ArrayList<ArcIGDTO> arcs) {
         this.etapes = etapes;
         this.arcs = arcs;
-        this.entrees = entrees;
-        this.sorties = sorties;
+    }
+
+    /**
+     * Méthode qui récupère la liste d'étapes DTO
+     * @return La liste d'étapes DTO
+     */
+    public ArrayList<EtapeIGDTO> getEtapes() {
+        return this.etapes;
+    }
+
+    /**
+     * Méthode qui récupère la liste d'arcs DTO
+     * @return La liste d'arcs DTO
+     */
+    public ArrayList<ArcIGDTO> getArcs() {
+        return this.arcs;
     }
 }
