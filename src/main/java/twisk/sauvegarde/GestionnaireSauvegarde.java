@@ -2,11 +2,15 @@ package twisk.sauvegarde;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import twisk.exceptions.TwiskMenuException;
 import twisk.mondeIG.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Classe GestionnaireSauvegarde qui permet la gestion de la sauvegarde du MondeIG en JSON
@@ -28,6 +32,19 @@ public class GestionnaireSauvegarde {
         FileWriter writer = new FileWriter(cheminFichier);
         writer.write(json);
         writer.close();
+    }
+
+    /**
+     * Méthode qui permet de charger un MondeIG depuis des données
+     * @param cheminFichier Le chemin vers le fichier à charger
+     * @return Le MondeIG
+     */
+    public static MondeIG chargerMonde(String cheminFichier) throws IOException {
+        String json = Files.readString(Path.of(cheminFichier));
+        Gson gson = new Gson();
+        MondeIGDTO dto = gson.fromJson(json, MondeIGDTO.class);
+
+        return reconstruireMondeIG(dto);
     }
 
     /**
@@ -83,5 +100,72 @@ public class GestionnaireSauvegarde {
         }
 
         return new MondeIGDTO(etapes, arcs, entrees, sorties);
+    }
+
+    /**
+     * Méthode qui permet d'importer / de reconstruire le MondeIG à partir des données d'un monde (JSON)
+     * @param dto Les données du monde à reconstruire
+     * @return Le MondeIG
+     */
+    private static MondeIG reconstruireMondeIG(MondeIGDTO dto) {
+        MondeIG monde = new MondeIG();
+
+        // On vide l'étape créée par défaut dans MondeIG
+        monde.getEtapes().clear();
+
+        HashMap<String, PointDeControleIG> pdcIdentifiants = new HashMap<>();
+
+        // Reconstruction des étapes
+        for(EtapeIGDTO eDTO : dto.getEtapes()) {
+            EtapeIG etape = construireEtapeIG(eDTO);
+            etape.positionnerLesPointsDeControle();
+
+            if(eDTO.estEntree()) etape.switchEntree();
+            if(eDTO.estSortie()) etape.switchSortie();
+
+            monde.getEtapes().put(etape.getIdentifiant(), etape);
+
+            for (PointDeControleIG pdc : etape) {
+                pdcIdentifiants.put(pdc.getIdentifiant(), pdc);
+            }
+        }
+
+        // Reconstruction des arcs
+        for(ArcIGDTO arcDTO : dto.getArcs()) {
+            PointDeControleIG src = pdcIdentifiants.get(arcDTO.getIdSource());
+            PointDeControleIG dst = pdcIdentifiants.get(arcDTO.getIdDestination());
+
+            if(src != null && dst != null) {
+                monde.getArcs().add(new ArcIG(src, dst));
+            }
+        }
+
+        return monde;
+    }
+
+    /**
+     * Méthode qui permet de construire une EtapeIG à partir de données (JSON)
+     * @param eDTO Les données de l'étape à reconstruire
+     * @return L'EtapeIG reconstruite
+     */
+    private static EtapeIG construireEtapeIG(EtapeIGDTO eDTO) {
+        EtapeIG etape;
+
+        if(eDTO.getType().equals("Guichet")) {
+            GuichetIG g = new GuichetIG(eDTO.getNom(), eDTO.getLargeur(), eDTO.getHauteur());
+            g.setNbJetons(eDTO.getNbJetons());
+            etape = g;
+        }
+        else {
+            ActiviteIG a = new ActiviteIG(eDTO.getNom(), eDTO.getLargeur(), eDTO.getHauteur());
+            a.setDelai(eDTO.getDelai());
+            a.setEcart(eDTO.getEcart());
+            etape = a;
+        }
+
+        etape.setIdentifiant(eDTO.getIdentifiant());
+        etape.setPosX(eDTO.getPosX());
+        etape.setPosY(eDTO.getPosY());
+        return etape;
     }
 }
