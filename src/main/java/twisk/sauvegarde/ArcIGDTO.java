@@ -16,4 +16,20 @@ public class ArcIGDTO {
         this.identifiantSource = idSource;
         this.identifiantDestination = idDest;
     }
+
+    /**
+     * Méthode qui renvoie l'identifiant du PDC source
+     * @return L'identifiant du PDC source
+     */
+    public String getIdSource() {
+        return this.identifiantSource;
+    }
+
+    /**
+     * Méthode qui renvoie l'identifiant du PDC destination
+     * @return L'identifiant du PDC destination
+     */
+    public String getIdDestination() {
+        return this.identifiantDestination;
+    }
 }
