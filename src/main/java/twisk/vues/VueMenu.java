@@ -183,7 +183,7 @@ public class VueMenu extends MenuBar implements Observateur {
         charger.setOnAction(e -> {
             try {
                 MondeIG mondeCharge = GestionnaireSauvegarde.chargerMonde("sauvegardes/monde.json");
-                this.monde.remplacerPar(mondeCharge);
+                this.monde.remplacerMonde(mondeCharge);
             }
             catch (IOException exception) {
                 afficherErreurChargement(exception.getMessage());
