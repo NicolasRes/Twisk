@@ -8,18 +8,24 @@ import twisk.outils.FabriqueIdentifiant;
 public class PointDeControleIG {
     private double x;
     private double y;
+    private double relativeX;
+    private double relativeY;
     private String identifiant;
     private EtapeIG etape;
 
     /**
      * Constructeur de la classe PointDeControleIG
-     * @param x Coordonnée x du centre du point de contrôle
-     * @param y Coordonnée x du centre du point de contrôle
+     * @param relativeX Coordonnée x du centre du point de contrôle
+     * @param relativeY Coordonnée x du centre du point de contrôle
      * @param etape Étape rattachée au point de contrôle
      */
-    public PointDeControleIG(double x, double y, EtapeIG etape) {
-        this.x = x + etape.getPosX();
-        this.y = y + etape.getPosY();
+    public PointDeControleIG(double relativeX, double relativeY, EtapeIG etape) {
+        this.relativeX = relativeX;
+        this.relativeY = relativeY;
+
+        this.x = relativeX + etape.getPosX();
+        this.y = relativeY + etape.getPosY();
+
         this.etape = etape;
         FabriqueIdentifiant id = FabriqueIdentifiant.getInstance();
         this.identifiant = id.getIdentifiantPDC();
@@ -67,6 +73,37 @@ public class PointDeControleIG {
         return this.identifiant;
     }
 
+    /**
+     * Méthode qui récupère la coordonnée x relative du PDC
+     * @return La coordonnée x relative
+     */
+    public double getRelativeX() {
+        return this.relativeX;
+    }
+
+    /**
+     * Méthode qui récupère la coordonnée y relative du PDC
+     * @return La coordonnée y relative
+     */
+    public double getRelativeY() {
+        return this.relativeY;
+    }
+
+    /**
+     * Méthode qui définit la coordonnée x relative du PDC
+     * @param x coordonnée x relative
+     */
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    /**
+     * Méthode qui définit la coordonnée y relative du PDC
+     * @param y coordonnée y relative
+     */
+    public void setY(double y) {
+        this.y = y;
+    }
 
     /**
      * Méthode qui renvoie une version String d'un point de contrôle
