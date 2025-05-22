@@ -65,4 +65,100 @@ public class EtapeIGDTO {
     public void setNbJetons(int nbJetons) {
         this.nbJetons = nbJetons;
     }
+
+    /**
+     * Méthode qui récupère le nom de l'étape DTO
+     * @return Le nom de l'étape DTO
+     */
+    public String getNom() {
+        return this.nom;
+    }
+
+    /**
+     * Méthode qui récupère l'identifiant de l'étape DTO
+     * @return L'identifiant de l'étape DTO
+     */
+    public int getIdentifiant() {
+        return this.identifiant;
+    }
+
+    /**
+     * Méthode qui récupère la pos x de l'étape DTO
+     * @return La pos x de l'étape DTO
+     */
+    public double getPosX() {
+        return this.posX;
+    }
+
+    /**
+     * Méthode qui récupère la pos y de l'étape DTO
+     * @return La pos y de l'étape DTO
+     */
+    public double getPosY() {
+        return this.posY;
+    }
+
+    /**
+     * Méthode qui récupère la largeur de l'étape DTO
+     * @return La largeur de l'étape DTO
+     */
+    public int getLargeur() {
+        return this.largeur;
+    }
+
+    /**
+     * Méthode qui récupère la hauteur de l'étape DTO
+     * @return La hauteur de l'étape DTO
+     */
+    public int getHauteur() {
+        return this.hauteur;
+    }
+
+    /**
+     * Méthode qui dit si une étape DTO est une entrée
+     * @return Vrai si l'étape est une entrée, faux sinon
+     */
+    public boolean estEntree() {
+        return this.estEntree;
+    }
+
+    /**
+     * Méthode qui dit si une étape DTO est une sortie
+     * @return Vrai si l'étape est une sortie, faux sinon
+     */
+    public boolean estSortie() {
+        return this.estSortie;
+    }
+
+    /**
+     * Méthode qui dit donne le type de l'étape DTO (activité / guichet)
+     * @return Le type de l'étape DTO
+     */
+    public String getType() {
+        return this.type;
+    }
+
+    /**
+     * Méthode qui récupère le délai de l'étape DTO
+     * @return Le délai
+     */
+    public int getDelai() {
+        return this.delai;
+    }
+
+    /**
+     * Méthode qui récupère l'écart temps de l'étape DTO
+     * @return L'écart temps
+     */
+    public int getEcart() {
+        return this.ecart;
+    }
+
+    /**
+     * Méthode qui récupère le nombre de jetons de l'étape DTO
+     * @return Le nombre de jetons
+     */
+    public int getNbJetons() {
+        return this.nbJetons;
+    }
 }
