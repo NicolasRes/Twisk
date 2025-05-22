@@ -79,14 +79,6 @@ public class GestionnaireSauvegarde {
                 eDTO.setNbJetons(((GuichetIG) etapeIG).getNbJetons());
             }
 
-            // On sauvegarde aussi les infos sur les entrées et sorties
-            if(etapeIG.estEntree()) {
-                entrees.add(String.valueOf(etapeIG.getIdentifiantEtape()));
-            }
-            if(etapeIG.estSortie()) {
-                sorties.add(String.valueOf(etapeIG.getIdentifiantEtape()));
-            }
-
             etapes.add(eDTO);    // On ajoute la version DTO de l'étape dans la liste d'étapes à sauvegarder
         }
 
@@ -98,7 +90,7 @@ public class GestionnaireSauvegarde {
             arcs.add(arcDTO);
         }
 
-        return new MondeIGDTO(etapes, arcs, entrees, sorties);
+        return new MondeIGDTO(etapes, arcs);
     }
 
     /**
