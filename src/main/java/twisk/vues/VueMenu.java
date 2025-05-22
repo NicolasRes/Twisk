@@ -181,7 +181,13 @@ public class VueMenu extends MenuBar implements Observateur {
         });
 
         charger.setOnAction(e -> {
-
+            try {
+                MondeIG mondeCharge = GestionnaireSauvegarde.chargerMonde("sauvegardes/monde.json");
+                this.monde.remplacerPar(mondeCharge);
+            }
+            catch (IOException exception) {
+                afficherErreurChargement(exception.getMessage());
+            }
         });
 
         supprimer.setOnAction(e -> {
@@ -408,9 +414,27 @@ public class VueMenu extends MenuBar implements Observateur {
         alert.setTitle("Echec sauvegarde");
         alert.setHeaderText(null);
         alert.setContentText(message);
+
         PauseTransition pause = new PauseTransition(seconds(3));
         pause.setOnFinished(event -> alert.close());
         pause.play();
+        alert.showAndWait();
+    }
+
+    /**
+     * Méthode qui affiche une erreur en cas d'échec du chargement
+     * @param message Le message d'erreur
+     */
+    private void afficherErreurChargement(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Échec du chargement");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        PauseTransition pause = new PauseTransition(seconds(3));
+        pause.setOnFinished(event -> alert.close());
+        pause.play();
+
         alert.showAndWait();
     }
 
