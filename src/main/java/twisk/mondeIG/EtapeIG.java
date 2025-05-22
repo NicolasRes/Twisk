@@ -62,6 +62,14 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
     }
 
     /**
+     * Méthode qui applique un identifiant à l'étape
+     * @param identifiant L'identifiant à appliquer sur l'étape
+     */
+    public void setIdentifiant(int identifiant) {
+        this.identifiant = identifiant;
+    }
+
+    /**
      * Méthode qui renvoie le nom d'une étape
      * @return Le nom d'une étape sous forme de String
      */
@@ -243,6 +251,18 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         sb.append("posX = ").append(this.posX).append(", ");
         sb.append("posY = ").append(this.posY);
         return sb.toString();
+    }
+
+    /**
+     * Méthode qui calcule la position absolue de chaque PDC (utile pour importer monde)
+     */
+    public void positionnerPDC() {
+        for (PointDeControleIG pdc : this.pdc) {
+            double relativeX = pdc.getRelativeX();
+            double relativeY = pdc.getRelativeY();
+            pdc.setX(this.posX + relativeX);
+            pdc.setY(this.posY + relativeY);
+        }
     }
 
     /**
