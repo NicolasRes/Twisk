@@ -5,7 +5,6 @@ import twisk.exceptions.TwiskJetonsException;
 import twisk.exceptions.TwiskMenuException;
 import twisk.outils.TailleComposants;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -613,5 +612,24 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
      */
     public void simulationTerminee() {
         notifierObservateurs();
+    }
+
+    /**
+     * Méthode qui remplace le monde actuel par un nouveau monde (chargement)
+     * @param nouveauMonde Le monde qu'on charge à la place du monde actuel
+     */
+    public void remplacerMonde(MondeIG nouveauMonde) {
+        this.etapes.clear();
+        this.etapes.putAll(nouveauMonde.getEtapes());
+
+        this.arcs.clear();
+        this.arcs.addAll(nouveauMonde.getArcs());
+
+        this.etapesSelectionnees.clear();
+        this.arcsSelectionnes.clear();
+        this.pointsSelectionnes.clear();
+        this.clientsIG.clear();
+
+        this.notifierObservateurs();
     }
 }
