@@ -111,8 +111,8 @@ public class VueMondeIG extends Pane implements Observateur {
         for(ClientIG c : this.monde.getClientsIG()) {
             EtapeIG etapeIG = c.getEtape();
             if(etapeIG.getType().equals("Activite")) {  // On récupère les vues activités
-                VueClientIG cli = new VueClientIG(c);
-                this.getChildren().add(cli);
+                VueActiviteIG vueActiviteIG = (VueActiviteIG) this.vuesEtapes.get(etapeIG);
+                vueActiviteIG.ajouterClientHBox(c);
             }
         }
     }
