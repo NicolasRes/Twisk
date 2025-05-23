@@ -87,7 +87,7 @@ public class GestionnaireSauvegarde {
 
         // Reconstruction des étapes
         for(EtapeDTO eDTO : dto.getEtapes()) {
-            EtapeIG etape = reconstruireEtapeIG(eDTO);
+            EtapeIG etape = reconstruireEtapeIG(eDTO, pdcIdentifiants);
             etape.positionnerPDC();
 
             if(eDTO.estEntree()) etape.switchEntree();
@@ -118,7 +118,7 @@ public class GestionnaireSauvegarde {
      * @param eDTO Les données de l'étape à reconstruire
      * @return L'EtapeIG reconstruite
      */
-    private static EtapeIG reconstruireEtapeIG(EtapeDTO eDTO) {
+    private static EtapeIG reconstruireEtapeIG(EtapeDTO eDTO, HashMap<String, PointDeControleIG> pdcIdentifiants) {
         EtapeIG etape;
 
         if(eDTO.getType().equals("Guichet")) {
@@ -132,6 +132,17 @@ public class GestionnaireSauvegarde {
             a.setEcart(eDTO.getEcart());
             etape = a;
         }
+
+        etape.getListePDC().clear();
+
+        // On reconstruit les PDC IG à partir des PDC DTO
+        for (PointDeControleDTO pdcDTO : eDTO.getPoints()) {
+            PointDeControleIG pdc = new PointDeControleIG(pdcDTO.getRelativeX(), pdcDTO.getRelativeY(), etape);
+            pdc.setIdentifiant(pdcDTO.getIdentifiant());
+            etape.ajouterPDC(pdc);
+            pdcIdentifiants.put(pdc.getIdentifiant(), pdc);
+        }
+
 
         etape.setNomSansId(eDTO.getNom());
         etape.setIdentifiant(eDTO.getIdentifiant());
@@ -165,6 +176,24 @@ public class GestionnaireSauvegarde {
         else if(etapeIG.getType().equals("Guichet")) {  // et les jetons pour le guichet
             eDTO.setNbJetons(((GuichetIG) etapeIG).getNbJetons());
         }
+
+        constructionPoints(etapeIG, eDTO);
+
         return eDTO;
+    }
+
+    /**
+     * Méthode qui construit les PDC DTO à partir des PDC IG et les place dans l'EtapeDTO correspondante
+     * @param etapeIG L'EtapeIG
+     * @param eDTO L'EtapeDTO
+     */
+    private static void constructionPoints(EtapeIG etapeIG, EtapeDTO eDTO) {
+        for (PointDeControleIG pdc : etapeIG) {
+            eDTO.getPoints().add(new PointDeControleDTO(
+                    pdc.getIdentifiant(),
+                    pdc.getRelativeX(),
+                    pdc.getRelativeY()
+            ));
+        }
     }
 }

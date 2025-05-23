@@ -289,6 +289,22 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         }
     }
 
+    /**
+     * Méthode qui ajoute un PDC à l'étape
+     * @param pdc Les PDC de l'étape
+     */
+    public void ajouterPDC(PointDeControleIG pdc) {
+        this.pdc.add(pdc);
+    }
+
+    /**
+     * Méthode qui renvoie la liste des PDC liés à l'étape
+     * @return La liste des PDC
+     */
+    public ArrayList<PointDeControleIG> getListePDC() {
+        return this.pdc;
+    }
+
     /// Méthodes abstraites ///
 
     /**

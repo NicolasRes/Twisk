@@ -74,6 +74,14 @@ public class PointDeControleIG {
     }
 
     /**
+     * Méthode qui applique un identifiant au PDC
+     * @param id L'identifiant à appliquer au PDC
+     */
+    public void setIdentifiant(String id) {
+        this.identifiant = id;
+    }
+
+    /**
      * Méthode qui récupère la coordonnée x relative du PDC
      * @return La coordonnée x relative
      */

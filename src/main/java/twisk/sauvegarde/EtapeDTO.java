@@ -1,5 +1,7 @@
 package twisk.sauvegarde;
 
+import java.util.ArrayList;
+
 /**
  * Classe EtapeIGDTO qui sert à conserver les données d'une EtapeIG (et ses sous-classes) pour sa conversion en JSON et sauvegarde
  */
@@ -16,6 +18,7 @@ public class EtapeDTO {
     public int delai = 0;         // si activité
     public int ecart = 0;         // pareil ici
     public int nbJetons = 0;      // si guichet
+    public ArrayList<PointDeControleDTO> points;
 
     /**
      * Constructeur de la classe EtapeIGDTO
@@ -40,6 +43,7 @@ public class EtapeDTO {
         this.estEntree = estEntree;
         this.estSortie = estSortie;
         this.type = type;
+        this.points = new ArrayList<>();
     }
 
     /**
@@ -160,5 +164,15 @@ public class EtapeDTO {
      */
     public int getNbJetons() {
         return this.nbJetons;
+    }
+
+    /**
+     * Méthode qui récupère les PDC de l'étape DTO
+     * @return Le PDC DTO de l'étape
+     */
+    public ArrayList<PointDeControleDTO> getPoints() {
+        if (this.points == null)
+            this.points = new ArrayList<>();
+        return this.points;
     }
 }
