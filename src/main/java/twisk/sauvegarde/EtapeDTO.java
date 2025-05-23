@@ -3,7 +3,7 @@ package twisk.sauvegarde;
 /**
  * Classe EtapeIGDTO qui sert à conserver les données d'une EtapeIG (et ses sous-classes) pour sa conversion en JSON et sauvegarde
  */
-public class EtapeIGDTO {
+public class EtapeDTO {
     public String nom;
     public int identifiant;
     public double posX;
@@ -29,8 +29,8 @@ public class EtapeIGDTO {
      * @param estSortie Si l'étape est une sortie ou non
      * @param type Activité ou guichet
      */
-    public EtapeIGDTO(String nom, int identifiant, double posX, double posY, int largeur, int hauteur,
-                      boolean estEntree, boolean estSortie, String type) {
+    public EtapeDTO(String nom, int identifiant, double posX, double posY, int largeur, int hauteur,
+                    boolean estEntree, boolean estSortie, String type) {
         this.nom = nom;
         this.identifiant = identifiant;
         this.posX = posX;

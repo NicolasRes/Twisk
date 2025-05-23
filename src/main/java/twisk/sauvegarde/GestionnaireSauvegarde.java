@@ -22,7 +22,7 @@ public class GestionnaireSauvegarde {
      * @param cheminFichier Le chemin du fichier sous forme de String
      */
     public static void sauvegarderMonde(MondeIG monde, String cheminFichier) throws IOException {
-        MondeIGDTO dto = construireMondeDTO(monde);
+        MondeDTO dto = construireMondeDTO(monde);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(dto);
@@ -41,7 +41,7 @@ public class GestionnaireSauvegarde {
     public static MondeIG chargerMonde(String cheminFichier) throws IOException {
         String json = Files.readString(Path.of(cheminFichier));
         Gson gson = new Gson();
-        MondeIGDTO dto = gson.fromJson(json, MondeIGDTO.class);
+        MondeDTO dto = gson.fromJson(json, MondeDTO.class);
 
         return reconstruireMondeIG(dto);
     }
@@ -51,15 +51,13 @@ public class GestionnaireSauvegarde {
      * @param monde Le MondeIG
      * @return Un monde DTO
      */
-    private static MondeIGDTO construireMondeDTO(MondeIG monde) {
-        ArrayList<EtapeIGDTO> etapes = new ArrayList<>();
-        ArrayList<ArcIGDTO> arcs = new ArrayList<>();
-        ArrayList<String> entrees = new ArrayList<>();
-        ArrayList<String> sorties = new ArrayList<>();
+    private static MondeDTO construireMondeDTO(MondeIG monde) {
+        ArrayList<EtapeDTO> etapes = new ArrayList<>();
+        ArrayList<ArcDTO> arcs = new ArrayList<>();
 
         // On remplit tous les champs des étapes DTO avec les infos des EtapeIG
         for(EtapeIG etapeIG : monde) {
-            EtapeIGDTO eDTO = new EtapeIGDTO(
+            EtapeDTO eDTO = new EtapeDTO(
                 etapeIG.getNom(),
                 etapeIG.getIdentifiantEtape(),
                 etapeIG.getPosX(),
@@ -86,11 +84,11 @@ public class GestionnaireSauvegarde {
         for(ArcIG arc : monde.getArcs()) {
             String idSrc = arc.getSource().getIdentifiant();
             String idDest = arc.getDestination().getIdentifiant();
-            ArcIGDTO arcDTO = new ArcIGDTO(idSrc, idDest);
+            ArcDTO arcDTO = new ArcDTO(idSrc, idDest);
             arcs.add(arcDTO);
         }
 
-        return new MondeIGDTO(etapes, arcs);
+        return new MondeDTO(etapes, arcs);
     }
 
     /**
@@ -98,7 +96,7 @@ public class GestionnaireSauvegarde {
      * @param dto Les données du monde à reconstruire
      * @return Le MondeIG
      */
-    private static MondeIG reconstruireMondeIG(MondeIGDTO dto) {
+    private static MondeIG reconstruireMondeIG(MondeDTO dto) {
         MondeIG monde = new MondeIG();
 
         // On vide l'étape créée par défaut dans MondeIG
@@ -107,8 +105,8 @@ public class GestionnaireSauvegarde {
         HashMap<String, PointDeControleIG> pdcIdentifiants = new HashMap<>();
 
         // Reconstruction des étapes
-        for(EtapeIGDTO eDTO : dto.getEtapes()) {
-            EtapeIG etape = construireEtapeIG(eDTO);
+        for(EtapeDTO eDTO : dto.getEtapes()) {
+            EtapeIG etape = reconstruireEtapeIG(eDTO);
             etape.positionnerPDC();
 
             if(eDTO.estEntree()) etape.switchEntree();
@@ -122,7 +120,7 @@ public class GestionnaireSauvegarde {
         }
 
         // Reconstruction des arcs
-        for(ArcIGDTO arcDTO : dto.getArcs()) {
+        for(ArcDTO arcDTO : dto.getArcs()) {
             PointDeControleIG src = pdcIdentifiants.get(arcDTO.getIdSource());
             PointDeControleIG dst = pdcIdentifiants.get(arcDTO.getIdDestination());
 
@@ -139,7 +137,7 @@ public class GestionnaireSauvegarde {
      * @param eDTO Les données de l'étape à reconstruire
      * @return L'EtapeIG reconstruite
      */
-    private static EtapeIG construireEtapeIG(EtapeIGDTO eDTO) {
+    private static EtapeIG reconstruireEtapeIG(EtapeDTO eDTO) {
         EtapeIG etape;
 
         if(eDTO.getType().equals("Guichet")) {
