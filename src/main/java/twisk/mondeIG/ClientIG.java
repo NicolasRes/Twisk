@@ -4,42 +4,21 @@ package twisk.mondeIG;
  * Classe qui gère un ClientIG
  */
 public class ClientIG {
-    private int numero;
-    private double x, y;
+    int numero;
     private int couleur;
     private EtapeIG etape;
 
     /**
      * Constructeur de la classe ClientIG
      * @param numero Le numero du client
-     * @param x La coordonnée x du client
-     * @param y La coordonnée y du client
+     * @param couleur La couleur du client
+     * @param etape L'étape liée au client
      */
-    public ClientIG(int numero, double x, double y, int couleur, EtapeIG etape) {
+    public ClientIG(int numero, int couleur, EtapeIG etape) {
         this.numero = numero;
-        this.x = x;
-        this.y = y;
         this.couleur = couleur;
         this.etape = etape;
     }
-
-    /**
-     * Méthode qui renvoie le numéro du client
-     * @return Le numéro du client
-     */
-    public int getNumero() {return this.numero;}
-
-    /**
-     * Méthode qui renvoie la coordonnée x du client
-     * @return La coordonnée x du client
-     */
-    public double getX() {return this.x;}
-
-    /**
-     * Méthode qui renvoie la coordonnée y du client
-     * @return La coordonnée y du client
-     */
-    public double getY() {return this.y;}
 
     /**
      * Méthode qui renvoie un chiffre aléatoire correspondant à la couleur du client

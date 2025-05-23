@@ -6,7 +6,6 @@ import twisk.ClientTwisk;
 import twisk.exceptions.MondeException;
 import twisk.monde.*;
 import twisk.outils.ClassLoaderPerso;
-import twisk.outils.TailleComposants;
 import twisk.outils.ThreadsManager;
 import twisk.vues.Observateur;
 
@@ -399,11 +398,10 @@ public class SimulationIG implements Observateur {
             }
 
             // Coordonnées et couleur
-            double[] coords = calculCoordonnees(i, etapeIG);
             int couleur = creerCouleurClient(numero);
 
             // On ajoute le client à la liste des clients du guichet s'il est dans un guichet
-            ClientIG clientIG = new ClientIG(numero, coords[0], coords[1], couleur, etapeIG);
+            ClientIG clientIG = new ClientIG(numero, couleur, etapeIG);
 
             if(etapeIG.getType().equals("Guichet")) {
                 GuichetIG guichetIG = (GuichetIG) etapeIG;
@@ -458,42 +456,6 @@ public class SimulationIG implements Observateur {
             }
         }
         return null;
-    }
-
-    /**
-     * Méthode qui calcule les coordonnées d'un client dans une EtapeIG
-     * @param position Compteur lié au client pour créer un décalage
-     * @param etapeIG L'étape dans laquelle se trouve le client
-     * @return Les coordonnées du client
-     */
-    private double[] calculCoordonnees(int position, EtapeIG etapeIG) {
-        double[] coordonnees = new double[2];
-
-        // La largeur et la hauteur diffèrent selon le type d'étape
-        int largeur = TailleComposants.LARGEUR_ETAPE;
-        int hauteur = TailleComposants.HAUTEUR_ETAPE;
-
-        if(etapeIG.getType().equals("Guichet")) {
-            largeur = TailleComposants.LARGEUR_GUICHET;
-            hauteur = TailleComposants.HAUTEUR_GUICHET;
-        }
-
-        int decalage = 15;
-        int base = -30;
-
-        if (etapeIG.getType().equals("Guichet")) {
-            GuichetIG g = (GuichetIG) etapeIG;
-            if (g.getSens() == GuichetIG.Sens.DROITE_GAUCHE) {
-                decalage = -15;
-                base = 30;
-            }
-        }
-
-        coordonnees[0] = etapeIG.getPosX() + largeur / 2.0 + base + position * decalage;
-        coordonnees[1] = etapeIG.getPosY() + hauteur - 35;
-        System.out.printf("Client %d dans %s : (%.1f, %.1f)\n", position, etapeIG.getNom(), coordonnees[0], coordonnees[1]);
-
-        return coordonnees;
     }
 
     /**

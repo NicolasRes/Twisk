@@ -14,8 +14,6 @@ public class VueClientIG extends Circle {
      */
     public VueClientIG(ClientIG client) {
         super(5);
-        this.setCenterX(client.getX());
-        this.setCenterY(client.getY());
         this.getStyleClass().add("client");
         this.getStyleClass().add("client-couleur-" + client.getCouleurClient());
     }
