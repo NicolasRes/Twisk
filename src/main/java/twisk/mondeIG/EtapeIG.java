@@ -78,6 +78,14 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
     }
 
     /**
+     * Méthode qui permet d'appliquer un nom à une étape sans avoir l'identifiant en suffixe comme dans les sous-classes
+     * @param nom Le nom à donner à l'étape
+     */
+    public void setNomSansId(String nom) {
+        this.nom = nom;
+    }
+
+    /**
      * Méthode qui sert à récupérer la largeur de l'étape
      * @return La largeur de l'étape
      */

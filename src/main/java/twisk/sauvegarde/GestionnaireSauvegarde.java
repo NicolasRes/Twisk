@@ -57,26 +57,7 @@ public class GestionnaireSauvegarde {
 
         // On remplit tous les champs des étapes DTO avec les infos des EtapeIG
         for(EtapeIG etapeIG : monde) {
-            EtapeDTO eDTO = new EtapeDTO(
-                etapeIG.getNom(),
-                etapeIG.getIdentifiantEtape(),
-                etapeIG.getPosX(),
-                etapeIG.getPosY(),
-                etapeIG.getLargeur(),
-                etapeIG.getHauteur(),
-                etapeIG.estEntree(),
-                etapeIG.estSortie(),
-                etapeIG.getType()
-            );
-
-            if(etapeIG.getType().equals("Activite")) {  // On n'oublie pas le délai et l'écart pour l'activité
-                eDTO.setDelai(((ActiviteIG) etapeIG).getDelai());
-                eDTO.setEcart(((ActiviteIG) etapeIG).getEcart());
-            }
-            else if(etapeIG.getType().equals("Guichet")) {  // et les jetons pour le guichet
-                eDTO.setNbJetons(((GuichetIG) etapeIG).getNbJetons());
-            }
-
+            EtapeDTO eDTO = constructionEtapeDTO(etapeIG);
             etapes.add(eDTO);    // On ajoute la version DTO de l'étape dans la liste d'étapes à sauvegarder
         }
 
@@ -152,9 +133,38 @@ public class GestionnaireSauvegarde {
             etape = a;
         }
 
+        etape.setNomSansId(eDTO.getNom());
         etape.setIdentifiant(eDTO.getIdentifiant());
         etape.setPosX(eDTO.getPosX());
         etape.setPosY(eDTO.getPosY());
         return etape;
+    }
+
+    /**
+     * Méthode qui permet de construire une étape DTO à partir d'une étape IG
+     * @param etapeIG L'EtapeIG
+     * @return L'EtapeDTO
+     */
+    private static EtapeDTO constructionEtapeDTO(EtapeIG etapeIG) {
+        EtapeDTO eDTO = new EtapeDTO(
+                etapeIG.getNom(),
+                etapeIG.getIdentifiantEtape(),
+                etapeIG.getPosX(),
+                etapeIG.getPosY(),
+                etapeIG.getLargeur(),
+                etapeIG.getHauteur(),
+                etapeIG.estEntree(),
+                etapeIG.estSortie(),
+                etapeIG.getType()
+        );
+
+        if(etapeIG.getType().equals("Activite")) {  // On n'oublie pas le délai et l'écart pour l'activité
+            eDTO.setDelai(((ActiviteIG) etapeIG).getDelai());
+            eDTO.setEcart(((ActiviteIG) etapeIG).getEcart());
+        }
+        else if(etapeIG.getType().equals("Guichet")) {  // et les jetons pour le guichet
+            eDTO.setNbJetons(((GuichetIG) etapeIG).getNbJetons());
+        }
+        return eDTO;
     }
 }
