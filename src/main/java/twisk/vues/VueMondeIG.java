@@ -1,5 +1,6 @@
 package twisk.vues;
 
+import javafx.application.Platform;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
@@ -143,9 +144,11 @@ public class VueMondeIG extends Pane implements Observateur {
      */
     @Override
     public void reagir() {
-        this.getChildren().clear();
-        afficherArcs();
-        afficherEtapes();
-        afficherClients();
+        Platform.runLater(() -> {
+            this.getChildren().clear();
+            afficherArcs();
+            afficherEtapes();
+            afficherClients();
+        });
     }
 }

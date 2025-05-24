@@ -1,5 +1,6 @@
 package twisk.vues;
 
+import javafx.application.Platform;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,13 +20,14 @@ public class VueOutils extends TilePane implements Observateur {
     private SimulationIG simulation;
     private Button ajouterActivite, ajouterGuichet, simuler;
     private boolean simuEnCours;
+
     /**
      * Constructeur de la classe VueOutils
      * @param monde Le monde dans lequel on crée les outils
      */
     public VueOutils(MondeIG monde, SimulationIG simulation) {
         assert(monde != null);
-        simuEnCours=false;
+        this.simuEnCours = false;
         this.monde = monde;
         this.monde.ajouterObservateur(this);
 
@@ -40,12 +42,13 @@ public class VueOutils extends TilePane implements Observateur {
         this.ajouterGuichet.setOnAction(e -> this.monde.ajouter("Guichet"));
         this.simuler.setOnAction(e -> {
             try {
-                if(!simuEnCours) {
+                if(!this.simuEnCours) {
                     this.simulation.simuler();
-                }else{
+                }
+                else{
                     ThreadsManager.getInstance().detruireTout();
                 }
-                this.switchImage(simuEnCours);
+                this.switchImage(this.simuEnCours);
 
             } catch (MondeException ex) {
                 DialogueErreur.afficherErreur(ex);
@@ -57,17 +60,31 @@ public class VueOutils extends TilePane implements Observateur {
         this.getStyleClass().add("TilePane");
     }
 
+    /**
+     * Méthode qui permet d'arrêter la simulation
+     */
+    public void arreterSimulation() {
+        if(simuEnCours) {
+            this.simuEnCours = false;
+            switchImage(true);
+        }
+    }
+
+    /**
+     * Méthode qui modifie l'image liée au bouton de simulation si elle est en cours ou non
+     * @param simuEnCours Vrai si la simulation est en cours, faux sinon
+     */
     private void switchImage(boolean simuEnCours) {
         this.simuEnCours=!simuEnCours;
 
         if(simuEnCours){
             Image imSimu = new Image(getClass().getResourceAsStream("/images/simu.png"), 50, 50, true, true);
             ImageView iconSimuAc = new ImageView(imSimu);
-            simuler.setGraphic(iconSimuAc);
+            this.simuler.setGraphic(iconSimuAc);
         }else{
             Image imAjouterActivite = new Image(getClass().getResourceAsStream("/images/stop.png"), 50, 50, true, true);
             ImageView iconAjouterActivite = new ImageView(imAjouterActivite);
-            simuler.setGraphic(iconAjouterActivite);
+            this.simuler.setGraphic(iconAjouterActivite);
         }
     }
 
@@ -107,6 +124,8 @@ public class VueOutils extends TilePane implements Observateur {
      * Méthode qui met à jour le dessin des activités dans le monde
      */
     public void reagir() {
-
+        if(this.simulation.simuFinie()) {
+            Platform.runLater(() -> arreterSimulation());
+        }
     }
 }

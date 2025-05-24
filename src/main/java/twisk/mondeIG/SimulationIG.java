@@ -338,7 +338,27 @@ public class SimulationIG implements Observateur {
             }
         };
         ThreadsManager.getInstance().lancer(taskUpdateClient);  // On lance la tâche et on la met dans la liste des tâches en cours
+        if(this.simuFinie()) {
+            this.mondeIG.notifierObservateurs();
+        }
     }
+
+    /**
+     * Méthode qui vérifie si la simulation est terminée
+     * @return Vrai si la simulation est terminée, faux sinon
+     */
+    public boolean simuFinie() {
+        if(instance == null) return false;  // Faux si elle n'est pas lancée
+        try {
+            Method m = instance.getClass().getMethod("estSimuFinie");
+            return (boolean) m.invoke(instance);    // On utilise la fonction estFinie sur l'instance de la simulation
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     /**
      * Méthode qui récupère le gestionnaire de clients de Simulation par introspection

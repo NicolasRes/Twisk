@@ -132,7 +132,6 @@ public class Simulation extends SujetObserve {
                 Thread.sleep(TMP_ATTENTE * 1000);
             } catch (InterruptedException e) {
                 kitC.tuerProcessus(gestionnaireClients);
-                estSimuFinie = true;
             }
 
             System.out.println();
@@ -141,15 +140,16 @@ public class Simulation extends SujetObserve {
         System.out.println("==========Fin simulation==========\n");
         this.estSimuFinie = true;
         this.gestionnaireClients.nettoyer();
+        notifierObservateurs();
     }
 
     /**
      * Getter pour savoir si la simulation est terminée
      * @return true si la simulation est terminée, false sinon
      */
-    public boolean isEstSimuFinie() {
+    public boolean estSimuFinie() {
         return estSimuFinie;
-    }
+    }   // Appelée par introspection
 
 
     /**
