@@ -32,7 +32,7 @@ public class VueMenu extends MenuBar implements Observateur {
     private Menu menuMonde;
     private Menu parametres;
     private Menu style;
-    private MenuItem delai, ecart, renommer, jetons, sauvegarder, charger;
+    private MenuItem delai, ecart, renommer, jetons, sauvegarder, charger, lois;
 
     /**
      * Constructeur de la classe VueMenu
@@ -64,12 +64,13 @@ public class VueMenu extends MenuBar implements Observateur {
         this.delai = new MenuItem("Délai");
         this.ecart = new MenuItem("Écart");
         this.jetons = new MenuItem("Jetons");
+        this.lois = new MenuItem("Lois");
         MenuItem pastel = new MenuItem("Pastel");
         MenuItem vanille = new MenuItem("Vanille");
 
-        initialiserImages(sauvegarder, charger, quitter, supprimer, this.renommer, desactiverSelection, entree, sortie, this.delai, this.ecart, this.jetons,
+        initialiserImages(sauvegarder, charger, quitter, supprimer, this.renommer, desactiverSelection, entree, sortie, this.delai, this.ecart, this.jetons, this.lois,
                 pastel, vanille);
-        initialiserEvenements(sauvegarder, charger, quitter, supprimer, this.renommer, desactiverSelection, entree, sortie, this.delai, this.ecart, this.jetons,
+        initialiserEvenements(sauvegarder, charger, quitter, supprimer, this.renommer, desactiverSelection, entree, sortie, this.delai, this.ecart, this.jetons, this.lois,
                 pastel, vanille);
 
         updateMenuItems();
@@ -95,7 +96,7 @@ public class VueMenu extends MenuBar implements Observateur {
      */
     private void initialiserImages(MenuItem sauvegarder, MenuItem charger, MenuItem quitter, MenuItem supprimer, MenuItem renommer,
                                    MenuItem desactiverSelection, MenuItem entree, MenuItem sortie, MenuItem delai,
-                                   MenuItem ecart, MenuItem jetons, MenuItem pastel, MenuItem vanille) {
+                                   MenuItem ecart, MenuItem jetons, MenuItem lois, MenuItem pastel, MenuItem vanille) {
 
         // Sauvegarder
         Image imSauvegarder = new Image(getClass().getResourceAsStream("/images/save.png"), 30, 30, true, true);
@@ -141,11 +142,15 @@ public class VueMenu extends MenuBar implements Observateur {
         Image imJetons = new Image(getClass().getResourceAsStream("/images/jeton.png"), 30, 30, true, true);
         jetons.setGraphic(new ImageView(imJetons));
 
+        // Lois
+        Image imLois = new Image(getClass().getResourceAsStream("/images/courbe.png"), 30, 30, true, true);
+        lois.setGraphic(new ImageView(imLois));
+
         // On ajoute les items aux menus
         this.fichier.getItems().addAll(sauvegarder, charger, quitter);
         this.edition.getItems().addAll(supprimer, renommer, desactiverSelection);
         this.menuMonde.getItems().addAll(entree, sortie);
-        this.parametres.getItems().addAll(delai, ecart, jetons);
+        this.parametres.getItems().addAll(delai, ecart, jetons,lois);
         this.style.getItems().addAll(pastel, vanille);
     }
 
@@ -166,7 +171,7 @@ public class VueMenu extends MenuBar implements Observateur {
      */
     private void initialiserEvenements(MenuItem sauvegarder, MenuItem charger, MenuItem quitter, MenuItem supprimer, MenuItem renommer,
                                        MenuItem desactiverSelection, MenuItem entree, MenuItem sortie, MenuItem delai,
-                                       MenuItem ecart, MenuItem jetons, MenuItem pastel, MenuItem vanille) {
+                                       MenuItem ecart, MenuItem jetons, MenuItem lois, MenuItem pastel, MenuItem vanille){
 
         //rajouter les entrée peuvent être expo, griser si autre chose que entrée
         //sinon loi uni ou gauss selon choix.
@@ -278,6 +283,33 @@ public class VueMenu extends MenuBar implements Observateur {
         vanille.setOnAction(e -> {
             appliquerStyle(this.stage.getScene(), "/css/vanille.css");
         });
+
+        lois.setOnAction(e -> {
+            try {
+                String loiChoisie = dialogueChoisirLoi();
+                if (loiChoisie != null) {
+                    this.monde.changerLois(loiChoisie);
+                }
+            } catch (TwiskMenuException exception) {
+                afficherErreur(exception.getMessage());
+            }
+        });
+    }
+
+    /**
+     * Méthode menu dialogue qui permet de choisir le type de loi pour une étape
+     *
+     * @return Le type de loi choisi (String) ou null si annulé
+     */
+    private String dialogueChoisirLoi() {
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("gaussienne",
+                "gaussienne", "uniforme", "exponentielle");
+        dialog.setTitle("Choix de la loi");
+        dialog.setHeaderText("Choisir le type de loi");
+        dialog.setContentText("Sélectionnez le type de loi pour l'étape :");
+
+        Optional<String> choix = dialog.showAndWait();
+        return choix.orElse(null);
     }
 
     /**
@@ -384,11 +416,13 @@ public class VueMenu extends MenuBar implements Observateur {
             this.ecart.setDisable(true);
             this.renommer.setDisable(true);
             this.jetons.setDisable(true);
+            this.lois.setDisable(true);
         } else {
             this.delai.setDisable(false);
             this.ecart.setDisable(false);
             this.renommer.setDisable(false);
             this.jetons.setDisable(false);
+            this.lois.setDisable(false);
         }
     }
 

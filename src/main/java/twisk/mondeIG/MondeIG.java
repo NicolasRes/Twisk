@@ -632,4 +632,26 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
 
         this.notifierObservateurs();
     }
+
+    public void changerLois(String lois) throws TwiskMenuException {
+        if(etapesSelectionnees.get(0).estEntree()) {
+            if(lois.equals("gaussienne")){
+                deselectionnerTout();
+                throw new TwiskMenuException("Les étapes d'entrée ne peuvent pas avoir une loi gaussienne");
+            }
+            etapesSelectionnees.get(0).setLois(lois);
+        } else {
+            if(etapesSelectionnees.get(0).getType().equals("Guichet")) {
+                deselectionnerTout();
+                throw new TwiskMenuException("Impossible de changer la loi d'un guichet");
+            } else {
+                if(lois.equals("exponentielle")){
+                    deselectionnerTout();
+                    throw new TwiskMenuException("Seules les étapes d'entrée peuvent avoir une loi exponentielle");
+                }
+                etapesSelectionnees.get(0).setLois(lois);
+            }
+        }
+        deselectionnerTout();
+    }
 }

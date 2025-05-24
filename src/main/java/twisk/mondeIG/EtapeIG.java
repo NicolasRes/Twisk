@@ -23,6 +23,7 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
     protected ArrayList<PointDeControleIG> pdc;
     private ArrayList<EtapeIG> successeurs;
     private ArrayList<EtapeIG> predecesseurs;
+    private String lois;
 
     /**
      * Constructeur de la classe EtapeIG
@@ -51,6 +52,15 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
 
         this.pdc = new ArrayList<>();
         this.ajouterPointsDeControle(larg, haut);
+        this.lois = "uniforme"; // ou exponentielle ou gaussienne
+    }
+
+    public String getLois() {
+        return lois;
+    }
+
+    public void setLois(String lois) {
+        this.lois = lois;
     }
 
     /**
