@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import twisk.exceptions.TwiskJetonsException;
 import twisk.exceptions.TwiskMenuException;
@@ -172,8 +173,23 @@ public class VueMenu extends MenuBar implements Observateur {
 
         sauvegarder.setOnAction(e -> {
             try {
-                GestionnaireSauvegarde.sauvegarderMonde(this.monde, "sauvegardes/monde.json");
-                afficherConfirmationSauvegarde();
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Sauvegarder le monde");
+                fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichier JSON", "*.json"));   // On affiche uniquement les .json
+                fileChooser.setInitialFileName("monde.json");
+
+                File dossier = new File("sauvegardes"); // dossier ouvert par défaut (s'il existe)
+                if (dossier.exists()) {
+                    fileChooser.setInitialDirectory(dossier);
+                }
+
+
+                File fichier = fileChooser.showSaveDialog(this.getScene().getWindow());
+
+                if (fichier != null) {  // En cas d'annulation de la save
+                    GestionnaireSauvegarde.sauvegarderMonde(this.monde, fichier.getAbsolutePath());
+                    afficherConfirmationSauvegarde();
+                }
             }
             catch(IOException exception) {
                 afficherErreurSauvegarde(exception.getMessage());
@@ -182,8 +198,21 @@ public class VueMenu extends MenuBar implements Observateur {
 
         charger.setOnAction(e -> {
             try {
-                MondeIG mondeCharge = GestionnaireSauvegarde.chargerMonde("sauvegardes/monde.json");
-                this.monde.remplacerMonde(mondeCharge);
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Importer un monde");
+                fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichier JSON", "*.json"));   // On affiche uniquement les .json
+
+                File dossier = new File("sauvegardes");
+                if (dossier.exists()) {
+                    fileChooser.setInitialDirectory(dossier);
+                }
+
+                File fichier = fileChooser.showOpenDialog(this.getScene().getWindow());
+
+                if(fichier != null) {
+                    MondeIG mondeCharge = GestionnaireSauvegarde.chargerMonde(fichier.getAbsolutePath());
+                    this.monde.remplacerMonde(mondeCharge);
+                }
             }
             catch (IOException exception) {
                 afficherErreurChargement(exception.getMessage());
