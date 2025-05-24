@@ -86,6 +86,9 @@ public class Activite extends Etape {
             } else if (type.equals("gaussienne")) {
                 sb.append(" lois_gauss(").append((this.temps)).append(", ").append(this.ecartTemps).append(");\n");
             }
+            else if (type.equals("exponentielle")) {
+                sb.append(" lois_expo(").append(this.temps).append(");\n");
+            }
 
             String nomSuccesseur = this.getSuccesseur(i).getNom();
             nomSuccesseur =this.replaceCarac(nomSuccesseur);

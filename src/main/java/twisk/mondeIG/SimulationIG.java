@@ -101,10 +101,10 @@ public class SimulationIG implements Observateur {
     }
 
     private void verifierLois(EtapeIG e) {
-        if (e.estEntree() && e.getLois() =="gaussienne"){
+        if (e.estEntree() && e.getLois().equals("gaussienne")){
             throw new MondeException("L'activité "+ e.getNom() +" est une entrée et sa lois ne peut pas être gaussienne", MondeException.TypeErreur.PB_LOIS_ENTREE);
         }
-        if( !e.estEntree() && e.getLois() =="exponentielle"){
+        if( !e.estEntree() && e.getLois().equals("exponentielle")){
             throw new MondeException("L'activité "+ e.getNom() +" est n'est pas une entrée donc sa lois ne peut pas être exponentielle", MondeException.TypeErreur.PB_LOIS_ACTIVITE_EXPO);
         }
     }
@@ -173,6 +173,7 @@ public class SimulationIG implements Observateur {
         Monde monde = new Monde();
 
         for (EtapeIG e : this.mondeIG) {
+            System.out.println("etape " + e.getNom() + "lois " + e.getLois());
             creationEtape(e, monde);
         }
         lierSuccesseurs();
