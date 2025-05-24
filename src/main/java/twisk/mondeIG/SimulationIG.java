@@ -223,6 +223,7 @@ public class SimulationIG implements Observateur {
      */
     private void creationActiviteRestreinte(EtapeIG e, Monde monde) {
         ActiviteRestreinte actRest = new ActiviteRestreinte(e.getNom(), e.getDelai(), e.getEcart());
+        actRest.setLoi(e.getLois());
         monde.ajouter(actRest);
         this.correspondance.ajouter(e, actRest);
     }

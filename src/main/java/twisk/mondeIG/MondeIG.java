@@ -653,5 +653,13 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
             }
         }
         deselectionnerTout();
+
+        Iterator<EtapeIG> itEtapes = this.iterator();
+        while(itEtapes.hasNext()) {
+            EtapeIG etape = itEtapes.next();
+            System.out.println("Etape "+ etape.getNom() +" Lois : \n" + etape.getLois());
+        }
+
+
     }
 }

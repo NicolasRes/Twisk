@@ -158,7 +158,6 @@ public class Monde implements Iterable<Etape> {
                 "#define M_PI 3.14159265358979323846\n" +
                 "#endif\n");
 
-
         for(Etape e : this.lesEtapes){
             String nom = e.getNom();
             nom =replaceCarac(nom);

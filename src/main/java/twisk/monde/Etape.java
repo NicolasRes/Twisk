@@ -12,6 +12,8 @@ public abstract class Etape implements Iterable<Etape> {
     private GestionnaireEtapes etapes;
     private int idEtape;
     private String loi;
+    private int lambda;
+
 
     /**
      * Constructeur de la classe Etape avec nom comme seul paramètre
@@ -23,6 +25,7 @@ public abstract class Etape implements Iterable<Etape> {
         this.etapes = new GestionnaireEtapes();
         this.idEtape = FabriqueNumero.getInstance().getNumeroEtape();
         this.loi = "uniforme"; //def , gaussienne ou exponentielle
+        this.lambda = 1;
     }
 
     public void setLoi(String loi) {

@@ -79,14 +79,13 @@ public class Activite extends Etape {
         for (int i = 0; i < nbSuccesseur; i++) {
             sb.append(" case ").append(i).append(":{\n");
 
-            String type = this.getLoi(); //vérif ortho
+            String type = this.getLoi();
 
             if(type.equals("uniforme")) {
                 sb.append(" lois_unif(").append((this.temps)).append(", ").append(this.ecartTemps).append(");\n");
             } else if (type.equals("gaussienne")) {
                 sb.append(" lois_gauss(").append((this.temps)).append(", ").append(this.ecartTemps).append(");\n");
-            }
-            else if (type.equals("exponentielle")) {
+            } else if (type.equals("exponentielle")) {
                 sb.append(" lois_expo(").append(this.temps).append(");\n");
             }
 
