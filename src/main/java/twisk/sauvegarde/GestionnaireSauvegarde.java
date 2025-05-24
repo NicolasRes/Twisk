@@ -137,6 +137,7 @@ public class GestionnaireSauvegarde {
             ActiviteIG a = new ActiviteIG(eDTO.getNom(), eDTO.getLargeur(), eDTO.getHauteur());
             a.setDelai(eDTO.getDelai());
             a.setEcart(eDTO.getEcart());
+            a.setLois(eDTO.getLoi());
             etape = a;
         }
 
@@ -179,6 +180,7 @@ public class GestionnaireSauvegarde {
         if(etapeIG.getType().equals("Activite")) {  // On n'oublie pas le délai et l'écart pour l'activité
             eDTO.setDelai(((ActiviteIG) etapeIG).getDelai());
             eDTO.setEcart(((ActiviteIG) etapeIG).getEcart());
+            eDTO.setLoi(((ActiviteIG) etapeIG).getLois());
         }
         else if(etapeIG.getType().equals("Guichet")) {  // et les jetons pour le guichet
             eDTO.setNbJetons(((GuichetIG) etapeIG).getNbJetons());

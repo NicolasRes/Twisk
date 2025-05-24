@@ -17,6 +17,7 @@ public class EtapeDTO {
     public String type;
     public int delai = 0;         // si activité
     public int ecart = 0;         // pareil ici
+    public String loi;            // et ici
     public int nbJetons = 0;      // si guichet
     public String sensGuichet;    // pareil ici
     public ArrayList<PointDeControleDTO> points;
@@ -191,5 +192,21 @@ public class EtapeDTO {
      */
     public void setSensGuichet(String sens) {
         this.sensGuichet = sens;
+    }
+
+    /**
+     * Méthode qui renvoie la loi de l'étape DTO
+     * @return La loi de l'étape DTO
+     */
+    public String getLoi() {
+        return this.loi;
+    }
+
+    /**
+     * Méthode qui définit la loi de l'étape DTO
+     * @param loi La loi de l'étape DTO
+     */
+    public void setLoi(String loi) {
+        this.loi = loi;
     }
 }
