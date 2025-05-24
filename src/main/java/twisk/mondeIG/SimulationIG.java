@@ -173,7 +173,6 @@ public class SimulationIG implements Observateur {
         Monde monde = new Monde();
 
         for (EtapeIG e : this.mondeIG) {
-            System.out.println("etape " + e.getNom() + "lois " + e.getLois());
             creationEtape(e, monde);
         }
         lierSuccesseurs();
