@@ -235,6 +235,7 @@ public class SimulationIG implements Observateur {
     private void creationActivite(EtapeIG e, Monde monde) {
         Activite act = new Activite(e.getNom(), e.getDelai(), e.getEcart());
         act.setLoi(e.getLois());
+        act.setLambda(e.getLambda());
         monde.ajouter(act);
         this.correspondance.ajouter(e, act);
     }

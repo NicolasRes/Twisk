@@ -287,13 +287,51 @@ public class VueMenu extends MenuBar implements Observateur {
         lois.setOnAction(e -> {
             try {
                 String loiChoisie = dialogueChoisirLoi();
+                double param = -1;
+
                 if (loiChoisie != null) {
-                    this.monde.changerLois(loiChoisie);
+                    if (loiChoisie.equals("exponentielle")) {
+                        Double lambda = dialogueLambda();
+                        if (lambda != null) {
+                            param = lambda;
+                        } else {
+                            return;
+                        }
+                    }
+                    this.monde.changerLois(loiChoisie, param);
                 }
             } catch (TwiskMenuException exception) {
                 afficherErreur(exception.getMessage());
             }
         });
+    }
+
+    private Double dialogueLambda() throws TwiskMenuException {
+        TextInputDialog dialog = new TextInputDialog("1.0");
+        dialog.setTitle("Paramètre λ");
+        dialog.setHeaderText("Définir λ pour la loi exponentielle");
+        dialog.setContentText("Entrez une valeur de λ (entre 0.1 et 5) :");
+
+        Optional<String> choix = dialog.showAndWait();
+
+        if (choix.isPresent()) {
+            String saisie = choix.get().trim();
+            if (saisie.isEmpty()) {
+                throw new TwiskMenuException("Aucune valeur saisie");
+            }
+
+            try {
+                double lambda = Double.parseDouble(saisie);
+                if (lambda < 0.1 || lambda > 5.0) {
+                    throw new TwiskMenuException("λ doit être compris entre 0.1 et 5");
+                }
+                return lambda;
+            } catch (NumberFormatException e) {
+                throw new TwiskMenuException("λ doit être un nombre décimal");
+            }
+        } else {
+            return null; // utilisateur a annulé
+        }
     }
 
     /**

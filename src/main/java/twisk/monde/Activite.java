@@ -18,8 +18,6 @@ public class Activite extends Etape {
         this.ecartTemps = 1;
     }
 
-
-
     /**
      * Constructeur de la classe Activite avec multiples paramètres
      * @param nom Le nom de l'activité
@@ -86,7 +84,7 @@ public class Activite extends Etape {
             } else if (type.equals("gaussienne")) {
                 sb.append(" lois_gauss(").append((this.temps)).append(", ").append(this.ecartTemps).append(");\n");
             } else if (type.equals("exponentielle")) {
-                sb.append(" lois_expo(").append(this.temps).append(");\n");
+                sb.append(" lois_expo(").append(this.getLambda()).append(");\n");
             }
 
             String nomSuccesseur = this.getSuccesseur(i).getNom();

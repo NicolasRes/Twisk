@@ -24,7 +24,7 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
     private ArrayList<EtapeIG> successeurs;
     private ArrayList<EtapeIG> predecesseurs;
     private String lois;
-    private int lambda;
+    private double lambda;
 
     /**
      * Constructeur de la classe EtapeIG
@@ -319,17 +319,16 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
 
     /**
      * Méthode qui définit la valeur du lambda
-     * @param lamba La valeur à définir
+     * @param lambda La valeur à définir
      */
-    public void setLambda(int lamba) {
+    public void setLambda(double lambda) {
         this.lambda = lambda;
     }
-
     /**
      * Méthode qui renvoie le lambda de l'EtapeIG
      * @return Le lambda
      */
-    public int getLambda() {
+    public double getLambda() {
         return this.lambda;
     }
 
@@ -381,4 +380,5 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
      * Méthode abstraite qui renvoie le type d'étape
      */
     public abstract String getType();
+
 }

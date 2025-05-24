@@ -633,13 +633,14 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         this.notifierObservateurs();
     }
 
-    public void changerLois(String lois) throws TwiskMenuException {
+    public void changerLois(String lois, double lambda) throws TwiskMenuException {
         if(etapesSelectionnees.get(0).estEntree()) {
             if(lois.equals("gaussienne")){
                 deselectionnerTout();
                 throw new TwiskMenuException("Les étapes d'entrée ne peuvent pas avoir une loi gaussienne");
             }
             etapesSelectionnees.get(0).setLois(lois);
+            etapesSelectionnees.get(0).setLambda(lambda);
         } else {
             if(etapesSelectionnees.get(0).getType().equals("Guichet")) {
                 deselectionnerTout();
@@ -657,9 +658,7 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         Iterator<EtapeIG> itEtapes = this.iterator();
         while(itEtapes.hasNext()) {
             EtapeIG etape = itEtapes.next();
-            System.out.println("Etape "+ etape.getNom() +" Lois : \n" + etape.getLois());
+            System.out.println("Etape "+ etape.getNom() +" Lois : \n" + etape.getLois() + "lambda : " + etape.getLambda());
         }
-
-
     }
 }

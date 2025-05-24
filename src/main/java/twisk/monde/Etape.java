@@ -12,7 +12,7 @@ public abstract class Etape implements Iterable<Etape> {
     private GestionnaireEtapes etapes;
     private int idEtape;
     private String loi;
-    private int lambda;
+    private double lambda;
 
 
     /**
@@ -153,7 +153,7 @@ public abstract class Etape implements Iterable<Etape> {
      * Méthode qui définit la valeur du lambda
      * @param lamba La valeur à définir
      */
-    public void setLambda(int lamba) {
+    public void setLambda(double lambda) {
         this.lambda = lambda;
     }
 
@@ -161,7 +161,7 @@ public abstract class Etape implements Iterable<Etape> {
      * Méthode qui renvoie le lambda de l'Etape
      * @return Le lambda
      */
-    public int getLambda() {
+    public double getLambda() {
         return this.lambda;
     }
 
