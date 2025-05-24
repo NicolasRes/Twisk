@@ -57,10 +57,18 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         this.lois = "uniforme"; // ou exponentielle ou gaussienne
     }
 
+    /**
+     * Méthode qui récupère la loi de l'étape
+     * @return La loi
+     */
     public String getLois() {
         return lois;
     }
 
+    /**
+     * Méthode qui définit la loi du lambda
+     * @param lois La loi à définir
+     */
     public void setLois(String lois) {
         this.lois = lois;
     }
