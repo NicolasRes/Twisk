@@ -279,7 +279,8 @@ public class SimulationIG implements Observateur {
      * @param monde Le monde sur lequel lancer la simulation
      */
     public void instrospectionSimu(Monde monde){
-        this.nbClients = 10;
+        this.nbClients = 6;
+
         try {
             clp = new ClassLoaderPerso(ClientTwisk.class.getClassLoader());
 
@@ -489,5 +490,4 @@ public class SimulationIG implements Observateur {
             }
         }
     }
-
 }

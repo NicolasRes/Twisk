@@ -48,8 +48,7 @@ public class VueGuichetIG extends VueEtapeIG {
     }
 
     /**
-     * Méthode qui affiche tous les clients dans les cases du guichet,
-     * en fonction de leur position et du sens de circulation.
+     * Méthode qui affiche tous les clients dans les cases du guichet en fonction de leur position et du sens de circulation
      * @param clients La liste des clients à afficher dans ce guichet
      */
     public void placerClientsGuichet(ArrayList<ClientIG> clients) {
@@ -104,7 +103,7 @@ public class VueGuichetIG extends VueEtapeIG {
      */
     private void initialiserCases() {
         this.hboxClients.setSpacing(5);
-        int nbCases = 6;    // Arbitraire
+        int nbCases = 6;    // Arbitraire (avant de lancer la simu)
 
         for(int i = 0; i < nbCases; i++) {
             StackPane casePane = new StackPane();
