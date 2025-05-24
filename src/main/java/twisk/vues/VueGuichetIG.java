@@ -103,7 +103,7 @@ public class VueGuichetIG extends VueEtapeIG {
      */
     private void initialiserCases() {
         this.hboxClients.setSpacing(5);
-        int nbCases = 6;    // Arbitraire (avant de lancer la simu)
+        int nbCases = 6;    // Arbitraire
 
         for(int i = 0; i < nbCases; i++) {
             StackPane casePane = new StackPane();
