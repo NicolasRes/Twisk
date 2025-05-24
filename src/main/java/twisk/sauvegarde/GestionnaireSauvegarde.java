@@ -2,6 +2,7 @@ package twisk.sauvegarde;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import twisk.exceptions.TwiskArcException;
 import twisk.mondeIG.*;
 
 import java.io.FileWriter;
@@ -106,7 +107,12 @@ public class GestionnaireSauvegarde {
             PointDeControleIG dst = pdcIdentifiants.get(arcDTO.getIdDestination());
 
             if(src != null && dst != null) {
-                monde.getArcs().add(new ArcIG(src, dst));
+                try {
+                    monde.ajouter(src, dst);
+                }
+                catch(TwiskArcException e) {
+                    System.err.println("Erreur lors de la reconstruction des arcs");
+                }
             }
         }
 
@@ -124,6 +130,7 @@ public class GestionnaireSauvegarde {
         if(eDTO.getType().equals("Guichet")) {
             GuichetIG g = new GuichetIG(eDTO.getNom(), eDTO.getLargeur(), eDTO.getHauteur());
             g.setNbJetons(eDTO.getNbJetons());
+            g.setSensGuichet(GuichetIG.Sens.valueOf(eDTO.getSensGuichet()));
             etape = g;
         }
         else {
@@ -175,6 +182,7 @@ public class GestionnaireSauvegarde {
         }
         else if(etapeIG.getType().equals("Guichet")) {  // et les jetons pour le guichet
             eDTO.setNbJetons(((GuichetIG) etapeIG).getNbJetons());
+            eDTO.setSensGuichet(((GuichetIG) etapeIG).getSens().toString());
         }
 
         constructionPoints(etapeIG, eDTO);

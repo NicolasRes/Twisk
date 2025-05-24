@@ -21,7 +21,7 @@ public class GuichetIG extends EtapeIG {
         GAUCHE_DROITE("gauche_droite"),
         DROITE_GAUCHE("droite_gauche");
 
-        private final String sens;
+        private String sens;
 
         /**
          * Constructeur de sens de circulation

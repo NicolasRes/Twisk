@@ -18,6 +18,7 @@ public class EtapeDTO {
     public int delai = 0;         // si activité
     public int ecart = 0;         // pareil ici
     public int nbJetons = 0;      // si guichet
+    public String sensGuichet;    // pareil ici
     public ArrayList<PointDeControleDTO> points;
 
     /**
@@ -174,5 +175,21 @@ public class EtapeDTO {
         if (this.points == null)
             this.points = new ArrayList<>();
         return this.points;
+    }
+
+    /**
+     * Méthode qui récupère le sens du guichet
+     * @return Le sens du guichet
+     */
+    public String getSensGuichet() {
+        return this.sensGuichet;
+    }
+
+    /**
+     * Méthode qui définit le sens du guichet
+     * @param sens Le sens du guichet
+     */
+    public void setSensGuichet(String sens) {
+        this.sensGuichet = sens;
     }
 }
