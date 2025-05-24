@@ -14,7 +14,6 @@ public abstract class Etape implements Iterable<Etape> {
     private String loi;
     private double lambda;
 
-
     /**
      * Constructeur de la classe Etape avec nom comme seul paramètre
      * @param nom Le nom de l'étape
@@ -151,7 +150,7 @@ public abstract class Etape implements Iterable<Etape> {
 
     /**
      * Méthode qui définit la valeur du lambda
-     * @param lamba La valeur à définir
+     * @param lambda La valeur à définir
      */
     public void setLambda(double lambda) {
         this.lambda = lambda;

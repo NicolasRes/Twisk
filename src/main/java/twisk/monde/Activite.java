@@ -18,6 +18,8 @@ public class Activite extends Etape {
         this.ecartTemps = 1;
     }
 
+
+
     /**
      * Constructeur de la classe Activite avec multiples paramètres
      * @param nom Le nom de l'activité
