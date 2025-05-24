@@ -24,6 +24,7 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
     private ArrayList<EtapeIG> successeurs;
     private ArrayList<EtapeIG> predecesseurs;
     private String lois;
+    private int lambda;
 
     /**
      * Constructeur de la classe EtapeIG
@@ -45,6 +46,7 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
         this.estSortie = false;
         this.predecesseurs = new ArrayList<>();
         this.successeurs = new ArrayList<>();
+        this.lambda = 1;
 
         Random rand = new Random();
         this.posX = rand.nextDouble(0, TailleComposants.LARGEUR_FENETRE - this.largeur - TailleComposants.PADDING_X - TailleComposants.PADDING_SPACING - TailleComposants.MARGE_X_SUP);
@@ -313,6 +315,22 @@ public abstract class EtapeIG implements Iterable<PointDeControleIG> {
      */
     public ArrayList<PointDeControleIG> getListePDC() {
         return this.pdc;
+    }
+
+    /**
+     * Méthode qui définit la valeur du lambda
+     * @param lamba La valeur à définir
+     */
+    public void setLambda(int lamba) {
+        this.lambda = lambda;
+    }
+
+    /**
+     * Méthode qui renvoie le lambda de l'EtapeIG
+     * @return Le lambda
+     */
+    public int getLambda() {
+        return this.lambda;
     }
 
     /// Méthodes abstraites ///

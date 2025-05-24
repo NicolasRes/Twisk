@@ -150,6 +150,22 @@ public abstract class Etape implements Iterable<Etape> {
     public abstract int getNbJetons();
 
     /**
+     * Méthode qui définit la valeur du lambda
+     * @param lamba La valeur à définir
+     */
+    public void setLambda(int lamba) {
+        this.lambda = lambda;
+    }
+
+    /**
+     * Méthode qui renvoie le lambda de l'Etape
+     * @return Le lambda
+     */
+    public int getLambda() {
+        return this.lambda;
+    }
+
+    /**
      * Méthode qui remplace les caractères spéciaux par les caractères correspondant sans accents
      * @param chaine La chaine de caractères sur laquelle appliquer les transformations
      * @return La chaine de caractères modifiée
