@@ -132,6 +132,7 @@ public class Simulation extends SujetObserve {
                 Thread.sleep(TMP_ATTENTE * 1000);
             } catch (InterruptedException e) {
                 kitC.tuerProcessus(gestionnaireClients);
+                this.estSimuFinie = true;
             }
 
             System.out.println();
