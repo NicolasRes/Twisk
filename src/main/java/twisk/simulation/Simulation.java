@@ -150,7 +150,7 @@ public class Simulation extends SujetObserve {
      */
     public boolean estSimuFinie() {
         return estSimuFinie;
-    }   // Appelée par introspection
+    }   // Appelée par introspection dans SimulationIG
 
 
     /**
@@ -238,6 +238,6 @@ public class Simulation extends SujetObserve {
      */
     public GestionnaireClients getGestionnaireClients() {   // Ne pas supprimer, utilisée par introspection
         return this.gestionnaireClients;
-    }
+    }   // Appelée par introspection dans SimulationIG
 
 }
