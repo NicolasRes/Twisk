@@ -108,7 +108,7 @@ Feuille de style pastel CSS liée au projet twiskIG
 }
 
 .circle.selected {
-    -fx-fill: #C27BCB;
+    -fx-fill: red;
 }
 
 .line {
