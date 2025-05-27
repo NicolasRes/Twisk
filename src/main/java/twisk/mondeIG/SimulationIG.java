@@ -434,6 +434,11 @@ public class SimulationIG implements Observateur {
             // Coordonnées et couleur
             int couleur = creerCouleurClient(numero);
 
+            // On ne crée pas le client (donc on ne l'affiche pas) s'il est dans la sortie
+            if (nom.equals("Sortie")) {
+                continue;
+            }
+
             // On ajoute le client à la liste des clients du guichet s'il est dans un guichet
             ClientIG clientIG = new ClientIG(numero, couleur, etapeIG);
 
