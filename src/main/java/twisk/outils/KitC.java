@@ -4,6 +4,7 @@ import twisk.simulation.Client;
 import twisk.simulation.GestionnaireClients;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,19 +25,15 @@ public class KitC {
         try {
             Files.createDirectories(directory);
 
-            String projectRoot = System.getProperty("user.dir");
-            Path resourcePath = Paths.get(projectRoot, "src", "main", "ressources", "codeC");
+            //String projectRoot = System.ge("user.dir");
+            //Path resourcePath = Paths.get(projectRoot, "src", "main", "ressources", "codeC");
 
             String[] liste = {"programmeC.o", "def.h", "programmeCMac.o", "client.h", "codeNatif.o"};
 
             for (String nom : liste) {
-                Path sourcePath = resourcePath.resolve(nom);
-                if (!Files.exists(sourcePath)) {
-                    System.err.println("ERREUR: Fichier non trouvé: " + sourcePath);
-                    continue;
-                }
+                InputStream src = getClass().getResourceAsStream("/codeC/" + nom);
                 Path dest = directory.resolve(nom);
-                Files.copy(sourcePath, dest, StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(src, dest, StandardCopyOption.REPLACE_EXISTING);
             }
         } catch (IOException e) {
             System.err.println("Erreur d'E/S lors de la création de l'environnement:");

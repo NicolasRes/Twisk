@@ -1,10 +1,10 @@
 <component name="ArtifactManager">
-  <artifact name="twisk:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/twisk_jar</output-path>
-    <root id="root">
-      <element id="archive" name="Twisk.jar">
-        <element id="module-output" name="Twisk" />
-      </element>
+  <artifact type="jar" name="Twisk:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Twisk_jar</output-path>
+    <root id="archive" name="Twisk.jar">
+      <element id="module-output" name="Twisk" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/gson-2.10.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="/usr/share/openjfx/lib/src.zip" path-in-jar="/" />
     </root>
   </artifact>
 </component>
