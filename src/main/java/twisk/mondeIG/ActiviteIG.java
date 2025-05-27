@@ -23,8 +23,8 @@ public class ActiviteIG extends EtapeIG {
 
         FabriqueIdentifiant id = FabriqueIdentifiant.getInstance();
         this.identifiant = id.getIdentifiantActivite();
-        this.delai = 2;
-        this.ecart = 1;
+        this.delai = 3;
+        this.ecart = 2;
         this.setNom(nom);
         this.activiteRestreinte = false;
     }
