@@ -32,7 +32,7 @@ public class VueMenu extends MenuBar implements Observateur {
     private Menu menuMonde;
     private Menu parametres;
     private Menu style;
-    private MenuItem delai, ecart, renommer, jetons, sauvegarder, charger, lois;
+    private MenuItem delai, ecart, renommer, jetons, sauvegarder, charger, lois,nbClients;
 
     /**
      * Constructeur de la classe VueMenu
@@ -65,12 +65,13 @@ public class VueMenu extends MenuBar implements Observateur {
         this.ecart = new MenuItem("Écart");
         this.jetons = new MenuItem("Jetons");
         this.lois = new MenuItem("Lois");
+        this.nbClients = new MenuItem("Nombre de clients");
         MenuItem pastel = new MenuItem("Pastel");
         MenuItem vanille = new MenuItem("Vanille");
 
-        initialiserImages(sauvegarder, charger, quitter, supprimer, this.renommer, desactiverSelection, entree, sortie, this.delai, this.ecart, this.jetons, this.lois,
+        initialiserImages(sauvegarder, charger, quitter, supprimer, this.renommer, desactiverSelection, entree, sortie, this.delai, this.ecart, this.jetons, this.lois,nbClients,
                 pastel, vanille);
-        initialiserEvenements(sauvegarder, charger, quitter, supprimer, this.renommer, desactiverSelection, entree, sortie, this.delai, this.ecart, this.jetons, this.lois,
+        initialiserEvenements(sauvegarder, charger, quitter, supprimer, this.renommer, desactiverSelection, entree, sortie, this.delai, this.ecart, this.jetons, this.lois,nbClients ,
                 pastel, vanille);
 
         updateMenuItems();
@@ -96,7 +97,7 @@ public class VueMenu extends MenuBar implements Observateur {
      */
     private void initialiserImages(MenuItem sauvegarder, MenuItem charger, MenuItem quitter, MenuItem supprimer, MenuItem renommer,
                                    MenuItem desactiverSelection, MenuItem entree, MenuItem sortie, MenuItem delai,
-                                   MenuItem ecart, MenuItem jetons, MenuItem lois, MenuItem pastel, MenuItem vanille) {
+                                   MenuItem ecart, MenuItem jetons, MenuItem lois, MenuItem nbClients,MenuItem pastel, MenuItem vanille) {
 
         // Sauvegarder
         Image imSauvegarder = new Image(getClass().getResourceAsStream("/images/save.png"), 30, 30, true, true);
@@ -146,11 +147,15 @@ public class VueMenu extends MenuBar implements Observateur {
         Image imLois = new Image(getClass().getResourceAsStream("/images/courbe.png"), 30, 30, true, true);
         lois.setGraphic(new ImageView(imLois));
 
+        // NBClients
+        Image imNbCLient = new Image(getClass().getResourceAsStream("/images/clients.png"), 30, 30, true, true);
+        nbClients.setGraphic(new ImageView(imNbCLient));
+
         // On ajoute les items aux menus
         this.fichier.getItems().addAll(sauvegarder, charger, quitter);
         this.edition.getItems().addAll(supprimer, renommer, desactiverSelection);
         this.menuMonde.getItems().addAll(entree, sortie);
-        this.parametres.getItems().addAll(delai, ecart, jetons,lois);
+        this.parametres.getItems().addAll(delai, ecart, jetons,lois, nbClients);
         this.style.getItems().addAll(pastel, vanille);
     }
 
@@ -171,7 +176,7 @@ public class VueMenu extends MenuBar implements Observateur {
      */
     private void initialiserEvenements(MenuItem sauvegarder, MenuItem charger, MenuItem quitter, MenuItem supprimer, MenuItem renommer,
                                        MenuItem desactiverSelection, MenuItem entree, MenuItem sortie, MenuItem delai,
-                                       MenuItem ecart, MenuItem jetons, MenuItem lois, MenuItem pastel, MenuItem vanille){
+                                       MenuItem ecart, MenuItem jetons, MenuItem lois, MenuItem nbClients,MenuItem pastel, MenuItem vanille){
 
         //rajouter les entrée peuvent être expo, griser si autre chose que entrée
         //sinon loi uni ou gauss selon choix.
@@ -304,6 +309,42 @@ public class VueMenu extends MenuBar implements Observateur {
                 afficherErreur(exception.getMessage());
             }
         });
+
+        nbClients.setOnAction(e -> {
+            try {
+                this.monde.setnbClients(dialogueNbClients());
+            } catch (TwiskMenuException exception) {
+                afficherErreur(exception.getMessage());
+            }
+        });
+    }
+
+    private int dialogueNbClients() {
+        TextInputDialog dialog = new TextInputDialog("6");
+        dialog.setTitle("Nombre de clients");
+        dialog.setHeaderText("Définir le nombre de clients");
+        dialog.setContentText("Entrez le nombre de clients :");
+
+        Optional<String> choix = dialog.showAndWait();
+
+        if (choix.isPresent()) {
+            String saisie = choix.get().trim();
+            if (saisie.isEmpty()) {
+                throw new TwiskMenuException("Aucune valeur saisie");
+            }
+
+            try {
+                int val = Integer.parseInt(saisie);
+                if (val <= 0) {
+                    throw new TwiskMenuException("Le nombre de clients doit être un entier positif");
+                }
+                return val;
+            } catch (NumberFormatException exception) {
+                throw new TwiskMenuException("Le nombre de clients doit être un entier positif");
+            }
+        } else {
+            throw new TwiskMenuException("Aucune saisie");
+        }
     }
 
     private Double dialogueLambda() throws TwiskMenuException {

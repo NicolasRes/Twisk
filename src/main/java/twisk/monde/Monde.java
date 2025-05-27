@@ -281,4 +281,7 @@ public class Monde implements Iterable<Etape> {
         sb.append("}\n");
     }
 
+    public int getnbClients() {
+        return this.nbClients;
+    }
 }

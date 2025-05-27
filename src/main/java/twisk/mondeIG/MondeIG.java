@@ -17,6 +17,7 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
     private ArrayList<ArcIG> arcsSelectionnes;
     private ArrayList<PointDeControleIG> pointsSelectionnes;
     private ArrayList<ClientIG> clientsIG;
+    private int nbClients;
 
     /**
      * Constructeur de la classe MondeIG
@@ -30,7 +31,9 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
         this.etapesSelectionnees = new ArrayList<>();
         this.arcsSelectionnes = new ArrayList<>();
         this.clientsIG = new ArrayList<>();
+        this.nbClients = 6;
     }
+
 
     /**
      * Méthode qui ajoute une étape au monde
@@ -634,31 +637,27 @@ public class MondeIG extends SujetObserve implements Iterable<EtapeIG> {
     }
 
     public void changerLois(String lois, double lambda) throws TwiskMenuException {
-        if(etapesSelectionnees.get(0).estEntree()) {
-            if(lois.equals("gaussienne")){
-                deselectionnerTout();
-                throw new TwiskMenuException("Les étapes d'entrée ne peuvent pas avoir une loi gaussienne");
-            }
-            etapesSelectionnees.get(0).setLois(lois);
-            etapesSelectionnees.get(0).setLambda(lambda);
-        } else {
+
             if(etapesSelectionnees.get(0).getType().equals("Guichet")) {
                 deselectionnerTout();
                 throw new TwiskMenuException("Impossible de changer la loi d'un guichet");
-            } else {
-                if(lois.equals("exponentielle")){
-                    deselectionnerTout();
-                    throw new TwiskMenuException("Seules les étapes d'entrée peuvent avoir une loi exponentielle");
-                }
-                etapesSelectionnees.get(0).setLois(lois);
             }
-        }
+            etapesSelectionnees.get(0).setLois(lois);
+
         deselectionnerTout();
 
         Iterator<EtapeIG> itEtapes = this.iterator();
         while(itEtapes.hasNext()) {
             EtapeIG etape = itEtapes.next();
-            System.out.println("Etape "+ etape.getNom() +" Lois : \n" + etape.getLois() + "lambda : " + etape.getLambda());
+            //System.out.println("Etape "+ etape.getNom() +" Lois : \n" + etape.getLois() + "lambda : " + etape.getLambda());
         }
+    }
+
+    public int getnbClients() {
+        return this.nbClients;
+    }
+
+    public void setnbClients(int nbClients) {
+        this.nbClients = nbClients;
     }
 }

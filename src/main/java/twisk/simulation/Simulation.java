@@ -44,7 +44,7 @@ public class Simulation extends SujetObserve {
         this.estSimuFinie = false;
         String mondeC = monde.toC();
 
-        System.out.println(mondeC);
+        //System.out.println(mondeC);
 
         int numSimulation = FabriqueNumero.getInstance().getNumeroSimulation();
 
@@ -55,7 +55,7 @@ public class Simulation extends SujetObserve {
 
         checkOSBibliotheque();
 
-        System.out.println("==========Lancement de la simulation==========\n");
+        //System.out.println("==========Lancement de la simulation==========\n");
         lancerSimulation(this.monde);
     }
 
@@ -138,7 +138,7 @@ public class Simulation extends SujetObserve {
             System.out.println();
         }
 
-        System.out.println("==========Fin simulation==========\n");
+        //System.out.println("==========Fin simulation==========\n");
         this.estSimuFinie = true;
         this.gestionnaireClients.nettoyer();
         notifierObservateurs();
@@ -163,12 +163,12 @@ public class Simulation extends SujetObserve {
         int nbClients = this.monde.nbClients();
         int[] tabJetonsGuichets = this.monde.getTabJetonsGuichets();
 
-        afficher_info_simu(nbClients, nbGuichets, nbEtapes, tabJetonsGuichets);
+        //afficher_info_simu(nbClients, nbGuichets, nbEtapes, tabJetonsGuichets);
 
         int[] tabPid = start_simulation(nbEtapes, nbGuichets, nbClients, tabJetonsGuichets);
         this.gestionnaireClients.setClients(tabPid);
 
-        afficher_pid_client(tabPid, nbClients);
+        //afficher_pid_client(tabPid, nbClients);
         simule_clients(nbClients, nbEtapes , this.monde);
         nettoyage();
     }
@@ -210,13 +210,13 @@ public class Simulation extends SujetObserve {
 
         for (int i = 0; i < nb_etape; i++) {
             int nb_clients = position[i * (nb_client + 1)];
-            System.out.print(nomEtapes[i] + ": ");
+            //System.out.print(nomEtapes[i] + ": ");
 
             for (int j = 0; j < nb_clients; j++) {
-                System.out.print(position[i * (nb_client + 1) + 1 + j] + " ");
+                //System.out.print(position[i * (nb_client + 1) + 1 + j] + " ");
                 this.gestionnaireClients.allerA(position[i * (nb_client + 1) + 1 + j], monde.getEtape(i), j);
             }
-            System.out.println();
+            //System.out.println();
         }
     }
 

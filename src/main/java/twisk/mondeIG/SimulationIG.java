@@ -88,8 +88,6 @@ public class SimulationIG implements Observateur {
             }
             verifEntreePrede(e);
             verifSortieSucc(e);
-            verifierLois(e);
-
         }
 
         if (!aEntree) {
@@ -100,14 +98,6 @@ public class SimulationIG implements Observateur {
         }
     }
 
-    private void verifierLois(EtapeIG e) {
-        if (e.estEntree() && e.getLois().equals("gaussienne")){
-            throw new MondeException("L'activité "+ e.getNom() +" est une entrée et sa lois ne peut pas être gaussienne", MondeException.TypeErreur.PB_LOIS_ENTREE);
-        }
-        if( !e.estEntree() && e.getLois().equals("exponentielle")){
-            throw new MondeException("L'activité "+ e.getNom() +" est n'est pas une entrée donc sa lois ne peut pas être exponentielle", MondeException.TypeErreur.PB_LOIS_ACTIVITE_EXPO);
-        }
-    }
 
     /**
      * Méthode qui vérifie si une étape est bien mise en entrée si elle n'a aucun prédécesseur
@@ -292,7 +282,7 @@ public class SimulationIG implements Observateur {
      * @param monde Le monde sur lequel lancer la simulation
      */
     public void instrospectionSimu(Monde monde){
-        this.nbClients = 6;
+        this.nbClients = mondeIG.getnbClients();
 
         try {
             clp = new ClassLoaderPerso(ClientTwisk.class.getClassLoader());
@@ -449,7 +439,7 @@ public class SimulationIG implements Observateur {
             clientsIG.add(clientIG);
 
             i++;
-            System.out.println(" -> Client " + numero + " dans " + etape.getNom());
+            //System.out.println(" -> Client " + numero + " dans " + etape.getNom());
         }
 
         return clientsIG;
