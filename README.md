@@ -99,9 +99,3 @@ Le projet suit une architecture inspirée du modèle **MVC (Model – View – C
 - gestion de processus et synchronisation
 - mise en place de l'architecture MVC
 - travail en équipe
-
----
-
-# 👨‍💻 Auteurs (pseudos GitHub) : NicolasRes / Flachboy88
-
-Projet réalisé en binôme dans le cadre d'un projet universitaire.
