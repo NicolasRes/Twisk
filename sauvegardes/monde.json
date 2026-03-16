@@ -1,0 +1,115 @@
+{
+  "etapes": [
+    {
+      "nom": "Act_A1",
+      "identifiant": 2,
+      "posX": 394.0,
+      "posY": 549.0,
+      "largeur": 150,
+      "hauteur": 100,
+      "estEntree": false,
+      "estSortie": true,
+      "type": "Activite",
+      "delai": 2,
+      "ecart": 1,
+      "loi": "gaussienne",
+      "nbJetons": 0,
+      "points": [
+        {
+          "identifiant": "P6",
+          "relativeX": 0.0,
+          "relativeY": 50.0
+        },
+        {
+          "identifiant": "P7",
+          "relativeX": 165.0,
+          "relativeY": 50.0
+        },
+        {
+          "identifiant": "P8",
+          "relativeX": 80.0,
+          "relativeY": -2.0
+        },
+        {
+          "identifiant": "P9",
+          "relativeX": 80.0,
+          "relativeY": 95.0
+        }
+      ]
+    },
+    {
+      "nom": "Gui_G1",
+      "identifiant": 1,
+      "posX": 102.0,
+      "posY": 268.0,
+      "largeur": 300,
+      "hauteur": 100,
+      "estEntree": false,
+      "estSortie": false,
+      "type": "Guichet",
+      "delai": 0,
+      "ecart": 0,
+      "nbJetons": 1,
+      "sensGuichet": "GAUCHE_DROITE",
+      "points": [
+        {
+          "identifiant": "P4",
+          "relativeX": 0.0,
+          "relativeY": 50.0
+        },
+        {
+          "identifiant": "P5",
+          "relativeX": 315.0,
+          "relativeY": 50.0
+        }
+      ]
+    },
+    {
+      "nom": "Act_A0",
+      "identifiant": 0,
+      "posX": 116.0,
+      "posY": 106.0,
+      "largeur": 150,
+      "hauteur": 100,
+      "estEntree": true,
+      "estSortie": false,
+      "type": "Activite",
+      "delai": 2,
+      "ecart": 1,
+      "loi": "exponentielle",
+      "nbJetons": 0,
+      "points": [
+        {
+          "identifiant": "P0",
+          "relativeX": 0.0,
+          "relativeY": 50.0
+        },
+        {
+          "identifiant": "P1",
+          "relativeX": 165.0,
+          "relativeY": 50.0
+        },
+        {
+          "identifiant": "P2",
+          "relativeX": 80.0,
+          "relativeY": -2.0
+        },
+        {
+          "identifiant": "P3",
+          "relativeX": 80.0,
+          "relativeY": 95.0
+        }
+      ]
+    }
+  ],
+  "arcs": [
+    {
+      "identifiantSource": "P3",
+      "identifiantDestination": "P4"
+    },
+    {
+      "identifiantSource": "P5",
+      "identifiantDestination": "P8"
+    }
+  ]
+}

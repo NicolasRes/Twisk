@@ -1,0 +1,147 @@
+@startuml
+skinparam class {
+   BackgroundColor<<java>> Wheat
+   BorderColor<<java>> Tomato
+}
+
+hide stereotype
+
+package twisk{
+
+      package outils {
+        class FabriqueIdentifiant {
+          int noEtape
+          + static FabriqueIdentifiant getInstance()
+          + String getIdentifiantEtape()
+        }
+
+        class TailleComposants {
+            + {static} final int LARGEUR_ETAPE
+            + {static} final int HAUTEUR_ETAPE
+            + {static} final int LARGEUR_FENETRE
+            + {static} final int HAUTEUR_FENETRE
+            + {static} final int MARGE_BAS
+            + {static} final int HAUTEUR_MINI_ACT
+        }
+
+        FabriqueIdentifiant -- "1" FabriqueIdentifiant : static
+      }
+
+
+     package vues {
+        interface EventHandler <<java>>
+
+        interface Observateur {
+          + void reagir()
+        }
+
+        class VBox<<java>>
+        class HBox<<java>>
+        class EcouteurBouton
+        class Button<<java>>
+        class TilePane<<java>>
+        class Pane<<java>>
+        class Label<<java>>
+
+        abstract VueEtapeIG extends VBox {
+         + VueEtapeIG(MondeIG monde, EtapeIG etape)
+        }
+
+        class VueActiviteIG extends VueEtapeIG {
+          + VueActiviteIG(MondeIG monde, EtapeIG etape)
+        }
+
+        class VueMondeIG implements Observateur {
+          + VueMondeIG(MondeIG monde)
+          + void reagir()
+        }
+
+        class VueOutils implements Observateur {
+          + VueOutils(MondeIG monde)
+          + void createButtonAjouterActivite()
+          + void reagir()
+        }
+     }
+
+
+
+     package mondeIG {
+       class SujetObserve {
+         + void ajouterObservateur(Observateur v)
+         + void notifierObservateurs()
+       }
+
+       class MondeIG extends SujetObserve implements Iterable{
+         + MondeIG()
+         + void ajouter(String type)
+         + Iterator<EtapeIG> iterator()
+         + Iterator<ArcIG> iteratorarc()
+         + HashMap<String, EtapeIG> getEtapes()
+         + void ajouter(PointDeControleIG pt1, PointDeControleIG pt2)
+       }
+
+       abstract class EtapeIG {
+         - String nom
+         - String identifiant
+         - int posX
+         - int posY
+         - int largeur
+         - int hauteur
+         + EtapeIG(String nom, int larg, int haut)
+         + String getIdentifiant()
+         + void setNom(String nom)
+         + String getNom()
+         + int getPosX()
+         + int getPosY()
+         + Iterator<PointDeControleIG> iterator()
+       }
+
+       class ActiviteIG {
+         + ActiviteIG(String nom, int larg, int haut)
+       }
+
+       interface Iterable<EtapeIG><<java>>{
+         Iterator<EtapeIG> iterator()
+       }
+
+       class PointDeControleIG {
+        - int x
+        - int y
+        - String identifiant
+        - EtapeIG etape
+        - {static} int cptId
+        + PointDeControleIG(int x, int y, EtapeIG etape)
+        - String creationId()
+       }
+
+       class ArcIG {
+        + ArcIG(PointDeControleIG pt1, PointDeControleIG pt2)
+       }
+     }
+
+'Liens du diagramme IG
+VueEtapeIG --"1" Label
+VueActiviteIG --"1" HBox
+VueMondeIG --|> Pane
+VueOutils --|> TilePane
+VueOutils -- "*" Button
+
+Button -down- "*" EventHandler : "       "
+
+EcouteurBouton ..|> EventHandler
+EcouteurBouton --"1" MondeIG
+
+VueEtapeIG - "1" EtapeIG
+
+
+
+SujetObserve "1"-right "*" Observateur
+
+MondeIG --"*" EtapeIG
+MondeIG --"*" ArcIG
+EtapeIG <|-down- ActiviteIG
+EtapeIG --"*" PointDeControleIG
+ArcIG --"*" PointDeControleIG
+
+}
+@enduml

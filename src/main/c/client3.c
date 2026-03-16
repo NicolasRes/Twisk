@@ -1,4 +1,4 @@
-/**
+7/**
  * @file client2.c
  * @author RESENDE Nicolas et BURNEL Mathias
  * @brief Fichier client2
