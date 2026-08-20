@@ -99,3 +99,61 @@ Le projet suit une architecture inspirée du modèle **MVC (Model – View – C
 - gestion de processus et synchronisation
 - mise en place de l'architecture MVC
 - travail en équipe
+
+--
+
+## 📦 Créer et lancer un `.jar`
+
+### Créer le `.jar` avec IntelliJ IDEA
+
+Dans IntelliJ IDEA :
+
+1. Aller dans **File → Project Structure**
+2. Sélectionner **Artifacts**
+3. Cliquer sur **+ → JAR → From modules with dependencies**
+4. Vérifier la configuration de l'artifact puis valider.
+5. Générer le JAR depuis **Build → Build Artifacts → Build**.
+
+Le fichier `.jar` sera généralement généré dans le dossier `out/artifacts/`.
+
+### Lancer le `.jar`
+
+Pour lancer le programme depuis un autre projet ou atelier Java, il est possible d'ajouter le JAR au classpath.
+
+Se placer dans le dossier contenant les projets concernés, puis adapter les chemins suivants à son environnement :
+
+```bash
+javac -cp "<CHEMIN_VERS_LE_JAR>/twisk.jar:." <CHEMIN_VERS_L_ATELIER>/ClientMonde.java
+```
+
+Puis :
+
+```bash
+java -cp "<CHEMIN_VERS_LE_JAR>/twisk.jar:." <CHEMIN_VERS_L_ATELIER>/ClientMonde.java
+```
+
+> **Remarque :** les chemins ci-dessus sont volontairement génériques. Remplacer `<CHEMIN_VERS_LE_JAR>` et `<CHEMIN_VERS_L_ATELIER>` par les chemins correspondant à votre installation.
+
+### Exemple
+
+Si le projet est organisé de la manière suivante :
+
+```text
+projets/
+├── twisk/
+│   └── out/
+│       └── artifacts/
+│           └── twisk_jar/
+│               └── twisk.jar
+└── atelier/
+    └── ClientMonde.java
+```
+
+Depuis le dossier `projets/`, les commandes deviennent :
+
+```bash
+javac -cp "twisk/out/artifacts/twisk_jar/twisk.jar:." atelier/ClientMonde.java
+java -cp "twisk/out/artifacts/twisk_jar/twisk.jar:." atelier/ClientMonde.java
+```
+
+> **Attention :** la syntaxe `:` utilisée pour séparer les éléments du classpath correspond à Linux/macOS. Sous Windows, il faut utiliser `;` à la place.
